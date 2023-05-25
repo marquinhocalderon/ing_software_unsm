@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- start: Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- start: Icons -->
+  <!-- start: CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link rel="stylesheet" href="/src/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- end: CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="/src/css/dataTables.bootstrap5.min.css">
+  <title>San Mathias</title>
+</head>
+
+<body>
+
+  <!-- start: Sidebar -->
+  <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
+    <div class="d-flex align-items-center p-3">
+      <a href="/auth" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
+      <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
+    </div>
+    <ul class="sidebar-menu p-3 m-0 mb-0">
+      <li class="sidebar-menu-item active">
+          <a href="/auth">
+              <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+              Inicio
+          </a>
+      </li>
+      <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
+      <li class="sidebar-menu-item has-dropdown">
+          <a href="#">
+              <i class="ri-pages-line sidebar-menu-item-icon"></i>
+              Seguridad
+              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+          </a>
+          <ul class="sidebar-dropdown-menu">
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/usuarios">
+                      Usuarios
+                  </a>
+              </li>
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/perfiles">
+                      Perfiles
+                  </a>
+              </li>
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/recuperar">
+                     Recuperar Contraseña
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li class="sidebar-menu-item has-dropdown">
+          <a href="#">
+              <i class="ri-pages-line sidebar-menu-item-icon"></i>
+              Almacen
+              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+          </a>
+          <ul class="sidebar-dropdown-menu">
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/lista">
+                      Productos
+                  </a>
+              </li>
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/categoria">
+                      Categorias
+                  </a>
+              </li>
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/unidad">
+                      Unidades
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li class="sidebar-menu-item has-dropdown">
+          <a href="#">
+              <i class="ri-pages-line sidebar-menu-item-icon"></i>
+              Compras
+              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+          </a>
+          <ul class="sidebar-dropdown-menu">
+            <li class="sidebar-dropdown-menu-item">
+              <a href="/auth/almacen">
+                Ingreso Almacen
+              </a>
+            </li>
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/compras">
+                      Ingreso Compras
+                  </a>
+              </li>
+              <li class="sidebar-dropdown-menu-item">
+                  <a href="/auth/proveedores">
+                      Proveedores
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li class="sidebar-menu-item has-dropdown">
+        <a href="#">
+            <i class="ri-pages-line sidebar-menu-item-icon"></i>
+            Ventas
+            <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+        </a>
+        <ul class="sidebar-dropdown-menu">
+          <li class="sidebar-dropdown-menu-item">
+            <a href="#">
+              Ventas
+            </a>
+          </li>
+            <li class="sidebar-dropdown-menu-item">
+                <a href="#">
+                    Nueva Venta
+                </a>
+            </li>
+            <li class="sidebar-dropdown-menu-item">
+                <a href="/auth/clientes">
+                    Clientes
+                </a>
+            </li>
+        </ul>
+    </li>
+  </ul>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <!-- end: Sidebar -->
+
+  <!-- start: Main -->
+  <main class="bg-light">
+    <div class="p-2">
+      <!-- start: Navbar -->
+      <nav class="px-3 py-2 bg-white rounded shadow-sm">
+        <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
+        <h5 class="fw-bold mb-0 me-auto">Perfiles</h5>
+       
+        <div class="dropdown">
+          <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <span class="me-2 d-none d-sm-block">Adminstrador </span>
+            <img class="navbar-profile-image"
+            src="https://marketplace.magento.com/media/catalog/product/4/a/4acb_rsz_admin-logo_1.png"
+              alt="Image">
+          </div>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Perfil</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout">Cerrar Session</a>
+          </div>
+        </div>
+      </nav>
+      <!-- end: Navbar -->
+
+      <!-- start: Content -->
+          <!-- end: Navbar -->
+
+      <!-- start: Content -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            
+              <button class="btn btn-primary" id="botonagregar" style=" margin-top: 15px; margin-bottom: 15px;">Agregar Perfil</button>
+              <table id="users" class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Id Perfil</th>
+                    <th scope="col">Nombre Perfil</th>
+                    <th scope="col">Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  <% perfiles.forEach(function(perfil) { %>
+                  <tr>
+                    <td>
+                      <%= perfil.idperfil %>
+                    </td>
+                    <td>
+                      <%= perfil.cargo %>
+                    </td>
+                    <td>
+                      <%= perfil.estado %>
+                    </td>
+                    <td>
+                      <button class="btn btn-success" onclick="mostrarFormulario('<%= perfil.idperfil %>', '<%= JSON.stringify(perfil) %>')">Actualizar Perfil</button>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              
+              <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+              <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+              
+              <script>
+                $(document).ready(function() {
+                  $('#users').DataTable();
+                });
+              </script>
+              
+              <% if(typeof alert !='undefined' ) { %>
+
+                <script>
+                  Swal.fire({
+                    title: "<%= alertTitle %> ",
+                    text: "<%= alertMessage %> ",
+                    icon: "<%= alertIcon %> ",
+                    showConfirmButton: <%= showConfirmButton %>,
+                    timer:<%= timer %> 
+                        }).then(() => {
+                      window.location = '<%= ruta %> '
+                    })
+                </script>
+                <% } %>
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- end: Content -->
+    </div>
+  </main>
+  <!-- end: Main -->
+
+  <!-- start: JS -->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+    integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script src="/src/css/script.js"></script>
+  <script src="/src/css/jquery-3.5.1.js"></script>
+  <script src="/src/css/jquery.dataTables.min.js"></script>
+  <script src="/src/css/dataTables.bootstrap5.min.js"></script>
+  <!-- end: JS -->
+
+  <script>
+    // Frontend - función mostrarFormulario
+    function mostrarFormulario(idperfil, datos) {
+      const perfil = JSON.parse(datos);
+  
+      Swal.fire({
+        title: 'Detalles del Perfil',
+        html: `
+          <form id="actualizarCategoriaForm" method="post" action="/auth/perfiles/${idperfil}">
+            <p>ID: ${perfil.idperfil}</p>
+            <div class="form-group">
+              <label for="nombre">Nombre del Perfil:</label>
+              <input type="text" class="form-control" id="cargo" name="cargo" value="${perfil.cargo|| ''}" required>
+            </div>
+            <div class="form-group">
+              <label for="estado">Estado:</label>
+              <select class="form-select" id="estado" name="estado" required>
+                <option value="Activo" ${perfil.estado === 'Activo' ? 'selected' : ''}>Activo</option>
+                <option value="Inactivo" ${perfil.estado === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
+              </select>
+            </div>
+  
+            <button class="submit" style="background-color: #4CAF50; border: none; color: white; padding: 10px 24px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px; cursor: pointer;" id="registrarBoton">Actualizar</button>
+            <a href="#" class="cancel" style="background-color: #d33; border: none; color: white; padding: 10px 24px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px; cursor: pointer; margin-left: 10px;" id="cancelarBoton">Cancelar</a>
+          </form>
+        `,
+        showCancelButton: false,
+        showConfirmButton: false,
+       
+      });
+  
+      document.getElementById('cancelarBoton').addEventListener('click', () => {
+        Swal.close(); // Cierra el cuadro de diálogo sin realizar ninguna acción adicional
+      });
+  
+      document.getElementById('actualizarCategoriaForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+  
+        const idPerfil = idperfil;
+        const cargo1 = document.getElementById('cargo').value;
+        const estado1 = document.getElementById('estado').value;
+  
+        fetch(`/auth/perfiles/${idPerfil}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            cargo: cargo1,
+            estado: estado1
+          })
+        })
+          .then(response => {
+            if (response.ok) {
+              Swal.fire('Éxito', 'El perfil se actualizó correctamente', 'success');
+              location.reload(); // Recargar la página después de la actualización exitosa
+            } else {
+              Swal.fire('Error', 'Hubo un error al actualizar El perfil, Perfil Repetido', 'error');
+            }
+          })
+          .catch(error => {
+            Swal.fire('Error', 'Hubo un error en la solicitud', 'error');
+          });
+  
+        Swal.close();
+      });
+    }
+  </script>
+  
+  
+  
+    <script>
+      document.getElementById('botonagregar').addEventListener('click', () => {
+        Swal.fire({
+          title: 'Agregar Perfil',
+          html: `
+      <form id="agregarUsuarioForm" method="post" action="/auth/perfiles">
+        <div class="form-group">
+          <label for="nombre">Nombre del Perfil:</label>
+          <input type="text" class="form-control" id="nombre" name="cargo" required>
+        </div>
+      
+  
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="estado" name="estado" value="Activo" checked>
+          <label class="form-check-label" for="estado">Activo</label>
+        </div>
+        <br/>
+  
+        <button class="submit" style="background-color: #4CAF50; border: none; color: white; padding: 10px 24px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px; cursor: pointer;" id="registrarBoton">Registrar</button>
+        <a href="#" class="cancel" style="background-color: #d33; border: none; color: white; padding: 10px 24px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px; cursor: pointer; margin-left: 10px;" id="cancelarBoton">Cancelar</a>
+      </form>
+      `,
+          showCancelButton: false, // Ocultar el botón de cancelar de SweetAlert
+          showConfirmButton: false // Ocultar el botón de confirmar de SweetAlert
+        });
+        function validarFormulario() {
+          const nombre = document.getElementById('nombre').value;
+          const estado = document.getElementById('estado').value;
+  
+  
+          if (!nombre || !estado) {
+            Swal.fire('Error', 'Debe completar todos los campos', 'error');
+            return false;
+          }
+  
+          return true;
+        }
+        // Agregar listener de evento para el botón "Registrar"
+        document.getElementById('registrarBoton').addEventListener('click', (event) => {
+          if (validarFormulario()) {
+            document.getElementById('agregarUsuarioForm').submit();
+            location.reload();
+            Swal.close();
+  
+          }
+        });
+        // Agregar listener de evento para el botón "Cancelar"
+        document.getElementById('cancelarBoton').addEventListener('click', () => {
+  
+          Swal.close(); // Cerrar la ventana modal de SweetAlert
+        });
+      });
+    </script>
+
+</body>
+
+</html>

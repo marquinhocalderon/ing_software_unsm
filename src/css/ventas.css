@@ -1,0 +1,110 @@
+.my-swal-container {
+  width: 100vw; /* Ancho del contenedor al 100% del viewport */
+  height: 100vh; /* Altura del contenedor al 100% del viewport */
+}
+.my-swal-card {
+  width: 100%; /* Ancho del card al 100% del contenedor */
+  height: 100%; /* Altura del card al 100% del contenedor */
+}
+
+.form-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.contenedor3 {
+  display: flex;
+ gap: 20px;
+}
+
+
+.form-group label {
+  font-weight: bold;
+}
+
+.form-control {
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+}
+
+.contenedor2{
+  display: flex;
+  justify-content: flex-start;
+}
+
+#bon{
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+.button2 {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: white;  
+  border: 1px solid #727070;
+  border-radius: 4px;
+  transition: all 0.2s ease-in;
+  position: relative;
+  overflow: hidden;
+  font-size: 19px;
+  color: black;
+  z-index: 1;
+  margin-bottom: 15px;
+ }
+ 
+ .button2:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.25);
+  top: 100%;
+  width: 140%;
+  height: 180%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+ }
+ 
+ .button2:after {
+  content: "";
+  position: absolute;
+  left: 55%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.45);
+  top: 180%;
+  width: 160%;
+  height: 190%;
+  background-color: #39bda7;
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+ }
+ 
+ .button2:hover {
+  color: #ffffff;
+  border: 1px solid #39bda7;
+ }
+ 
+ .button2:hover:before {
+  top: -35%;
+  background-color: #39bda7;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+ }
+ 
+ .button2:hover:after {
+  top: -45%;
+  background-color: #39bda7;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+ }
