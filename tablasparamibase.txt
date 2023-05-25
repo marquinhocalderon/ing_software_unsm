@@ -1,0 +1,115 @@
+CREATE TABLE perfil (
+  idperfil INT PRIMARY KEY AUTO_INCREMENT,
+  cargo VARCHAR(255),
+  estado VARCHAR(255)
+) ENGINE=InnoDB;
+
+CREATE TABLE usuarios (
+  idusuario INT PRIMARY KEY AUTO_INCREMENT,
+  dni_usuario INT(8),
+  nombre VARCHAR(255),
+  usuario VARCHAR(255),
+  password VARCHAR(255),
+  imagen VARCHAR(255),
+  estado_usuario VARCHAR(255),
+  idperfil INT,
+  CONSTRAINT fk_usuarios_perfil FOREIGN KEY (idperfil) REFERENCES perfil(idperfil)
+) ENGINE=InnoDB;
+
+CREATE TABLE proveedores (
+  idproveedor INT PRIMARY KEY AUTO_INCREMENT,
+  nombre_empresa VARCHAR(255),
+  ruc VARCHAR(11),
+  direccion VARCHAR(255),
+  ciudad VARCHAR(50),
+  pais VARCHAR(50),
+  telefono VARCHAR(20),
+  email VARCHAR(255),
+  estado_proveedor VARCHAR(255)
+) ENGINE=InnoDB;
+
+CREATE TABLE categoria (
+  idcategoria INT PRIMARY KEY AUTO_INCREMENT,
+  nombre_categoria VARCHAR(255),
+  estado_categoria VARCHAR(50)
+) ENGINE=InnoDB;
+
+CREATE TABLE unidad (
+  idunidad INT PRIMARY KEY AUTO_INCREMENT,
+  nombre_unidad VARCHAR(255),
+  estado_unidad VARCHAR(50)
+) ENGINE=InnoDB;
+
+CREATE TABLE productos (
+  idproducto INT PRIMARY KEY AUTO_INCREMENT,
+  codigo_producto VARCHAR(255),
+  nombre_producto VARCHAR(255),
+  idcategoria INT,
+  idunidad INT,
+  precio_venta DECIMAL(10, 2),
+  descripcion TEXT,
+  stock INT,
+  estado_producto VARCHAR(255),
+  CONSTRAINT fk_productos_unidad FOREIGN KEY (idunidad) REFERENCES unidad(idunidad),
+  CONSTRAINT fk_productos_categoria FOREIGN KEY (idcategoria) REFERENCES categoria(idcategoria)
+) ENGINE=InnoDB;
+
+CREATE TABLE compras (
+  idcompra INT PRIMARY KEY AUTO_INCREMENT,
+  fecha_compra DATE,
+  tipo_comprobante VARCHAR(255),
+  serie VARCHAR(255), 
+  numero_correlativo VARCHAR(255),
+  subtotal DECIMAL(10, 2),
+  igv DECIMAL(10, 2),  
+  totalcompra DECIMAL(10, 2),
+  estado_compra VARCHAR(255),
+  idproveedor INT,
+  idusuario INT,
+  CONSTRAINT fk_compras_usuario FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario),
+  CONSTRAINT fk_compras_proveedor FOREIGN KEY (idproveedor) REFERENCES proveedores(idproveedor)
+) ENGINE=InnoDB;
+
+CREATE TABLE detalle_compras (
+  iddetalle INT PRIMARY KEY AUTO_INCREMENT,
+  idcompra INT,
+  idproducto INT,
+  cantidad INT,
+  precio_compra DECIMAL(10, 2),
+  total DECIMAL(10, 2),
+  FOREIGN KEY (idcompra) REFERENCES compras(idcompra),
+  FOREIGN KEY (idproducto) REFERENCES productos(idproducto)
+) ENGINE=InnoDB;
+
+CREATE TABLE clientes (
+  idcliente INT PRIMARY KEY AUTO_INCREMENT,
+  dni INT(8),
+  nombre_cliente VARCHAR(255),
+  telefono VARCHAR(20),
+  direccion VARCHAR(255),
+  estado_cliente VARCHAR(255)
+) ENGINE=InnoDB;
+
+CREATE TABLE ventas (
+  idventa INT PRIMARY KEY AUTO_INCREMENT,
+  fecha_venta DATE,
+  tipo_comprobante VARCHAR(255),
+  subtotal DECIMAL(10, 2),
+  igv DECIMAL(10, 2),
+  totalventa DECIMAL(10, 2),
+  idusuario INT,
+  idcliente INT,
+  CONSTRAINT fk_ventas_usuario FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario),
+  CONSTRAINT fk_ventas_cliente FOREIGN KEY (idcliente) REFERENCES clientes(idcliente)
+) ENGINE=InnoDB;
+
+CREATE TABLE detalle_venta (
+  iddetalle INT PRIMARY KEY AUTO_INCREMENT,
+  idventa INT,
+  idproducto INT,
+  cantidad_vendida INT,
+  total DECIMAL(10, 2),
+  CONSTRAINT fk_detalle_venta_venta FOREIGN KEY (idventa) REFERENCES ventas(idventa),
+  CONSTRAINT fk_detalle_venta_producto FOREIGN KEY (idproducto) REFERENCES productos(idproducto)
+) ENGINE=InnoDB;
+
