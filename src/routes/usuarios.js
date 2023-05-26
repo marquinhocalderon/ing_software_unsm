@@ -30,7 +30,7 @@ function requireAuth(req, res, next) {
 /* PARA MODIFICAR USUARIOS
 ---------------------------------------------------------------------------------------------------- */
 
-router.get("/auth/usuarios", requireAuth, async function (req, res) {
+router.get("/auth/usuarios", async function (req, res) {
   pool.query(
     "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil",
     function (error, results, fields) {

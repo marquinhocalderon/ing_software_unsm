@@ -97,6 +97,8 @@ CREATE TABLE ventas (
   subtotal DECIMAL(10, 2),
   igv DECIMAL(10, 2),
   totalventa DECIMAL(10, 2),
+  montocancelado DECIMAL(10, 2),
+  vuelto DECIMAL(10, 2),
   idusuario INT,
   idcliente INT,
   CONSTRAINT fk_ventas_usuario FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario),

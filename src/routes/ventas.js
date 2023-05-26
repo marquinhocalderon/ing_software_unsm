@@ -1,7 +1,10 @@
 const express = require("express");
 const pool = require("../../database/db");
-
+const bcryptjs = require("bcryptjs");
 const router = express.Router();
+const axios = require("axios");
+
+
 router.use(express.json());
 
 function requireAuth(req, res, next) {
@@ -21,156 +24,170 @@ function requireAuth(req, res, next) {
 --------------------------------------------------------------------------------------------------------------------
 */
 router.get("/auth/ventas", async function (req, res) {
-  pool.query(
-    "SELECT v.*, c.*, p.*, u.*, dv.*, pr.*, ma.*, ca.*, un.* " +
-      "FROM ventas v " +
-      "INNER JOIN clientes c ON v.idcliente = c.idcliente " +
-      "INNER JOIN detalle_venta dv ON v.idventa = dv.idventa " +
-      "INNER JOIN productos p ON dv.idproducto = p.idproducto " +
-      "INNER JOIN usuarios u ON v.idusuario = u.idusuario " +
-      "INNER JOIN proveedores pr ON p.idproveedor = pr.idproveedor " +
-      "INNER JOIN marca ma ON p.idmarca = ma.idmarca " +
-      "INNER JOIN categoria ca ON p.idcategoria = ca.idcategoria " +
-      "INNER JOIN unidad un ON p.idunidad = un.idunidad " +
-      "ORDER BY dv.iddetalle ASC",
-    function (error, results, fields) {
-      if (error) throw error;
+  try {
+    const data = await new Promise((resolve, reject) => {
       pool.query(
-        "SELECT * FROM productos",
-        function (error, productos, fields) {
-          if (error) throw error;
-          res.render("ventas", { ventas: results, productos: productos });
+        "SELECT c.*, p.nombre_empresa AS nombre_proveedor, dc.* " +
+          "FROM compras c " +
+          "JOIN proveedores p ON c.idproveedor = p.idproveedor " +
+          "JOIN detalle_compras dc ON c.idcompra = dc.idcompra",
+        function (error, data, fields) {
+          if (error) reject(error);
+          resolve(data);
         }
       );
-    }
-  );
-});
+    });
 
-router.get("/api/cliente", async function (req, res) {
-  const dni = req.query.dni;
-
-  // Realizar la consulta a la base de datos para obtener los datos del cliente según el DNI
-  pool.query(
-    "SELECT * FROM clientes WHERE dni = ?",
-    [dni],
-    function (error, results, fields) {
-      if (error) {
-        console.error("Error al obtener los datos del cliente:", error);
-        res
-          .status(500)
-          .json({ error: "Error al obtener los datos del cliente" });
-      } else {
-        // Devolver los datos del cliente en formato JSON
-        res.json(results[0]);
-      }
-    }
-  );
-});
-
-router.get("/api/producto", async function (req, res) {
-  const codigoProducto = req.query.codigo_producto;
-
-  // Realizar la consulta a la base de datos para obtener los datos del producto según el código
-  pool.query(
-    "SELECT * FROM productos WHERE codigo_producto = ?",
-    [codigoProducto],
-    function (error, results, fields) {
-      if (error) {
-        console.error("Error al obtener los datos del producto:", error);
-        res
-          .status(500)
-          .json({ error: "Error al obtener los datos del producto" });
-      } else {
-        if (results.length > 0) {
-          // Devolver los datos del producto en formato JSON
-          res.json(results[0]);
-        } else {
-          // No se encontró ningún producto con el código proporcionado
-          res.status(404).json({ error: "Producto no encontrado" });
+    const clientes = await new Promise((resolve, reject) => {
+      pool.query(
+        "SELECT * FROM clientes",
+        function (error, clientes, fields) {
+          if (error) reject(error);
+          resolve(clientes);
         }
-      }
-    }
-  );
+      );
+    });
+
+    const productos = await new Promise((resolve, reject) => {
+      pool.query(
+        "SELECT p.*,c.nombre_categoria AS nombre_categoria, u.nombre_unidad AS nombre_unidad " +
+          "FROM productos p " +
+          "JOIN categoria c ON p.idcategoria = c.idcategoria " +
+          "JOIN unidad u ON p.idunidad = u.idunidad " +
+          "ORDER BY p.idproducto ASC",
+        function (error, productos, fields) {
+          if (error) reject(error);
+          resolve(productos);
+        }
+      );
+    });
+    const facturaResult = await new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
+        FROM compras
+        WHERE tipo_comprobante = 'factura'
+        ORDER BY idcompra DESC
+        LIMIT 1;
+        `,
+        function (error, factura, fields) {
+          if (error) reject(error);
+          resolve(factura);
+        }
+      );
+    });
+
+    const boletaResult = await new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
+        FROM compras
+        WHERE tipo_comprobante = 'boleta'
+        ORDER BY idcompra DESC
+        LIMIT 1;
+        `,
+        function (error, boleta, fields) {
+          if (error) reject(error);
+          resolve(boleta);
+        }
+      );
+    });
+
+    const idUsuario = req.session.idusuario;
+    res.render("ventas", {
+      idUsuario: idUsuario,
+      compras: data,
+      clientes: clientes,
+      productos: productos,
+      factura: facturaResult[0],
+      boleta: boletaResult[0],
+    });
+
+    console.log(facturaResult, boletaResult);
+  } catch (error) {
+    throw error;
+  }
 });
 
-router.get("/api/usuario", async function (req, res) {
-  const idUsuario = req.query.id;
+router.post("/auth/compras", (req, res) => {
+  const idUsuario = req.session.idusuario;
+  const {
+    idusuario,
+    fecha_compra,
+    tipo_comprobante,
+    serie,
+    numero_correlativo,
+    subtotal,
+    igv,
+    totalcompra,
+    idproveedor,
+    comprasjson,
+  } = req.body;
 
-  // Realizar la consulta a la base de datos para obtener los datos del usuario según el ID
-  pool.query(
-    "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil WHERE perfil.cargo IN (?, ?) AND usuarios.idusuario = ?",
-    ["Administrador", "Cajero", idUsuario],
-    function (error, results, fields) {
-      if (error) {
-        console.error("Error al obtener los datos del usuario:", error);
-        res
-          .status(500)
-          .json({ error: "Error al obtener los datos del usuario" });
-      } else {
-        // Devolver los datos del usuario en formato JSON
-        res.json(results[0]);
-      }
-    }
-  );
-});
+  // Verificar el contenido de comprasjson
+  console.log(comprasjson);
 
-// Importa los módulos necesarios para tu aplicación Node.js
-
-// Definir la ruta POST '/auth/ventas' para procesar el formulario
-
-router.post("/auth/ventas", (req, res) => {
-  const { idusuario, idcliente, productojson ,total_venta} = req.body;
-
-  // Verificar el contenido de productojson
-  console.log(productojson);
-
-  // Convertir productojson en un arreglo
+  // Convertir comprasjson en un arreglo
   let productos = [];
 
   try {
-    // Parsear el JSON si productojson es un string
-    const productojsonArray = Array.isArray(productojson) ? productojson : JSON.parse(productojson);
+    // Parsear el JSON si comprasjson es un string
+    const productosArray = Array.isArray(comprasjson)
+      ? comprasjson
+      : JSON.parse(comprasjson);
 
-    // Recorrer el arreglo y obtener los valores de idproducto, cantidadVendida y total
-    for (let i = 0; i < productojsonArray.length; i++) {
-      if (productojsonArray[i].hasOwnProperty("idproducto")) {
-        const { idproducto, cantidadVendida, total } = productojsonArray[i];
-        productos.push({ idproducto, cantidadVendida, total });
+    // Recorrer el arreglo y obtener los valores de idproducto, cantidad, unidadMedida, precioUnitario y total
+    for (let i = 0; i < productosArray.length; i++) {
+      if (productosArray[i].hasOwnProperty("idproducto")) {
+        const { idproducto, cantidad, precioUnitario, Total } =
+          productosArray[i];
+        productos.push({
+          idproducto,
+          cantidad,
+          precioUnitario,
+          Total,
+        });
       }
     }
 
     console.log(productos);
 
-    // Insertar los datos de venta en la tabla 'ventas'
-    const venta = {
-      idusuario: idusuario,
-      idcliente: idcliente,
-      fechaventa: new Date(),
-      total_venta: total_venta,
+    // Insertar los datos de compra en la tabla 'compras'
+    const compra = {
+      idusuario: idUsuario, // Utilizar idUsuario en lugar de idusuario
+      idproveedor: idproveedor,
+      fecha_compra: fecha_compra,
+      tipo_comprobante: tipo_comprobante,
+      serie: serie,
+      numero_correlativo: numero_correlativo,
+      subtotal: subtotal,
+      igv: igv,
+      totalcompra: totalcompra,
+      estado_compra: "Pendiente",
     };
 
-    pool.query("INSERT INTO ventas SET ?", venta, (error, result) => {
+    pool.query("INSERT INTO compras SET ?", compra, (error, result) => {
       if (error) throw error;
 
-      const idventa = result.insertId;
+      const idcompra = result.insertId;
 
-      // Insertar los detalles de venta en la tabla 'detalle_venta'
+      // Insertar los detalles de compra en la tabla 'detalle_compras'
       const detalles = productos.map((producto) => {
         return {
-          idventa: idventa,
+          idcompra: idcompra,
           idproducto: producto.idproducto,
-          cantidad_vendida: producto.cantidadVendida, // Valor predeterminado para cantidad_vendida
-          total: producto.total , // Valor predeterminado para total
+          cantidad: producto.cantidad,
+          precio_compra: producto.precioUnitario,
+          total: producto.Total,
         };
       });
 
       pool.query(
-        "INSERT INTO detalle_venta (idventa, idproducto, cantidad_vendida, total) VALUES ?",
+        "INSERT INTO detalle_compras (idcompra, idproducto, cantidad, precio_compra, total) VALUES ?",
         [
           detalles.map((detalle) => [
-            detalle.idventa,
+            detalle.idcompra,
             detalle.idproducto,
-            detalle.cantidad_vendida,
+            detalle.cantidad,
+            detalle.precio_compra,
             detalle.total,
           ]),
         ],
@@ -179,18 +196,103 @@ router.post("/auth/ventas", (req, res) => {
 
           // Éxito en la inserción de datos
 
-          // Generar boleta en HTML
+          // Realizar la consulta SELECT para obtener todos los proveedores
+          pool.query("SELECT * FROM proveedores", (error, proveedores) => {
+            if (error) {
+              console.error("Error al obtener proveedores:", error);
+              return res.status(500).json({ error: "Ocurrió un error al obtener los proveedores" });
+            }
 
-          // Enviar la boleta como respuesta
-          res.render("ventas");
-        }
-      );
-    });
+            // Realizar la consulta SELECT para obtener todos los productos
+            pool.query(
+              "SELECT p.*,c.nombre_categoria AS nombre_categoria, u.nombre_unidad AS nombre_unidad " +
+              "FROM productos p " +
+              "JOIN categoria c ON p.idcategoria = c.idcategoria " +
+              "JOIN unidad u ON p.idunidad = u.idunidad " +
+              "ORDER BY p.idproducto ASC",
+              (error, productos) => {
+                if (error) {
+                  console.error("Error al obtener productos:", error);
+                  return res.status(500).json({
+                    error: "Ocurrió un error al obtener los productos",
+                  });
+                }
+
+                pool.query(
+                  `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
+                  FROM compras
+                  WHERE tipo_comprobante = 'factura'
+                  ORDER BY idcompra DESC
+                  LIMIT 1;
+                  `,
+                  (error, factura) => {
+                    if (error) {
+                      console.error("Error al obtener correlativo:", error);
+                      return res.status(500).json({
+                        error: "Ocurrió un error al obtener el correlativo",
+                      });
+                    }
+
+                    pool.query(
+                      `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
+                      FROM compras
+                      WHERE tipo_comprobante = 'boleta'
+                      ORDER BY idcompra DESC
+                      LIMIT 1;
+                      `,
+                      (error, boleta) => {
+                        if (error) {
+                          console.error("Error al obtener correlativo:", error);
+                          return res.status(500).json({
+                            error: "Ocurrió un error al obtener el correlativo",
+                          });
+                        }
+
+                        res.render("compras", {
+                          boleta: boleta[0],
+                          factura: factura[0],
+                          idUsuario: idUsuario,
+                          productos: productos,
+                          proveedores: proveedores,
+                        });
+                      }
+                    );
+                  }
+                );
+              }
+            );
+          }
+    )});
+      }
+    );
   } catch (error) {
-    console.error("Error al procesar productojson:", error);
-    res.status(400).json({ error: "El formato de productojson es incorrecto" });
+    console.error("Error al procesar comprasjson:", error);
+    const consultaSQL = "SELECT * FROM proveedores;";
+    pool.query(consultaSQL, (err, resultados) => {
+      if (err) {
+        console.error("Error al obtener proveedores:", err);
+        // Manejar el error al obtener los proveedores, si es necesario
+        // ...
+      } else {
+        // Renderizar la vista "compras" con los datos obtenidos
+        res.render("compras", {
+          idUsuario: idUsuario,
+          productos: productos,
+          proveedores: resultados, // Utilizar los resultados de la consulta
+          alert: true,
+          alertTitle: "Error",
+          alertMessage:
+            "No has insertado los productos en la tabla. Por favor, inserta los productos.",
+          alertIcon: "error",
+          showConfirmButton: true,
+          timer: false,
+          ruta: "compras",
+        });
+      }
+    });
   }
 });
+
 
 
 

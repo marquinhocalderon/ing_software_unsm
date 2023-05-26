@@ -1,0 +1,24 @@
+<!-- <script>
+    const tipoComprobanteSelect = document.getElementById('tipo_comprobante');
+    const impuestoInput = document.getElementById('impuesto');
+    const serie = document.getElementById('serie');
+    const numeroCorrelativoInput = document.getElementById('numero_correlativo');
+    // Agregar un evento de cambio al select
+    tipoComprobanteSelect.addEventListener('change', function () {
+      if (tipoComprobanteSelect.value === 'factura') {
+        impuestoInput.value = '0';
+        serie.value = 'F001';
+        numeroCorrelativoInput.value = "<%= (parseInt(factura.numero_correlativo) + 1).toString().padStart(8, '0') %>";
+      } else if(tipoComprobanteSelect.value === 'boleta') {
+        impuestoInput.value = '0';
+        serie.value = 'B001';
+        numeroCorrelativoInput.value = "<%= (parseInt(boleta.numero_correlativo) + 1).toString().padStart(8, '0') %>";
+        
+      }
+
+      else{
+        serie.value = '';
+        numeroCorrelativoInput.value = '';
+      }
+    });
+  </script>-->
