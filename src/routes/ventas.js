@@ -107,17 +107,17 @@ router.get("/auth/ventas", async function (req, res) {
   }
 });
 
-router.post("/auth/compras", (req, res) => {
+router.post("/auth/ventas", (req, res) => {
   const idUsuario = req.session.idusuario;
   const {
     idusuario,
-    fecha_compra,
+    fecha_venta,
     tipo_comprobante,
     serie,
     numero_correlativo,
     subtotal,
     igv,
-    totalcompra,
+    totalventa,
     idproveedor,
     comprasjson,
   } = req.body;
