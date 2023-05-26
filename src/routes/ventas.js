@@ -110,7 +110,6 @@ router.get("/auth/ventas", async function (req, res) {
 router.post("/auth/ventas", (req, res) => {
   const idUsuario = req.session.idusuario;
   const {
-    idusuario,
     fecha_venta,
     tipo_comprobante,
     serie,
@@ -118,7 +117,9 @@ router.post("/auth/ventas", (req, res) => {
     subtotal,
     igv,
     totalventa,
-    idproveedor,
+    montocancelado,
+    vuelto,
+    idcliente,
     comprasjson,
   } = req.body;
 
@@ -137,12 +138,11 @@ router.post("/auth/ventas", (req, res) => {
     // Recorrer el arreglo y obtener los valores de idproducto, cantidad, unidadMedida, precioUnitario y total
     for (let i = 0; i < productosArray.length; i++) {
       if (productosArray[i].hasOwnProperty("idproducto")) {
-        const { idproducto, cantidad, precioUnitario, Total } =
+        const { idproducto, cantidad, Total } =
           productosArray[i];
         productos.push({
           idproducto,
           cantidad,
-          precioUnitario,
           Total,
         });
       }
@@ -151,43 +151,42 @@ router.post("/auth/ventas", (req, res) => {
     console.log(productos);
 
     // Insertar los datos de compra en la tabla 'compras'
-    const compra = {
+    const venta = {
       idusuario: idUsuario, // Utilizar idUsuario en lugar de idusuario
-      idproveedor: idproveedor,
-      fecha_compra: fecha_compra,
+      idcliente: idcliente,
+      fecha_venta: fecha_venta,
       tipo_comprobante: tipo_comprobante,
       serie: serie,
       numero_correlativo: numero_correlativo,
       subtotal: subtotal,
       igv: igv,
-      totalcompra: totalcompra,
-      estado_compra: "Pendiente",
+      totalventa: totalventa,
+      montocancelado: montocancelado,
+      vuelto: vuelto,
     };
 
-    pool.query("INSERT INTO compras SET ?", compra, (error, result) => {
+    pool.query("INSERT INTO ventas SET ?", venta, (error, result) => {
       if (error) throw error;
 
-      const idcompra = result.insertId;
+      const idventa = result.insertId;
 
       // Insertar los detalles de compra en la tabla 'detalle_compras'
       const detalles = productos.map((producto) => {
         return {
-          idcompra: idcompra,
+          idventa: idventa,
           idproducto: producto.idproducto,
           cantidad: producto.cantidad,
-          precio_compra: producto.precioUnitario,
           total: producto.Total,
         };
       });
 
       pool.query(
-        "INSERT INTO detalle_compras (idcompra, idproducto, cantidad, precio_compra, total) VALUES ?",
+        "INSERT INTO detalle_venta (idventa, idproducto, cantidad_vendida, total) VALUES ?",
         [
           detalles.map((detalle) => [
-            detalle.idcompra,
+            detalle.idventa,
             detalle.idproducto,
             detalle.cantidad,
-            detalle.precio_compra,
             detalle.total,
           ]),
         ],
@@ -197,7 +196,7 @@ router.post("/auth/ventas", (req, res) => {
           // Éxito en la inserción de datos
 
           // Realizar la consulta SELECT para obtener todos los proveedores
-          pool.query("SELECT * FROM proveedores", (error, proveedores) => {
+          pool.query("SELECT * FROM clientes", (error, clientes) => {
             if (error) {
               console.error("Error al obtener proveedores:", error);
               return res.status(500).json({ error: "Ocurrió un error al obtener los proveedores" });
@@ -219,10 +218,10 @@ router.post("/auth/ventas", (req, res) => {
                 }
 
                 pool.query(
-                  `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
-                  FROM compras
+                  `SELECT serie, numero_correlativo, tipo_comprobante, idventa
+                  FROM ventas
                   WHERE tipo_comprobante = 'factura'
-                  ORDER BY idcompra DESC
+                  ORDER BY idcliente DESC
                   LIMIT 1;
                   `,
                   (error, factura) => {
@@ -234,10 +233,10 @@ router.post("/auth/ventas", (req, res) => {
                     }
 
                     pool.query(
-                      `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
-                      FROM compras
+                      `SELECT serie, numero_correlativo, tipo_comprobante, idventa
+                      FROM ventas
                       WHERE tipo_comprobante = 'boleta'
-                      ORDER BY idcompra DESC
+                      ORDER BY idcliente DESC
                       LIMIT 1;
                       `,
                       (error, boleta) => {
@@ -248,12 +247,12 @@ router.post("/auth/ventas", (req, res) => {
                           });
                         }
 
-                        res.render("compras", {
+                        res.render("ventas", {
                           boleta: boleta[0],
                           factura: factura[0],
                           idUsuario: idUsuario,
                           productos: productos,
-                          proveedores: proveedores,
+                          clientes: clientes,
                         });
                       }
                     );
@@ -267,7 +266,7 @@ router.post("/auth/ventas", (req, res) => {
     );
   } catch (error) {
     console.error("Error al procesar comprasjson:", error);
-    const consultaSQL = "SELECT * FROM proveedores;";
+    const consultaSQL = "SELECT * FROM clientes;";
     pool.query(consultaSQL, (err, resultados) => {
       if (err) {
         console.error("Error al obtener proveedores:", err);
@@ -275,10 +274,10 @@ router.post("/auth/ventas", (req, res) => {
         // ...
       } else {
         // Renderizar la vista "compras" con los datos obtenidos
-        res.render("compras", {
+        res.render("ventas", {
           idUsuario: idUsuario,
           productos: productos,
-          proveedores: resultados, // Utilizar los resultados de la consulta
+          clientes: resultados, // Utilizar los resultados de la consulta
           alert: true,
           alertTitle: "Error",
           alertMessage:
@@ -286,7 +285,7 @@ router.post("/auth/ventas", (req, res) => {
           alertIcon: "error",
           showConfirmButton: true,
           timer: false,
-          ruta: "compras",
+          ruta: "ventas",
         });
       }
     });
