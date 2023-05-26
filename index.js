@@ -94,7 +94,8 @@ const compras = require("./src/routes/compras");
 app.use(compras);
 const ingreso_almacen = require("./src/routes/ingreso_almacen");
 app.use(ingreso_almacen);
-
+const ingreso_venta = require("./src/routes/ingreso_ventas");
+app.use(ingreso_venta);
 
 
 //PRUEBA DE LA CONEXION A LA BASE DE DATOS MYSQL

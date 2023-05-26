@@ -219,7 +219,7 @@ router.post("/auth/ventas", (req, res) => {
 
                 pool.query(
                   `SELECT serie, numero_correlativo, tipo_comprobante, idventa
-                  FROM ventas
+                  FROM ventas 
                   WHERE tipo_comprobante = 'factura'
                   ORDER BY idcliente DESC
                   LIMIT 1;
@@ -291,6 +291,10 @@ router.post("/auth/ventas", (req, res) => {
     });
   }
 });
+
+
+
+
 
 
 

@@ -83,6 +83,7 @@ CREATE TABLE detalle_compras (
 
 CREATE TABLE clientes (
   idcliente INT PRIMARY KEY AUTO_INCREMENT,
+  ruc INT(11),
   dni INT(8),
   nombre_cliente VARCHAR(255),
   telefono VARCHAR(20),
@@ -94,6 +95,8 @@ CREATE TABLE ventas (
   idventa INT PRIMARY KEY AUTO_INCREMENT,
   fecha_venta DATE,
   tipo_comprobante VARCHAR(255),
+  serie VARCHAR(255), 
+  numero_correlativo VARCHAR(255),
   subtotal DECIMAL(10, 2),
   igv DECIMAL(10, 2),
   totalventa DECIMAL(10, 2),

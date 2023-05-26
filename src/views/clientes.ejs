@@ -119,8 +119,8 @@
         </a>
         <ul class="sidebar-dropdown-menu">
           <li class="sidebar-dropdown-menu-item">
-            <a href="#">
-              Ventas
+            <a href="/auth/facturaciones">
+              Lista de ventas
             </a>
           </li>
             <li class="sidebar-dropdown-menu-item">
@@ -335,7 +335,7 @@
           <form id="actualizarClienteForm" method="post" action="/auth/actualizarcliente/${idcliente}">
             <div class="form-group">
               <label for="dni">DNI:</label>
-              <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}" readonly required>
+              <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}"  required>
             </div>
             <div class="form-group">
               <label for="nombre">Nombre Cliente:</label>
