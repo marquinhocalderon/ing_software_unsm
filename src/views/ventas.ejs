@@ -277,7 +277,8 @@
               </div>
               <div class="input-field">
                 <label>Total:</label>
-                <input type="number" step="0.01" placeholder="Total" id="calculoTotal" name="totalventa" readonly required>
+                <input type="number" step="0.01" placeholder="Total" id="calculoTotal" name="totalventa" readonly
+                  required>
               </div>
               <div class="input-field">
                 <label>Monto a Cancelar:</label>
@@ -285,7 +286,7 @@
               </div>
               <div class="input-field">
                 <label>Vuelto:</label>
-                <input type="number"step="0.01" placeholder="vuelto" id="vuelto" name="vuelto" readonly required>
+                <input type="number" step="0.01" placeholder="vuelto" id="vuelto" name="vuelto" readonly required>
               </div>
             </div>
             <div>
@@ -398,10 +399,10 @@
           const newRow = document.createElement('tr');
           newRow.innerHTML = `
       <td><input type="text" value="${nombre_producto}" class="form-control"readonly></td>
-      <td><input type="text" value="${stock}" class="form-control"readonly></td>
+      <td><input type="text" value="${stock}" class="form-control stock"readonly></td>
       <td><input id="precio" type="text" value="${precio_venta}" class="form-control precioventa" required readonly></td>
       <td><input type="number" value="${cantidad}" class="form-control cantidad" required></td>
-      <td><input type="number"step="0.01" value="${Total}" class="form-control total" readonly required></td>
+      <td><input type="text"step="0.01" value="${Total}" class="form-control total" readonly required></td>
       <td><button type="button" class="eliminarBtn" >Eliminar</button></td>
       <td><input type="number" value="${idproducto}" class="form-control"readonly></td>
     `
@@ -412,6 +413,7 @@
 
           Swal.close();
           const precioVentaInput = newRow.querySelector('.precioventa');
+          const stockInput = newRow.querySelector('.stock');
           const cantidadInput = newRow.querySelector('.cantidad');
           const totalInput = newRow.querySelector('.total');
           const eliminarBtn = newRow.querySelector('.eliminarBtn');
@@ -424,47 +426,56 @@
           });
 
           function calcularTotal() {
-            const cantidadValue = parseFloat(cantidadInput.value);
-            const precioVentaValue = parseFloat(precioVentaInput.value);
+  const cantidadValue = parseFloat(cantidadInput.value);
+  const precioVentaValue = parseFloat(precioVentaInput.value);
+  const stockValue = parseFloat(stockInput.value);
 
-            if (!isNaN(cantidadValue) && !isNaN(precioVentaValue)) {
-              totalInput.value = (cantidadValue * precioVentaValue).toFixed(2);
-            } else {
-              totalInput.value = '';
-            }
+  if (isNaN(cantidadValue) || isNaN(precioVentaValue)) {
+    totalInput.value = '';
+    calcularSumaTotal();
+    return;
+  }
 
-            calcularSumaTotal();
-          }
+  if (cantidadValue > stockValue) {
+    totalInput.value = '';
+    cantidadInput.value="";
+    alert('La cantidad es mayor que el stock');
+  } else {
+    totalInput.value = (cantidadValue * precioVentaValue).toFixed(2);
+  }
+
+  calcularSumaTotal();
+}
         });
       });
-  
-
-const calcularSumaTotal = () => {
-  const totalInputs = document.querySelectorAll('.total');
-  let sumaTotal = 0;
-
-  totalInputs.forEach(input => {
-    const valor = parseFloat(input.value);
-
-    // Verificar si el valor es numérico antes de sumarlo
-    if (!isNaN(valor)) {
-      sumaTotal += valor;
-    }
-  });
-
-  let igv = 0;
-  const costoTotal = parseFloat(document.getElementById('impuesto').value);
-  const total = parseFloat(sumaTotal + igv);
-
-  document.getElementById('subtotal').value = sumaTotal.toFixed(2);
-  document.getElementById('igv').value = igv.toFixed(2);
-  document.getElementById('calculoTotal').value = total.toFixed(2);
-
-  enviarDatosCompras(); // Llamar a la función para calcular el vuelto después de actualizar los valores
-};
 
 
-      
+      const calcularSumaTotal = () => {
+        const totalInputs = document.querySelectorAll('.total');
+        let sumaTotal = 0;
+
+        totalInputs.forEach(input => {
+          const valor = parseFloat(input.value);
+
+          // Verificar si el valor es numérico antes de sumarlo
+          if (!isNaN(valor)) {
+            sumaTotal += valor;
+          }
+        });
+
+        let igv = 0;
+        const costoTotal = parseFloat(document.getElementById('impuesto').value);
+        const total = parseFloat(sumaTotal + igv);
+
+        document.getElementById('subtotal').value = sumaTotal.toFixed(2);
+        document.getElementById('igv').value = igv.toFixed(2);
+        document.getElementById('calculoTotal').value = total.toFixed(2);
+
+        enviarDatosCompras(); // Llamar a la función para calcular el vuelto después de actualizar los valores
+      };
+
+
+
 
       const enviarDatosCompras = () => {
         const filasTabla = document.querySelectorAll('#tablaDestino tr:not(:first-child)');
@@ -506,44 +517,44 @@ const calcularSumaTotal = () => {
   </script>
 
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const montoInput = document.getElementById('monto');
-    const vueltoInput = document.getElementById('vuelto');
-    const enviarBtn = document.getElementById('enviarBtn');
-    montoInput.addEventListener('input', calcularVuelto);
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const montoInput = document.getElementById('monto');
+      const vueltoInput = document.getElementById('vuelto');
+      const enviarBtn = document.getElementById('enviarBtn');
+      montoInput.addEventListener('input', calcularVuelto);
 
-    enviarBtn.addEventListener('click', (event) => {
-      if (montoInput.value.trim() === '') {
-        alert('El campo Monto a Cancelar es requerido.');
-        event.preventDefault(); // Evita el envío del formulario
-      } else if (vueltoInput.value.trim() === '') {
-        alert('El campo Vuelto es requerido.');
-        event.preventDefault(); // Evita el envío del formulario
-      } else {
-        // Aquí puedes agregar la lógica para enviar los datos
-      }
-    });
+      enviarBtn.addEventListener('click', (event) => {
+        if (montoInput.value.trim() === '') {
+          alert('El campo Monto a Cancelar es requerido.');
+          event.preventDefault(); // Evita el envío del formulario
+        } else if (vueltoInput.value.trim() === '') {
+          alert('El campo Vuelto es requerido.');
+          event.preventDefault(); // Evita el envío del formulario
+        } else {
+          // Aquí puedes agregar la lógica para enviar los datos
+        }
+      });
 
-    function calcularVuelto() {
-      const totalInput = document.getElementById('calculoTotal');
+      function calcularVuelto() {
+        const totalInput = document.getElementById('calculoTotal');
 
-      const totalValue = parseFloat(totalInput.value);
-      const montoValue = parseFloat(montoInput.value);
+        const totalValue = parseFloat(totalInput.value);
+        const montoValue = parseFloat(montoInput.value);
 
-      if (!isNaN(totalValue) && !isNaN(montoValue)) {
-        if (montoValue >= totalValue) {
-          const vuelto = montoValue - totalValue;
-          vueltoInput.value = vuelto.toFixed(2);
+        if (!isNaN(totalValue) && !isNaN(montoValue)) {
+          if (montoValue >= totalValue) {
+            const vuelto = montoValue - totalValue;
+            vueltoInput.value = vuelto.toFixed(2);
+          } else {
+            vueltoInput.value = '';
+          }
         } else {
           vueltoInput.value = '';
         }
-      } else {
-        vueltoInput.value = '';
       }
-    }
-  });
-</script>
+    });
+  </script>
 
 
 

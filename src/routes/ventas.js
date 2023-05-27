@@ -150,6 +150,8 @@ router.post("/auth/ventas", (req, res) => {
 
     console.log(productos);
 
+    
+
     // Insertar los datos de compra en la tabla 'compras'
     const venta = {
       idusuario: idUsuario, // Utilizar idUsuario en lugar de idusuario
@@ -192,6 +194,22 @@ router.post("/auth/ventas", (req, res) => {
         ],
         (error, result) => {
           if (error) throw error;
+
+          
+          // Actualizar el stock de productos vendidos
+          productos.forEach((producto) => {
+            const { idproducto, cantidad } = producto;
+
+            // Restar la cantidad vendida al stock actual
+            const consultaSQL = "UPDATE productos SET stock = stock - ? WHERE idproducto = ?";
+            pool.query(consultaSQL, [cantidad, idproducto], (error, result) => {
+              if (error) {
+                console.error("Error al actualizar el stock del producto:", error);
+                // Manejar el error de actualización del stock, si es necesario
+                // ...
+              }
+            });
+          });
 
           // Éxito en la inserción de datos
 
