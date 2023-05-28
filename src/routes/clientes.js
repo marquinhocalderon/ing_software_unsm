@@ -37,20 +37,6 @@ router.post("/auth/clientes", (req, res) => {
   const estado_cliente = "Activo";
 
   try {
-    if (dni.length < 8) {
-      // El DNI tiene menos de 8 dígitos, mostrar un mensaje de error
-      return res.render("clientes", {
-        clientes: [],
-        name: "Administrador",
-        alert: true,
-        alertTitle: "Error De Registro",
-        alertMessage: "El DNI debe tener al menos 8 dígitos",
-        alertIcon: "error",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "",
-      });
-    }
 
     const sqlBuscaCliente = "SELECT * FROM clientes WHERE dni = ? AND ruc=? AND telefono = ?";
     pool.query(sqlBuscaCliente, [dni, ruc, telefono], async (err, results) => {
@@ -140,7 +126,7 @@ router.get("/auth/actualizarcliente/:id", async function (req, res) {
   try {
     // Verificar si el número de DNI ya está en uso por otro cliente
     const [existingClients, _] = await pool.promise().query(
-      "SELECT idcliente FROM clientes WHERE dni = ? AND ruc=? AND idcliente <> ?",
+      "SELECT idcliente FROM clientes WHERE dni = ?  AND idcliente <> ?",
       [dni, idCliente]
     );
 

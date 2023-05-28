@@ -191,8 +191,9 @@
                     width: 100%;
                     flex-direction: column;
                     margin: 4px 0;">
-                      <label>DNI:</label>
-                      <input type="text" placeholder="Ingrese DNI" id="dni" name="dni" required>
+                      <label>Buscar Cliente:</label>
+                      <input type="text" placeholder="Buscar Cliente (opcional)" id="dni" name="dni" >
+                      <input type="text" placeholder="Buscar Cliente" id="ruc" name="ruc" style="display: none;" >
                     </div>
                    
                     <div style="margin-top: 1em;  ">
@@ -201,13 +202,13 @@
                     </div>
                   </div>
                   <div class="input-field">
-                    <label>Proveedor</label>
-                    <input type="text" placeholder="Nombre Cliente" id="nombre_cliente" name="nombre_cliente" readonly
-                      required>
+                    <label>Cliente</label>
+                    <input type="text" placeholder="Nombre Cliente" id="nombre_cliente" name="nombre_cliente"  >
+                    <input type="text" placeholder="Razón Social" id="razon_social" name="razon_social" style="display: none;" >
                   </div>
                   <div class="input-field">
                     <label>Direccion</label>
-                    <input type="text" placeholder="Direccion" id="direccion" name="direccion" readonly required>
+                    <input type="text" placeholder="Direccion (Opcional)" id="direccion" name="direccion"  >
                   </div>
                   <div class="input-field">
                     <label>Serie/Follo</label>
@@ -300,6 +301,31 @@
     </div>
     </form>
 
+     <script>
+    const tipoComprobanteSelect = document.getElementById('tipo_comprobante');
+    const impuestoInput = document.getElementById('impuesto');
+    const serie = document.getElementById('serie');
+    const numeroCorrelativoInput = document.getElementById('numero_correlativo');
+    // Agregar un evento de cambio al select
+    tipoComprobanteSelect.addEventListener('change', function () {
+      if (tipoComprobanteSelect.value === 'factura') {
+        impuestoInput.value = '0';
+        serie.value = 'F001';
+        numeroCorrelativoInput.value = "<%= (parseInt(factura.numero_correlativo) + 1).toString().padStart(8, '0') %>";
+      } else if(tipoComprobanteSelect.value === 'boleta') {
+        impuestoInput.value = '0';
+        serie.value = 'B001';
+        numeroCorrelativoInput.value = "<%= (parseInt(boleta.numero_correlativo) + 1).toString().padStart(8, '0') %>";
+        
+      }
+
+      else{
+        serie.value = '';
+        numeroCorrelativoInput.value = '';
+      }
+    });
+  </script>
+
 
     <% if(typeof alert !='undefined' ) { %>
 
@@ -325,6 +351,35 @@
   <!-- end: Main -->
 
   <!-- Importante para venta -->
+  <script>
+    // Obtener referencias a los elementos del DOM
+    const tipoComprobante = document.getElementById('tipo_comprobante');
+    const nombreCliente = document.getElementById('nombre_cliente');
+    const razonSocial = document.getElementById('razon_social');
+    const dnicliente = document.getElementById('dni');
+    const ruccliente = document.getElementById('ruc');
+  
+    // Agregar un event listener para detectar cambios en el menú desplegable
+    tipoComprobante.addEventListener('change', function() {
+      if (tipoComprobante.value === 'factura') {
+        nombreCliente.style.display = 'none';
+        razonSocial.style.display = 'block';
+        ruccliente.style.display = 'block';
+        dnicliente.style.display = 'none';
+      } else if (tipoComprobante.value === 'boleta') {
+        nombreCliente.style.display = 'block';
+        razonSocial.style.display = 'none';
+        ruccliente.style.display = 'none';
+        dnicliente.style.display = 'block';
+      } else {
+        nombreCliente.style.display = 'block';
+        razonSocial.style.display = 'none';
+        ruccliente.style.display = 'none';
+        dnicliente.style.display = 'block';
+      }
+    });
+  </script>
+  
 
 
   <script>
@@ -575,7 +630,9 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">dni</th>
+                <th scope="col">ruc</th>
                 <th scope="col">nombre_cliente  </th>
+                <th scope="col">razon social  </th>
                 <th scope="col">telefono  </th>
                 <th scope="col">direccion  </th>
                 <th scope="col">estado_cliente  </th>
@@ -587,7 +644,9 @@
                 <tr>
                   <td><%= cliente.idcliente %></td>
                   <td><%= cliente.dni %></td>
+                  <td><%= cliente.ruc %></td>
                   <td><%= cliente.nombre_cliente %></td>
+                  <td><%= cliente.razonsocial %></td>
                   <td><%= cliente.telefono %></td>
                   <td><%= cliente.direccion %></td>
                   <td><%= cliente.estado_cliente %></td>
@@ -612,6 +671,8 @@
           const clienteData = JSON.parse(selectedProveedor.getAttribute('data-proveedor'));
           document.getElementById('nombre_cliente').value = clienteData.nombre_cliente;
           document.getElementById('dni').value = clienteData.dni;
+          document.getElementById('ruc').value = clienteData.ruc;
+          document.getElementById('razon_social').value = clienteData.razonsocial;
           document.getElementById('direccion').value = clienteData.direccion;
           document.getElementById('idcliente').value = clienteData.idcliente;
           Swal.close();

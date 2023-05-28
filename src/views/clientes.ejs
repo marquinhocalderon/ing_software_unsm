@@ -216,13 +216,13 @@
                     <div class="input-field" >
                       <div style="display: flex; flex-direction: column; margin: 4px 0;">
                         <label>Telefono:</label>
-                        <input style="width: 15em;" type="number" placeholder="telefono" id="telefono" name="telefono" required>
+                        <input style="width: 15em;" type="number" placeholder="telefono" id="telefono" name="telefono" >
                       </div>
                     </div>
                     <div class="input-field" style="display: flex; flex-direction: row; gap: 5px;">
                       <div style="display: flex; flex-direction: column; margin: 4px 0;">
                         <label>Direccion:</label>
-                        <input style="width: 20em;" type="text" placeholder="direccion" id="direccion" name="direccion" required>
+                        <input style="width: 20em;" type="text" placeholder="direccion" id="direccion" name="direccion" >
                       </div>
                       <div>
                         <button type="submit" class="btn btn-primary" style="margin-top: 1.7em;">Agregar</button>
@@ -347,11 +347,11 @@
           <form id="actualizarClienteForm" method="post" action="/auth/actualizarcliente/${idcliente}">
             <div class="form-group">
               <label for="dni">DNI:</label>
-              <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}"  required>
+              <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}"  >
             </div>
             <div class="form-group">
               <label for="dni">Ruc:</label>
-              <input type="number" class="form-control" id="ruc" name="ruc" value="${cliente.ruc || ''}"  required>
+              <input type="number" class="form-control" id="ruc" name="ruc" value="${cliente.ruc || ''}"  >
             </div>
             <div class="form-group">
               <label for="nombre">Nombre Cliente:</label>
@@ -359,15 +359,15 @@
             </div>
             <div class="form-group">
               <label for="nombre">razonsocial Cliente:</label>
-              <input type="text" class="form-control" id="razonsocial" name="razonsocial" value="${cliente.razonsocial || ''}" readonly required>
+              <input type="text" class="form-control" id="razonsocial" name="razonsocial" value="${cliente.razonsocial || ''}" readonly >
             </div>
             <div class="form-group">
               <label for="telefono">Teléfono:</label>
-              <input type="text" class="form-control" id="telefono" name="telefono" value="${cliente.telefono || ''}" required>
+              <input type="text" class="form-control" id="telefono" name="telefono" value="${cliente.telefono || ''}" >
             </div>
             <div class="form-group">
               <label for="direccion">Dirección:</label>
-              <input type="text" class="form-control" id="direccion" name="direccion" value="${cliente.direccion || ''}" required>
+              <input type="text" class="form-control" id="direccion" name="direccion" value="${cliente.direccion || ''}" >
             </div>
             <div class="form-group">
               <label for="estado">Estado:</label>

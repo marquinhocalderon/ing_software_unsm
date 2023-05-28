@@ -63,10 +63,10 @@ router.get("/auth/ventas", async function (req, res) {
     });
     const facturaResult = await new Promise((resolve, reject) => {
       pool.query(
-        `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
-        FROM compras
+        `SELECT serie, numero_correlativo, tipo_comprobante, idventa
+        FROM ventas
         WHERE tipo_comprobante = 'factura'
-        ORDER BY idcompra DESC
+        ORDER BY idventa DESC
         LIMIT 1;
         `,
         function (error, factura, fields) {
@@ -78,10 +78,10 @@ router.get("/auth/ventas", async function (req, res) {
 
     const boletaResult = await new Promise((resolve, reject) => {
       pool.query(
-        `SELECT serie, numero_correlativo, tipo_comprobante, idcompra
-        FROM compras
+        `SELECT serie, numero_correlativo, tipo_comprobante, idventa
+        FROM ventas
         WHERE tipo_comprobante = 'boleta'
-        ORDER BY idcompra DESC
+        ORDER BY idventa DESC
         LIMIT 1;
         `,
         function (error, boleta, fields) {
@@ -239,7 +239,7 @@ router.post("/auth/ventas", (req, res) => {
                   `SELECT serie, numero_correlativo, tipo_comprobante, idventa
                   FROM ventas 
                   WHERE tipo_comprobante = 'factura'
-                  ORDER BY idcliente DESC
+                  ORDER BY idventa DESC
                   LIMIT 1;
                   `,
                   (error, factura) => {
@@ -251,11 +251,12 @@ router.post("/auth/ventas", (req, res) => {
                     }
 
                     pool.query(
-                      `SELECT serie, numero_correlativo, tipo_comprobante, idventa
+                      `  SELECT serie, numero_correlativo, tipo_comprobante, idventa
                       FROM ventas
                       WHERE tipo_comprobante = 'boleta'
-                      ORDER BY idcliente DESC
+                      ORDER BY idventa DESC
                       LIMIT 1;
+                      
                       `,
                       (error, boleta) => {
                         if (error) {

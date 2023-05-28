@@ -119,3 +119,8 @@ CREATE TABLE detalle_venta (
   CONSTRAINT fk_detalle_venta_producto FOREIGN KEY (idproducto) REFERENCES productos(idproducto)
 ) ENGINE=InnoDB;
 
+INSERT INTO ventas (fecha_venta, tipo_comprobante, serie, numero_correlativo)
+VALUES (CURDATE(), 'factura', 'F001', '00000001');
+
+INSERT INTO ventas (fecha_venta, tipo_comprobante, serie, numero_correlativo)
+VALUES (CURDATE(), 'boleta', 'B001', '00000001');
