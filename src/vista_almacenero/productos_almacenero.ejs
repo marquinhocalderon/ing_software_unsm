@@ -25,12 +25,12 @@
   <!-- start: Sidebar -->
   <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
     <div class="d-flex align-items-center p-3">
-      <a href="/auth" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
+      <a href="/almacen" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
       <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
     </div>
     <ul class="sidebar-menu p-3 m-0 mb-0">
       <li class="sidebar-menu-item active">
-        <a href="/auth">
+        <a href="/almacen">
           <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
           Inicio
         </a>
@@ -39,46 +39,22 @@
       <li class="sidebar-menu-item has-dropdown">
         <a href="#">
           <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Seguridad
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/usuarios">
-              Usuarios
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/perfiles">
-              Perfiles
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/recuperar">
-                Recuperar Contraseña
-            </a>
-        </li>
-        </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
           Almacen
           <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
         </a>
         <ul class="sidebar-dropdown-menu">
           <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/lista">
+            <a href="/lista">
               Productos
             </a>
           </li>
           <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/categoria">
+            <a href="/categoria">
               Categorias
             </a>
           </li>
           <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/unidad">
+            <a href="/unidad">
               Unidades
             </a>
           </li>
@@ -92,46 +68,22 @@
         </a>
         <ul class="sidebar-dropdown-menu">
           <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/almacen">
+            <a href="/ingreso-almacen">
               Ingreso Almacen
             </a>
           </li>
           <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/compras">
+            <a href="/compras">
               Ingreso Compras
             </a>
           </li>
           <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/proveedores">
+            <a href="/proveedores">
               Proveedores
             </a>
           </li>
         </ul>
       </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-            <i class="ri-pages-line sidebar-menu-item-icon"></i>
-            Ventas
-            <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/facturaciones">
-              Lista de ventas
-            </a>
-          </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/ventas">
-                    Nueva Venta
-                </a>
-            </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/clientes">
-                    Clientes
-                </a>
-            </li>
-        </ul>
-    </li>
     </ul>
   </div>
   <div class="sidebar-overlay"></div>
@@ -148,9 +100,9 @@
         <div class="dropdown">
           <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <span class="me-2 d-none d-sm-block">Adminstrador </span>
+            <span class="me-2 d-none d-sm-block">Almacenero </span>
             <img class="navbar-profile-image"
-              src="https://marketplace.magento.com/media/catalog/product/4/a/4acb_rsz_admin-logo_1.png" alt="Image">
+              src="https://w7.pngwing.com/pngs/979/902/png-transparent-laborer-computer-icons-warehouse-warehouse-miscellaneous-angle-warehouse-worker.png" alt="Image">
           </div>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Perfil</a>
@@ -224,8 +176,6 @@
                         <button class="btn btn-success"
                           onclick="editar('<%= producto.idproducto %>')"><i class="bi bi-box-arrow-up-right"></i></button>
 
-                        <button class="btn btn-danger" id="eliminarClienteBtn"
-                          onclick="mostrarFormulario2('<%= producto.idproducto %>', '<%= JSON.stringify(producto) %>')"><i class="bi bi-trash-fill"></i></button>
                       </td>
                     </tr>
                     <% }); %>
@@ -293,7 +243,7 @@
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          const url = `/auth/eliminarcliente/${idproducto}`;
+          const url = `/eliminarcliente/${idproducto}`;
           fetch(url, {
             method: 'DELETE'
           })
@@ -316,7 +266,7 @@
   <script>
     async function editar(id) {
       try {
-        const response = await axios.get(`/auth/lista/${id}`);
+        const response = await axios.get(`/lista/${id}`);
         const response3 = await axios.get(`/auth/categoria1`);
         const response5 = await axios.get(`/auth/unidad1`);
 
@@ -349,7 +299,7 @@
         Swal.fire({
           title: 'Detalles del Producto',
           html: `
-      <form id="actualizarProveedorForm" method="post" action="/auth/actualizar/${datosProducto.idproducto}">
+      <form id="actualizarProveedorForm" method="post" action="/actualizar/${datosProducto.idproducto}">
       
         <div class="form-group">
       <label for="codigo_producto">codigo_producto:</label>
@@ -449,7 +399,7 @@
       Swal.fire({
         title: 'Agregar Productos',
         html: `
-      <form id="agregarUsuarioForm" method="post" action="/auth/lista">
+      <form id="agregarUsuarioForm" method="post" action="/lista">
 
   <div class="form-group">
   <label for="producto">Codigo Producto:</label>

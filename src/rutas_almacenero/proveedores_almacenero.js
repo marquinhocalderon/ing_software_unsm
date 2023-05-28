@@ -5,33 +5,64 @@ const pool = require("../../database/db");
 const router = express.Router();
 
 function requireAuth(req, res, next) {
-  if (!req.session.loggedin) {
-    // Limpiamos la cookie "loggedout"
-    return res.redirect("/login");
-  } else {
-    if (req.session.usuario) {
-      return next();
-    } else {
+    if (!req.session.loggedin) {
+      // Limpiamos la cookie "loggedout"
       return res.redirect("/login");
+    } else {
+      if (req.session) {
+        // Aquí puedes acceder a los datos de usuario de la sesión
+  
+        // Verifica el cargo del usuario permitido para acceder a /auth/compras
+        if (req.session.cargo === "Almacenero") {
+          // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+          return next();
+        } else {
+          // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+          return res.redirect("/login");
+        }
+      } else {
+        return res.redirect("/login");
+      }
     }
   }
-}
+  
+  function otro(req, res, next) {
+      if (!req.session.loggedin) {
+        // Limpiamos la cookie "loggedout"
+        return res.redirect("/login");
+      } else {
+        if (req.session) {
+          // Aquí puedes acceder a los datos de usuario de la sesión
+    
+          // Verifica el cargo del usuario permitido para acceder a /auth/compras
+          if (req.session.cargo === "Almacenero" || req.session.cargo === "Administrador") {
+            // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+            return next();
+          } else {
+            // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+            return res.redirect("/login");
+          }
+        } else {
+          return res.redirect("/login");
+        }
+      }
+    }
 
 /* BOTON PARA REGISTRAR CATEGORIAS
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/proveedores", async function (req, res) {
+router.get("/proveedores", requireAuth, async function (req, res) {
   pool.query(
     "SELECT * FROM proveedores",
     function (error, results, fields) {
       if (error) throw error;
-      res.render("proveedores", { proveedores: results });
+      res.render("proveedores_almacenero", { proveedores: results });
     }
   );
 });
 
-router.post("/auth/proveedores", async (req, res) => {
+router.post("/proveedores", async (req, res) => {
   const { nombre_empresa, ruc, direccion, ciudad, pais, telefono, email, estado_proveedor } = req.body;
 
   try {
@@ -41,7 +72,7 @@ router.post("/auth/proveedores", async (req, res) => {
 
       if (results.length > 0) {
         // El proveedor ya existe, mostrar un mensaje de error
-        res.render("proveedores", {
+        res.render("proveedores_almacenero", {
           proveedores: results,
           name: "Administrador",
           alert: true,
@@ -61,7 +92,7 @@ router.post("/auth/proveedores", async (req, res) => {
           // Obtener los resultados y renderizar la vista
           pool.query("SELECT * FROM proveedores", (error, results, fields) => {
             if (error) throw error;
-            res.render("proveedores", {
+            res.render("proveedores_almacenero", {
               proveedores: results,
               name: "Administrador",
               alert: true,
@@ -77,7 +108,7 @@ router.post("/auth/proveedores", async (req, res) => {
       }
     });
   } catch (error) {
-    res.render("proveedores", {
+    res.render("proveedores_almacenero", {
       name: "Administrador",
       alert: true,
       alertTitle: "Error",
@@ -98,14 +129,14 @@ router.post("/auth/proveedores", async (req, res) => {
 /* PARA MODIFICAR CATEGORIAS
 ---------------------------------------------------------------------------------------------------- */
 
-router.get("/auth/actualizarproveedor/:id", async function (req, res) {
+router.get("/actualizarproveedor/:id", async function (req, res) {
   const idproveedor = req.params.id;
   try {
     const [results, fields] = await pool.promise().query(
       "SELECT * FROM proveedores WHERE idproveedor = ?",
       [idproveedor]
     );
-    res.render("proveedores", { productos: results });
+    res.render("proveedores_almacenero", { productos: results });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al obtener la categoría");
@@ -113,7 +144,7 @@ router.get("/auth/actualizarproveedor/:id", async function (req, res) {
 });
 
 
-router.post("/auth/actualizarproveedor/:id", async function (req, res) {
+router.post("/actualizarproveedor/:id", async function (req, res) {
   const idproveedor = req.params.id;
   const {
     nombre_empresa,
@@ -129,9 +160,10 @@ router.post("/auth/actualizarproveedor/:id", async function (req, res) {
   try {
     // Verificar si el nombre de proveedor ya está en uso
     const [existingProvider, _] = await pool.promise().query(
-      "SELECT * FROM proveedores",
+      "SELECT * FROM proveedores ",
       [telefono]
     );
+   
 
     // Actualizar el proveedor
     await pool.promise().query(
@@ -139,7 +171,7 @@ router.post("/auth/actualizarproveedor/:id", async function (req, res) {
       [nombre_empresa, ruc, direccion, ciudad, pais, telefono, email, estado_proveedor, idproveedor]
     );
 
-    res.redirect("/auth/proveedores");
+    res.redirect("/proveedores");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al actualizar proveedor");
@@ -148,7 +180,7 @@ router.post("/auth/actualizarproveedor/:id", async function (req, res) {
 
 
 
-router.delete("/auth/eliminarproveedor/:idproveedor", async function (req, res) {
+router.delete("/eliminarproveedor/:idproveedor", async function (req, res) {
   const idproveedor = req.params.idproveedor;
   try {
     const [results, fields] = await pool

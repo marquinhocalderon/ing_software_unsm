@@ -83,9 +83,10 @@ CREATE TABLE detalle_compras (
 
 CREATE TABLE clientes (
   idcliente INT PRIMARY KEY AUTO_INCREMENT,
-  ruc INT(11),
-  dni INT(8),
+  ruc VARCHAR(255),
+  dni VARCHAR(255),
   nombre_cliente VARCHAR(255),
+  razonsocial VARCHAR(255),
   telefono VARCHAR(20),
   direccion VARCHAR(255),
   estado_cliente VARCHAR(255)

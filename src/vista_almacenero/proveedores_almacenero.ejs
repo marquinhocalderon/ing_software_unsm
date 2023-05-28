@@ -25,115 +25,71 @@
   <!-- start: Sidebar -->
   <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
     <div class="d-flex align-items-center p-3">
-      <a href="/auth" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
-      <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
+        <a href="/almacen" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San
+            Mathias</a>
+        <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
     </div>
     <ul class="sidebar-menu p-3 m-0 mb-0">
-      <li class="sidebar-menu-item active">
-        <a href="/auth">
-          <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
-          Inicio
-        </a>
-      </li>
-      <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Seguridad
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/usuarios">
-              Usuarios
+        <li class="sidebar-menu-item active">
+            <a href="/almacen">
+                <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+                Inicio
             </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/perfiles">
-              Perfiles
+        </li>
+        <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
+        </li>
+        <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                Almacen
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
             </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/recuperar">
-              Recuperar Contraseña
+            <ul class="sidebar-dropdown-menu">
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/lista">
+                        Productos
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/categoria">
+                        Categorias
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/unidad">
+                        Unidades
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                Compras
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
             </a>
-          </li>
-        </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Almacen
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/lista">
-              Productos
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/categoria">
-              Categorias
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/unidad">
-              Unidades
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Compras
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/almacen">
-              Ingreso Almacen
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/compras">
-              Ingreso Compras
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/proveedores">
-              Proveedores
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Ventas
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/facturaciones">
-              Lista de ventas
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/ventas">
-              Nueva Venta
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/clientes">
-              Clientes
-            </a>
-          </li>
-        </ul>
-      </li>
+            <ul class="sidebar-dropdown-menu">
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/ingreso-almacen">
+                      Ingreso Almacen
+                    </a>
+                  </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/compras">
+                        Ingreso Compras
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/proveedores">
+                        Proveedores
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
-  </div>
+
+
+</div>
   <div class="sidebar-overlay"></div>
   <!-- end: Sidebar -->
 
@@ -148,9 +104,9 @@
         <div class="dropdown">
           <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <span class="me-2 d-none d-sm-block">Adminstrador </span>
+            <span class="me-2 d-none d-sm-block">Almacenero </span>
             <img class="navbar-profile-image"
-              src="https://marketplace.magento.com/media/catalog/product/4/a/4acb_rsz_admin-logo_1.png" alt="Image">
+              src="https://w7.pngwing.com/pngs/979/902/png-transparent-laborer-computer-icons-warehouse-warehouse-miscellaneous-angle-warehouse-worker.png" alt="Image">
           </div>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Perfil</a>
@@ -269,7 +225,7 @@
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          const url = `/auth/eliminarproveedor/${idproveedor}`;
+          const url = `/eliminarproveedor/${idproveedor}`;
           fetch(url, {
             method: 'DELETE'
           })
@@ -309,7 +265,7 @@
       Swal.fire({
         title: 'Detalles del Proveedor',
         html: `
-    <form id="actualizarProveedorForm" method="post" action="/auth/actualizarproveedor/${idproveedor}">
+    <form id="actualizarProveedorForm" method="post" action="/actualizarproveedor/${idproveedor}">
       <div class="form-group">
         <label for="nombre">Nombre de la Empresa:</label>
         <input type="text" class="form-control" id="nombre" name="nombre_empresa" value="${proveedor.nombre_empresa || ''}" required>
@@ -371,7 +327,7 @@
         const email = document.getElementById('email').value;
         const estado = document.getElementById('estado').value;
 
-        fetch(`/auth/actualizarproveedor/${idproveedor}`, {
+        fetch(`/actualizarproveedor/${idproveedor}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -410,7 +366,7 @@
       Swal.fire({
         title: 'Agregar Proveedor',
         html: `
-  <form id="agregarUsuarioForm" method="post" action="/auth/proveedores">
+  <form id="agregarUsuarioForm" method="post" action="/proveedores">
     <div class="form-group" style="display: flex; gap: 10px">
       <div  style="width: 100%;">
           <label for="ruc">Ruc:</label>

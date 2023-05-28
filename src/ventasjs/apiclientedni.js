@@ -1,9 +1,9 @@
-const botoncliente = document.getElementById("buscarclienteapi2");
+const botoncliente1 = document.getElementById("buscar1");
 // document.getElementById("dni").addEventListener("input", obtenerDatosCliente);
 
 async function obtenerDatosCliente() {
   const dniCliente = document.getElementById("dni").value;
-  const nombreInput = document.getElementById("nombre_cliente");
+  const nombreInput = document.getElementById("nombre");
 
   if (dniCliente.length === 8 ) {
     const apiUrl = `https://dniruc.apisperu.com/api/v1/dni/${dniCliente}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmNvLmNhbGRlcm9uMTcwMUBob3RtYWlsLmNvbSJ9._G_OPWUN5ysie2m5euE6tzabcWVKOe2TpxJeyn2xWrs`;
@@ -25,4 +25,4 @@ async function obtenerDatosCliente() {
   }
 }
 
-botoncliente.addEventListener('click', obtenerDatosCliente)
+botoncliente1.addEventListener('click', obtenerDatosCliente)

@@ -250,4 +250,9 @@ router.delete("/auth/eliminarcliente/:idproducto", async function (req, res) {
   }
 });
 
+
+
+
+
+
 module.exports = router;

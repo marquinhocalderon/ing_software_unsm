@@ -117,8 +117,8 @@
         </a>
         <ul class="sidebar-dropdown-menu">
           <li class="sidebar-dropdown-menu-item">
-            <a href="#">
-              Ventas
+            <a href="/auth/facturaciones">
+              Lista de ventas
             </a>
           </li>
             <li class="sidebar-dropdown-menu-item">
@@ -170,7 +170,7 @@
 
           <form action="/auth/compras" method="post">
             <input type="hidden" placeholder="idproveedor" id="idproveedor" name="idproveedor">
-            <input type="text" placeholder="idusuario" id="idusuario" value="<%= idUsuario %>" name="idusuario">
+            <input type="text" placeholder="idusuario" id="idusuario" value="<%= idUsuario %>" name="idusuario" readonly>
             <div class="form first">
               <div class="details personal">
                 <span class="title">Proveedor</span>

@@ -175,57 +175,65 @@
             
             <div class="form first">
               <form id="agregarUsuarioForm" method="post" action="/auth/clientes">
-              <div class="details personal">
-                <br>
-                <div class="fields" style="display: flex; flex-direction: row; flex-wrap: wrap;" >
-                  <div class="input-field"
-                    style="display: flex; flex-direction: row; align-items: center; gap: 5px;">
-                    <div style=" display: flex;
-                    flex-direction: column;
-                    width: 100%;
-                    margin: 4px 0;">
-                      <label>Dni:</label>
-                      <input style="width: 20em;" type="number" placeholder="Ingrese Dni" id="dni" name="dni" required>
+                <div class="details personal" style="width: 100%;">
+                  <br>
+                  <div class="fields" >
+                    <div class="input-field" style=" width: auto;">
+                      <div style="display: flex; flex-direction: column; width: 100%; margin: 4px 0;">
+                        <label>Dni:</label>
+                        <input style="width: 20em;" type="number" placeholder="Ingrese Dni" id="dni" name="dni" >
+                      </div>
+                      
+                      <div style="display: flex; flex-direction: column; width: 100%; margin: 4px 0;">
+                        <label>Ruc:</label>
+                        <input style="width: 20em;" type="number" placeholder="Ingrese ruc" id="ruc" name="ruc" >
+                      </div>
+                      <div style="display: flex; gap: 10px; width: 100em;">
+                      <div style="margin-top: 1.8em;">
+                        <a class="btn btn-primary" id="buscar1" style=" font-size: 1.2em;">
+                          Buscar por dni
+                        </a>
+                      </div>
+                      <div style="margin-top: 1.8em;">
+                        <a class="btn btn-primary" id="buscarclienteapi" style="font-size: 1.2em;">
+                          Buscar por Ruc
+                        </a>
+                      </div>
                     </div>
-                    <div style="margin-top: 1em;  ">
-                      <a class="btn btn-primary" id="buscarclienteapi" style="width: 4.5em; font-size: 1.2em;"><i
-                          class="bi bi-search"></i></a>
                     </div>
-                  </div>
-                  <div class="input-field" style="margin-left:35px; margin-right: 10px;">
-                    <div style=" display: flex;
-                    flex-direction: column;
-                    margin: 4px 0;">
-                    <label>Nombre Completo:</label>
-                    <input style="width: 24.5em;" type="text" placeholder="nombre" id="nombre" name="nombre_cliente" 
-                      required>
+                    <div class="input-field"  >
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Nombre Completo:</label>
+                        <input style="width: 24.5em;" type="text" placeholder="nombre" id="nombre" name="nombre_cliente" >
+                      </div>
                     </div>
-                  </div>
-                  <div class="input-field">
-                    <div style=" display: flex;
-                    flex-direction: column;
-                    margin: 4px 0;">
-                    <label>Telefono:</label>
-                    <input style="width: 15em;" type="number" placeholder="telefono" id="telefono" name="telefono" 
-                      required>
+                    <div class="input-field"  >
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Razon Social:</label>
+                        <input style="width: 24.5em;" type="text" placeholder="razonsocial" id="razonsocial" name="razonsocial" >
+                      </div>
                     </div>
-                  </div>
-                  <div class="input-field" style="display: flex; flex-direction: row; gap: 5px;">
-                    <div style=" display: flex;
-                    flex-direction: column;
-                    margin: 4px 0;">
-                    <label>Direccion:</label>
-                    <input style="width: 20em;" type="text" placeholder="direccion" id="direccion" name="direccion" 
-                      required>
+                    <div class="input-field" >
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Telefono:</label>
+                        <input style="width: 15em;" type="number" placeholder="telefono" id="telefono" name="telefono" required>
+                      </div>
                     </div>
-                    <div>
-                      <button type="submit" class=" btn btn-primary" style="margin-top: 1.7em;">Agregar</button>
+                    <div class="input-field" style="display: flex; flex-direction: row; gap: 5px;">
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Direccion:</label>
+                        <input style="width: 20em;" type="text" placeholder="direccion" id="direccion" name="direccion" required>
+                      </div>
+                      <div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 1.7em;">Agregar</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div> 
+              </form>
             </div>
-          </form> 
+            
+          
           </div>
 
           <div class="col-md-12">
@@ -235,7 +243,9 @@
                   <tr>
                     <th scope="col">ID</th>
                     <th scope="col">DNI</th>
+                    <th scope="col">RUC</th>
                     <th scope="col">Nombre Cliente</th>
+                    <th scope="col">Razon Social</th>
                     <th scope="col">Telefono</th>
                     <th scope="col">Direccion</th>
                     <th scope="col">Estado</th>
@@ -247,7 +257,9 @@
                   <tr>
                     <td><%= cliente.idcliente %></td>
                     <td><%= cliente.dni %></td>
+                    <td><%= cliente.ruc %></td>
                     <td><%= cliente.nombre_cliente %></td>
+                    <td><%= cliente.razonsocial %></td>
                     <td><%= cliente.telefono %></td>
                     <td><%= cliente.direccion %></td>
                     <td><%= cliente.estado_cliente %></td>
@@ -338,8 +350,16 @@
               <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}"  required>
             </div>
             <div class="form-group">
+              <label for="dni">Ruc:</label>
+              <input type="number" class="form-control" id="ruc" name="ruc" value="${cliente.ruc || ''}"  required>
+            </div>
+            <div class="form-group">
               <label for="nombre">Nombre Cliente:</label>
               <input type="text" class="form-control" id="nombre" name="nombre_cliente" value="${cliente.nombre_cliente || ''}" readonly required>
+            </div>
+            <div class="form-group">
+              <label for="nombre">razonsocial Cliente:</label>
+              <input type="text" class="form-control" id="razonsocial" name="razonsocial" value="${cliente.razonsocial || ''}" readonly required>
             </div>
             <div class="form-group">
               <label for="telefono">Teléfono:</label>
@@ -416,7 +436,7 @@
   <script src="/src/css/dataTables.bootstrap5.min.js"></script>
   <!-- end: JS -->
  <script src="/src/ventasjs/getapidni.js"></script> 
- 
+ <script src="/src/ventasjs/apiclientedni.js"></script>
 </body>
 
 </html>

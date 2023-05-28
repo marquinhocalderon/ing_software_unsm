@@ -5,21 +5,30 @@ const router = express.Router();
 const axios = require("axios");
 
 function requireAuth(req, res, next) {
-  if (!req.session.loggedin) {
-    // Limpiamos la cookie "loggedout"
-    return res.redirect("/login");
-  } else {
-    if (req.session.usuario) {
-      return next();
-    } else {
+    if (!req.session.loggedin) {
+      // Limpiamos la cookie "loggedout"
       return res.redirect("/login");
+    } else {
+      if (req.session) {
+        // Aquí puedes acceder a los datos de usuario de la sesión
+  
+        // Verifica el cargo del usuario permitido para acceder a /auth/compras
+        if (req.session.cargo === "Almacenero") {
+          // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+          return next();
+        } else {
+          // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+          return res.redirect("/login");
+        }
+      } else {
+        return res.redirect("/login");
+      }
     }
   }
-}
 
 /* PARA INSERTAR Compras
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/almacen", async (req, res) => {
+router.get("/ingreso-almacen", requireAuth, async (req, res) => {
   try {
     const data = await poolQuery(`
     
@@ -39,7 +48,7 @@ WHERE c.estado_compra = 'Comprado';
       ORDER BY p.idproducto ASC
     `);
 
-    res.render("ingreso_almacen", { compras: data, proveedores, productos });
+    res.render("lista_compra_almacenero", { compras: data, proveedores, productos });
   } catch (error) {
     throw error;
   }
@@ -59,7 +68,7 @@ function poolQuery(query) {
   });
 }
 
-router.get("/auth/almacen/:id", async function (req, res) {
+router.get("/ingreso-almacen/:id", async function (req, res) {
   try {
     const { id } = req.params; // Capturar el valor del ID
     const results = await poolQuery(
@@ -95,18 +104,6 @@ router.get("/auth/almacen/:id", async function (req, res) {
 });
 
 
-router.put("/auth/pagado/:idcompra", async function (req, res) {
-  const idcompra = req.params.idcompra;
-  try {
-    const [results, fields] = await pool
-      .promise()
-      .query("UPDATE compras SET estado_compra = 'Eliminado' WHERE idcompra = ?", [idcompra]);
-    res.sendStatus(200); // Respuesta exitosa
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Hubo un error"); // Error en el servidor
-  }
-});
 
 
 

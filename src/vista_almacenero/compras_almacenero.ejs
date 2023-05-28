@@ -26,115 +26,71 @@
   <!-- start: Sidebar -->
   <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
     <div class="d-flex align-items-center p-3">
-      <a href="/auth" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
-      <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
+        <a href="/almacen" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San
+            Mathias</a>
+        <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
     </div>
     <ul class="sidebar-menu p-3 m-0 mb-0">
-      <li class="sidebar-menu-item active">
-        <a href="/auth">
-          <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
-          Inicio
-        </a>
-      </li>
-      <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Seguridad
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/usuarios">
-              Usuarios
+        <li class="sidebar-menu-item active">
+            <a href="/almacen">
+                <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+                Inicio
             </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/perfiles">
-              Perfiles
+        </li>
+        <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
+        </li>
+        <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                Almacen
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
             </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/recuperar">
-              Recuperar Contraseña
+            <ul class="sidebar-dropdown-menu">
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/lista">
+                        Productos
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/categoria">
+                        Categorias
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/unidad">
+                        Unidades
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                Compras
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
             </a>
-          </li>
-        </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Almacen
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/lista">
-              Productos
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/categoria">
-              Categorias
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/unidad">
-              Unidades
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Compras
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/almacen">
-              Ingreso Almacen
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/compras">
-              Ingreso Compras
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/proveedores">
-              Proveedores
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-          <i class="ri-pages-line sidebar-menu-item-icon"></i>
-          Ventas
-          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/facturaciones">
-              Lista de ventas
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/ventas">
-              Nueva Venta
-            </a>
-          </li>
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/clientes">
-              Clientes
-            </a>
-          </li>
-        </ul>
-      </li>
+            <ul class="sidebar-dropdown-menu">
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/ingreso-almacen">
+                      Ingreso Almacen
+                    </a>
+                  </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/compras">
+                        Ingreso Compras
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/proveedores">
+                        Proveedores
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
-  </div>
+
+
+</div>
   <div class="sidebar-overlay"></div>
   <!-- end: Sidebar -->
 
@@ -144,14 +100,14 @@
       <!-- start: Navbar -->
       <nav class="px-3 py-2 bg-white rounded shadow-sm">
         <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
-        <h5 class="fw-bold mb-0 me-auto">Registro Ventas</h5>
+        <h5 class="fw-bold mb-0 me-auto">Registro Compras</h5>
 
         <div class="dropdown">
           <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <span class="me-2 d-none d-sm-block">Adminstrador </span>
+            <span class="me-2 d-none d-sm-block">Almacenero </span>
             <img class="navbar-profile-image"
-              src="https://marketplace.magento.com/media/catalog/product/4/a/4acb_rsz_admin-logo_1.png" alt="Image">
+              src="https://w7.pngwing.com/pngs/979/902/png-transparent-laborer-computer-icons-warehouse-warehouse-miscellaneous-angle-warehouse-worker.png" alt="Image">
           </div>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Perfil</a>
@@ -168,41 +124,30 @@
         <!-- start: Content -->
         <div class="container">
 
-          <form action="/auth/ventas" method="post">
-            <input type="hidden" placeholder="idcliente" id="idcliente" name="idcliente" >
+          <form action="/compras" method="post">
+            <input type="hidden" placeholder="idproveedor" id="idproveedor" name="idproveedor">
             <input type="text" placeholder="idusuario" id="idusuario" value="<%= idUsuario %>" name="idusuario" readonly>
             <div class="form first">
               <div class="details personal">
-                <span class="title">Cliente</span>
+                <span class="title">Proveedor</span>
                 <div class="fields">
-
-                  <div class="input-field">
-                    <label>Tipo de Comprobante</label>
-                    <select name="tipo_comprobante" id="tipo_comprobante" required>
-                      <option value="">Seleccione</option>
-
-                      <option value="factura">Factura</option>
-                      <option value="boleta">Boleta</option>
-                    </select>
-                  </div>
                   <div class="input-field"
                     style="display: flex; flex-direction: row; justify-content: end; align-items: center; gap: 5px;">
                     <div style=" display: flex;
                     width: 100%;
                     flex-direction: column;
                     margin: 4px 0;">
-                      <label>DNI:</label>
-                      <input type="text" placeholder="Ingrese DNI" id="dni" name="dni" required>
+                      <label>Ruc:</label>
+                      <input type="text" placeholder="Ingrese Ruc" id="ruc" name="ruc" required>
                     </div>
-                   
                     <div style="margin-top: 1em;  ">
-                      <a class="btn btn-primary" id="buscarcliente" style="width: 3em; font-size: 1.2em;"><i
-                        class="bi bi-search"></i></a>
+                      <a class="btn btn-primary" id="buscarproveedor" style="width: 3em; font-size: 1.2em;"><i
+                          class="bi bi-search"></i></a>
                     </div>
                   </div>
                   <div class="input-field">
                     <label>Proveedor</label>
-                    <input type="text" placeholder="Nombre Cliente" id="nombre_cliente" name="nombre_cliente" readonly
+                    <input type="text" placeholder="Proveedor" id="nombre_empresa" name="nombre_empresa" readonly
                       required>
                   </div>
                   <div class="input-field">
@@ -210,15 +155,23 @@
                     <input type="text" placeholder="Direccion" id="direccion" name="direccion" readonly required>
                   </div>
                   <div class="input-field">
+                    <label>Tipo de Comprobante</label>
+                    <select name="tipo_comprobante" id="tipo_comprobante" required>
+                      <option value="">Seleccione</option>
+          
+                      <option value="factura">Factura</option>
+                      <option value="boleta">Boleta</option>
+                    </select>
+                  </div>
+                  <div class="input-field">
                     <label>Serie/Follo</label>
-                    <input type="text" placeholder="Serie" name="serie" id="serie" required>
+                    <input type="text" placeholder="Serie" name="serie" id="serie"  required>
                   </div>
                   <div class="input-field">
                     <label>Numero Correlativo:</label>
-                    <input type="text" placeholder="Numero Correlativo" name="numero_correlativo"
-                      id="numero_correlativo" required>
+                    <input type="text" placeholder="Numero Correlativo" name="numero_correlativo" id="numero_correlativo"   required>
                   </div>
-
+                  
                 </div>
               </div>
               <div class="details ID">
@@ -243,17 +196,18 @@
                   </div>
                   <div class="input-field">
                     <label>Fecha Compra:</label>
-                    <input type="date" placeholder="Fecha Compra" name="fecha_venta" required>
+                    <input type="date" placeholder="Fecha Compra" name="fecha_compra" required>
                   </div>
                 </div>
 
                 <table class="table" id="tablaDestino">
                   <thead>
                     <tr>
-                      <th scope="col">Nombre Producto</th>
-                      <th scope="col">Stock</th>
-                      <th scope="col">Precio Venta</th>
-                      <th scope="col">Cantidad Vendida</th>
+                      <th scope="col">Codigo Producto</th>
+                      <th scope="col">Descripcion</th>
+                      <th scope="col">Unidad Medida</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Precio Unitario</th>
                       <th scope="col">Total</th>
                       <th scope="col">Acciones</th>
                     </tr>
@@ -276,23 +230,14 @@
               </div>
               <div class="input-field">
                 <label>Total:</label>
-                <input type="number" step="0.01" placeholder="Total" id="calculoTotal" name="totalventa" readonly
-                  required>
-              </div>
-              <div class="input-field">
-                <label>Monto a Cancelar:</label>
-                <input type="number" step="0.01" placeholder="montocancelado" id="monto" name="montocancelado" required>
-              </div>
-              <div class="input-field">
-                <label>Vuelto:</label>
-                <input type="number" step="0.01" placeholder="vuelto" id="vuelto" name="vuelto" readonly required>
+                <input type="number" placeholder="Total" id="calculoTotal" name="totalcompra" readonly required>
               </div>
             </div>
             <div>
               <textarea style="display: none;" name="comprasjson" id="datosComprasInput" cols="30" rows="10"></textarea>
             </div>
             <div style="display: flex; gap: 10px;">
-              <button type="submit" id="enviarBtn" class="btn btn-primary">Registrar Pedido</button>
+              <button type="submit" class="btn btn-primary">Registrar Pedido</button>
             </div>
 
         </div>
@@ -324,7 +269,7 @@
   </main>
   <!-- end: Main -->
 
-  <!-- Importante para venta -->
+   <!-- Importante para venta -->
 
 
   <script>
@@ -336,12 +281,13 @@
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
+                    <th scope="col">Codigo</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Precio Venta</th>
+                    <th scope="col">Categoria</th>
                     <th scope="col">Unidad</th>
- 
-              
+                    <th scope="col">Precio Venta</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Estado</th>
                     <th>Acciones</th>
 
                   </tr>
@@ -353,20 +299,26 @@
                         <%= producto.idproducto %>
                       </td>
                       <td>
+                        <%= producto.codigo_producto %>
+                      </td>
+                      <td>
                         <%= producto.nombre_producto %>
                       </td>
                       <td>
-                        <%= producto.stock %>
+                        <%= producto.nombre_unidad %>
+                      </td>
+                      <td>
+                        <%= producto.nombre_categoria %>
                       </td>
                       <td>
                         <%= producto.precio_venta %>
                       </td>
                       <td>
-                        <%= producto.nombre_categoria %>
+                        <%= producto.descripcion %>
                       </td>
-               
-                 
-                     
+                      <td>
+                        <%= producto.estado_producto %>
+                      </td>
                       <td><button class="btn btn-primary agregarBtn">Agregar</button></td>
                     </tr>
                     <% }); %>
@@ -385,8 +337,9 @@
       document.querySelectorAll('.agregarBtn').forEach((btn) => {
         btn.addEventListener('click', () => {
           const rowData = btn.parentNode.parentNode.querySelectorAll('td');
-          const [idproducto, nombre_producto, stock, precio_venta] = Array.from(rowData).slice(0, 4).map(td => td.textContent.trim());
+          const [idproducto, codigoProducto, descripcion, unidadMedida] = Array.from(rowData).slice(0, 4).map(td => td.textContent.trim());
           const cantidad = '';
+          const precioUnitario = '';
           const Total = '';
 
 
@@ -395,13 +348,14 @@
           const targetTable = document.getElementById('tablaDestino');
           const newRow = document.createElement('tr');
           newRow.innerHTML = `
-      <td><input type="text" value="${nombre_producto}" class="form-control"readonly></td>
-      <td><input type="text" value="${stock}" class="form-control stock"readonly></td>
-      <td><input id="precio" type="text" value="${precio_venta}" class="form-control precioventa" required readonly></td>
+      <td><input type="text" value="${codigoProducto}" class="form-control"readonly></td>
+      <td><input type="text" value="${descripcion}" class="form-control"readonly></td>
+      <td><input type="text" value="${unidadMedida}" class="form-control" required readonly></td>
       <td><input type="number" value="${cantidad}" class="form-control cantidad" required></td>
-      <td><input type="text"step="0.01" value="${Total}" class="form-control total" readonly required></td>
+      <td><input type="number" step="0.01" value="${precioUnitario}" class="form-control precio" required></td>
+      <td><input type="number"step="0.01" value="${Total}" class="form-control total" readonly required></td>
       <td><button type="button" class="eliminarBtn" >Eliminar</button></td>
-      <td><input type="number" value="${idproducto}" class="form-control"readonly></td>
+      <td><input type="hidden" value="${idproducto}" class="form-control"readonly></td>
     `
 
             ;
@@ -409,13 +363,13 @@
           targetTable.appendChild(newRow);
 
           Swal.close();
-          const precioVentaInput = newRow.querySelector('.precioventa');
-          const stockInput = newRow.querySelector('.stock');
+
           const cantidadInput = newRow.querySelector('.cantidad');
+          const precioInput = newRow.querySelector('.precio');
           const totalInput = newRow.querySelector('.total');
           const eliminarBtn = newRow.querySelector('.eliminarBtn');
           cantidadInput.addEventListener('input', calcularTotal);
-          precioVentaInput.addEventListener('input', calcularTotal);
+          precioInput.addEventListener('input', calcularTotal);
           eliminarBtn.addEventListener('click', () => {
             targetTable.removeChild(newRow);
             calcularSumaTotal();
@@ -423,29 +377,19 @@
           });
 
           function calcularTotal() {
-  const cantidadValue = parseFloat(cantidadInput.value);
-  const precioVentaValue = parseFloat(precioVentaInput.value);
-  const stockValue = parseFloat(stockInput.value);
+            const cantidadValue = parseFloat(cantidadInput.value);
+            const precioValue = parseFloat(precioInput.value);
 
-  if (isNaN(cantidadValue) || isNaN(precioVentaValue)) {
-    totalInput.value = '';
-    calcularSumaTotal();
-    return;
-  }
+            if (!isNaN(cantidadValue) && !isNaN(precioValue)) {
+              totalInput.value = (cantidadValue * precioValue).toFixed(2);
+            } else {
+              totalInput.value = '';
+            }
 
-  if (cantidadValue > stockValue) {
-    totalInput.value = '';
-    cantidadInput.value="";
-    alert('La cantidad es mayor que el stock');
-  } else {
-    totalInput.value = (cantidadValue * precioVentaValue).toFixed(2);
-  }
-
-  calcularSumaTotal();
-}
+            calcularSumaTotal();
+          }
         });
       });
-
 
       const calcularSumaTotal = () => {
         const totalInputs = document.querySelectorAll('.total');
@@ -453,26 +397,21 @@
 
         totalInputs.forEach(input => {
           const valor = parseFloat(input.value);
-
-          // Verificar si el valor es numérico antes de sumarlo
           if (!isNaN(valor)) {
             sumaTotal += valor;
           }
+
         });
 
-        let igv = 0;
         const costoTotal = parseFloat(document.getElementById('impuesto').value);
-        const total = parseFloat(sumaTotal + igv);
+        let igv = 0;
+        const total = sumaTotal + igv;
 
         document.getElementById('subtotal').value = sumaTotal.toFixed(2);
         document.getElementById('igv').value = igv.toFixed(2);
         document.getElementById('calculoTotal').value = total.toFixed(2);
-
-        enviarDatosCompras(); // Llamar a la función para calcular el vuelto después de actualizar los valores
+        enviarDatosCompras()
       };
-
-
-
 
       const enviarDatosCompras = () => {
         const filasTabla = document.querySelectorAll('#tablaDestino tr:not(:first-child)');
@@ -480,25 +419,26 @@
 
         filasTabla.forEach(fila => {
           const inputs = fila.querySelectorAll('input');
-          const [nombre_producto, stock, precio_venta, cantidad, Total, idproducto] = Array.from(inputs).map(input => input.value);
+          const [codigoProducto, descripcion, unidadMedida, cantidad, precioUnitario, Total, idproducto] = Array.from(inputs).map(input => input.value);
 
-          const filaVentas = {
-            nombre_producto,
-            stock,
-            precio_venta,
+          const filaCompras = {
+            codigoProducto,
+            descripcion,
+            unidadMedida,
             cantidad,
+            precioUnitario,
             Total,
             idproducto
           };
-          datosCompras.push(filaVentas);
-          console.log(filaVentas)
-          const datosVentasInput = document.getElementById('datosComprasInput'); // Reemplaza 'datosComprasInput' con el ID de tu campo de entrada
+          datosCompras.push(filaCompras);
+          console.log(datosCompras)
+          const datosComprasInput = document.getElementById('datosComprasInput'); // Reemplaza 'datosComprasInput' con el ID de tu campo de entrada
 
           // Convertir el arreglo a una cadena JSON
           const datosComprasJSON = JSON.stringify(datosCompras);
 
           // Asignar el valor al campo de entrada
-          datosVentasInput.value = datosComprasJSON;
+          datosComprasInput.value = datosComprasJSON;
 
         })
       }
@@ -514,58 +454,18 @@
   </script>
 
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const montoInput = document.getElementById('monto');
-      const vueltoInput = document.getElementById('vuelto');
-      const enviarBtn = document.getElementById('enviarBtn');
-      montoInput.addEventListener('input', calcularVuelto);
-
-      enviarBtn.addEventListener('click', (event) => {
-        if (montoInput.value.trim() === '') {
-          alert('El campo Monto a Cancelar es requerido.');
-          event.preventDefault(); // Evita el envío del formulario
-        } else if (vueltoInput.value.trim() === '') {
-          alert('El campo Vuelto es requerido.');
-          event.preventDefault(); // Evita el envío del formulario
-        } else {
-          // Aquí puedes agregar la lógica para enviar los datos
-        }
-      });
-
-      function calcularVuelto() {
-        const totalInput = document.getElementById('calculoTotal');
-
-        const totalValue = parseFloat(totalInput.value);
-        const montoValue = parseFloat(montoInput.value);
-
-        if (!isNaN(totalValue) && !isNaN(montoValue)) {
-          if (montoValue >= totalValue) {
-            const vuelto = montoValue - totalValue;
-            vueltoInput.value = vuelto.toFixed(2);
-          } else {
-            vueltoInput.value = '';
-          }
-        } else {
-          vueltoInput.value = '';
-        }
-      }
-    });
-  </script>
-
-
 
 
 
 
 
   <script>
-    document.getElementById('buscarcliente').addEventListener('click', () => {
+    document.getElementById('buscarproveedor').addEventListener('click', () => {
       Swal.fire({
-        title: 'Agregar Cliente',
+        title: 'Agregar Proveedor',
         html: `
         <div style="margin-top: 25px; display: flex; justify-content: start; margin-left: 20px;">
-          <a href="/auth/clientes"
+          <a href="/proveedores"
                             style="text-decoration: none; padding: 10px; background-color: rgb(6, 133, 223); color: white; border-radius: 10px; border-color:white"
                             class="btn-primary">Ir a Agregar Proveedor </a>
               </div>
@@ -574,31 +474,37 @@
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">dni</th>
-                <th scope="col">nombre_cliente  </th>
-                <th scope="col">telefono  </th>
-                <th scope="col">direccion  </th>
-                <th scope="col">estado_cliente  </th>
+                <th scope="col">Proveedor</th>
+                <th scope="col">Ruc</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Pais</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
-              <% clientes.forEach(function(cliente) { %>
+              <% proveedores.forEach(function(proveedor) { %>
                 <tr>
-                  <td><%= cliente.idcliente %></td>
-                  <td><%= cliente.dni %></td>
-                  <td><%= cliente.nombre_cliente %></td>
-                  <td><%= cliente.telefono %></td>
-                  <td><%= cliente.direccion %></td>
-                  <td><%= cliente.estado_cliente %></td>
+                  <td><%= proveedor.idproveedor %></td>
+                  <td><%= proveedor.nombre_empresa %></td>
+                  <td><%= proveedor.ruc %></td>
+                  <td><%= proveedor.direccion %></td>
+                  <td><%= proveedor.ciudad %></td>
+                  <td><%= proveedor.pais %></td>
+                  <td><%= proveedor.telefono %></td>
+                  <td><%= proveedor.email %></td>
+                  <td><%= proveedor.estado_proveedor %></td>
                   <td>
-                    <input type="radio" name="cliente" value="<%= cliente.idcliente %>" data-proveedor='<%= JSON.stringify(cliente) %>'>
+                    <input type="radio" name="proveedor" value="<%= proveedor.idproveedor %>" data-proveedor='<%= JSON.stringify(proveedor) %>'>
                  </td>
                 </tr>
               <% }); %>
             </tbody>
           </table>
-          <button id="agregarCliente" class="btn btn-primary">Agregar</button>
+          <button id="agregarProveedor" class="btn btn-primary">Agregar</button>
           <button id="cancelarAgregarProveedor" class="btn btn-secondary">Cancelar</button>
         `,
         width: '100%',
@@ -606,17 +512,17 @@
         showConfirmButton: false
       });
 
-      document.getElementById('agregarCliente').addEventListener('click', () => {
-        const selectedProveedor = document.querySelector('input[name="cliente"]:checked');
+      document.getElementById('agregarProveedor').addEventListener('click', () => {
+        const selectedProveedor = document.querySelector('input[name="proveedor"]:checked');
         if (selectedProveedor) {
-          const clienteData = JSON.parse(selectedProveedor.getAttribute('data-proveedor'));
-          document.getElementById('nombre_cliente').value = clienteData.nombre_cliente;
-          document.getElementById('dni').value = clienteData.dni;
-          document.getElementById('direccion').value = clienteData.direccion;
-          document.getElementById('idcliente').value = clienteData.idcliente;
+          const proveedorData = JSON.parse(selectedProveedor.getAttribute('data-proveedor'));
+          document.getElementById('nombre_empresa').value = proveedorData.nombre_empresa;
+          document.getElementById('ruc').value = proveedorData.ruc;
+          document.getElementById('direccion').value = proveedorData.direccion;
+          document.getElementById('idproveedor').value = proveedorData.idproveedor;
           Swal.close();
         } else {
-          Swal.fire(`Selecciona un Cliente 
+          Swal.fire(`Selecciona un proveedor 
           Por Favor`);
         }
       });
@@ -624,8 +530,8 @@
       document.getElementById('cancelarAgregarProveedor').addEventListener('click', () => {
         Swal.close();
       });
-
-
+      
+      
 
       $(document).ready(function () {
         $('#users').DataTable();
@@ -647,10 +553,10 @@
   <script src="/src/css/jquery-3.5.1.js"></script>
   <script src="/src/css/jquery.dataTables.min.js"></script>
   <script src="/src/css/dataTables.bootstrap5.min.js"></script>
-
+  <script src="/src/ventascompras/getproveedores.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
   <!-- end: JS -->
-  <script src="/src/ventasjs/apiclientedni.js"></script>
+
 
 
 </body>

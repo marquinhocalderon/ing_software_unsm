@@ -12,7 +12,7 @@ function requireAuth(req, res, next) {
       // Aquí puedes acceder a los datos de usuario de la sesión
 
       // Verifica el cargo del usuario permitido para acceder a /auth/compras
-      if (req.session.cargo === "Administrador") {
+      if (req.session.cargo === "Almacenero") {
         // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
         return next();
       } else {
@@ -25,6 +25,28 @@ function requireAuth(req, res, next) {
   }
 }
 
+function otro(req, res, next) {
+    if (!req.session.loggedin) {
+      // Limpiamos la cookie "loggedout"
+      return res.redirect("/login");
+    } else {
+      if (req.session) {
+        // Aquí puedes acceder a los datos de usuario de la sesión
+  
+        // Verifica el cargo del usuario permitido para acceder a /auth/compras
+        if (req.session.cargo === "Almacenero" || req.session.cargo === "Administrador") {
+          // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+          return next();
+        } else {
+          // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+          return res.redirect("/login");
+        }
+      } else {
+        return res.redirect("/login");
+      }
+    }
+  }
+
 router.get("/", (req, res) => {
   res.render("login");
 });
@@ -33,12 +55,12 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/auth", requireAuth, function (req, res) {
+router.get("/almacen", requireAuth, function (req, res) {
   pool.query(
     'SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil  WHERE perfil.estado= "Activo"',
     function (error, results, fields) {
       if (error) throw error;
-      res.render("index", {
+      res.render("almacen", {
         usuarios: results,
         name: results[0].cargo,
         usuario: results[0].usuario,
@@ -132,18 +154,5 @@ router.post("/auth", async (req, res) => {
   }
 });
 
-
-router.get("/logout", requireAuth, function (req, res) {
-  req.session.destroy(function (err) {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-
-    // redirect the user to the login page
-    res.redirect("/login");
-  });
-});
-
+  
 module.exports = router;

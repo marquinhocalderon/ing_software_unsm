@@ -24,113 +24,66 @@
   <!-- start: Sidebar -->
   <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
     <div class="d-flex align-items-center p-3">
-      <a href="/auth" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
+      <a href="/almacen" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
       <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
     </div>
     <ul class="sidebar-menu p-3 m-0 mb-0">
-      <li class="sidebar-menu-item active">
-          <a href="/auth">
-              <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
-              Inicio
-          </a>
-      </li>
-      <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
-      <li class="sidebar-menu-item has-dropdown">
-          <a href="#">
-              <i class="ri-pages-line sidebar-menu-item-icon"></i>
-              Seguridad
-              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-          </a>
-          <ul class="sidebar-dropdown-menu">
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/usuarios">
-                      Usuarios
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/perfiles">
-                      Perfiles
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/recuperar">
-                      Recuperar Contraseña
-                  </a>
-              </li>
-          </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-          <a href="#">
-              <i class="ri-pages-line sidebar-menu-item-icon"></i>
-              Almacen
-              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-          </a>
-          <ul class="sidebar-dropdown-menu">
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/lista">
-                      Productos
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/categoria">
-                      Categorias
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/unidad">
-                      Unidades
-                  </a>
-              </li>
-          </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-          <a href="#">
-              <i class="ri-pages-line sidebar-menu-item-icon"></i>
-              Compras
-              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-          </a>
-          <ul class="sidebar-dropdown-menu">
-            <li class="sidebar-dropdown-menu-item">
-              <a href="/auth/almacen">
-                Ingreso Almacen
-              </a>
-            </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/compras">
-                      Ingreso Compras
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/proveedores">
-                      Proveedores
-                  </a>
-              </li>
-          </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-            <i class="ri-pages-line sidebar-menu-item-icon"></i>
-            Ventas
-            <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/facturaciones">
-              Lista de ventas
+        <li class="sidebar-menu-item active">
+            <a href="/almacen">
+                <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+                Inicio
             </a>
-          </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/ventas">
-                    Nueva Venta
-                </a>
-            </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/clientes">
-                    Clientes
-                </a>
-            </li>
-        </ul>
-    </li>
+        </li>
+        <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
+        </li>
+        <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                Almacen
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+            </a>
+            <ul class="sidebar-dropdown-menu">
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/lista">
+                        Productos
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/categoria">
+                        Categorias
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/unidad">
+                        Unidades
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                Compras
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+            </a>
+            <ul class="sidebar-dropdown-menu">
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/ingreso-almacen">
+                      Ingreso Almacen
+                    </a>
+                  </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/compras">
+                        Ingreso Compras
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/proveedores">
+                        Proveedores
+                    </a>
+                </li>
+            </ul>
+        </li>
   </ul>
   </div>
   <div class="sidebar-overlay"></div>
@@ -142,14 +95,14 @@
       <!-- start: Navbar -->
       <nav class="px-3 py-2 bg-white rounded shadow-sm">
         <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
-        <h5 class="fw-bold mb-0 me-auto">Categorias</h5>
+        <h5 class="fw-bold mb-0 me-auto">Unidades</h5>
        
         <div class="dropdown">
           <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <span class="me-2 d-none d-sm-block">Adminstrador </span>
+            <span class="me-2 d-none d-sm-block">Almacenero </span>
             <img class="navbar-profile-image"
-              src="https://marketplace.magento.com/media/catalog/product/4/a/4acb_rsz_admin-logo_1.png"
+              src="https://w7.pngwing.com/pngs/979/902/png-transparent-laborer-computer-icons-warehouse-warehouse-miscellaneous-angle-warehouse-worker.png"
               alt="Image">
           </div>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -169,30 +122,30 @@
         <div class="row">
           <div class="col-md-12">
             <div class="scrollable" style="max-height: 570px; overflow-y: scroll;">
-              <button class="btn btn-primary" id="botonagregar">Agregar Categorias</button>
+              <button class="btn btn-primary" id="botonagregar">Agregar Unidad</button>
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Id Categoria</th>
-                    <th scope="col">Nombre Categoria</th>
+                    <th scope="col">Id Unidad</th>
+                    <th scope="col">Nombre Unidad</th>
                     <th scope="col">Estado</th>
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <% categorias.forEach(function(categoria) { %>
+                  <% unidades.forEach(function(unidad) { %>
                     <tr>
                       <td>
-                        <%= categoria.idcategoria%>
+                        <%= unidad.idunidad%>
                       </td>
                       <td>
-                        <%= categoria.nombre_categoria %>
+                        <%= unidad.nombre_unidad %>
                       </td>
                       <td>
-                        <%= categoria.estado_categoria %>
+                        <%= unidad.estado_unidad %>
                       </td>
                       <td>
                         <button class="btn btn-success"
-                          onclick="mostrarFormulario('<%= categoria.idcategoria%>', '<%= JSON.stringify(categoria) %>')">Actualizar
+                          onclick="mostrarFormulario('<%= unidad.idunidad %>', '<%= JSON.stringify(unidad) %>')">Actualizar
                           Unidad</button>
 
                       </td>
@@ -234,29 +187,28 @@
   <script src="/src/css/script.js"></script>
   <!-- end: JS -->
 
- 
   <script>
     // Frontend - función mostrarFormulario
-    function mostrarFormulario(idcategoria, datos) {
-      const categoria = JSON.parse(datos);
-
+    function mostrarFormulario(idunidad, datos) {
+      const unidad = JSON.parse(datos);
+  
       Swal.fire({
-        title: 'Detalles de la categoría',
+        title: 'Detalles de la Marca',
         html: `
-    <form id="actualizarCategoriaForm" method="post" action="/auth/actualizarcategoria/${idcategoria}">
-      <p>ID: ${categoria.idcategoria}</p>
+    <form id="actualizarCategoriaForm" method="post" action="/actualizarunidad/${idunidad}">
+      <p>ID: ${unidad.idunidad}</p>
       <div class="form-group">
         <label for="nombre">Nombre de la Categoria:</label>
-        <input type="text" class="form-control" id="nombre" name="nombre_categoria" value="${categoria.nombre_categoria || ''}" required>
+        <input type="text" class="form-control" id="nombre" name="nombre_categoria" value="${unidad.nombre_unidad || ''}" required>
       </div>
       <div class="form-group">
         <label for="estado">Estado:</label>
         <select class="form-select" id="estado" name="estado_categoria" required>
-          <option value="Activo" ${categoria.estado_categoria === 'Activo' ? 'selected' : ''}>Activo</option>
-          <option value="Inactivo" ${categoria.estado_categoria === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
+          <option value="Activo" ${unidad.estado_unidad === 'Activo' ? 'selected' : ''}>Activo</option>
+          <option value="Inactivo" ${unidad.estado_unidad === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
         </select>
       </div>
-
+  
       <button class="submit" style="background-color: #4CAF50; border: none; color: white; padding: 10px 24px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px; cursor: pointer;" id="registrarBoton">Actualizar</button>
       <a href="#" class="cancel" style="background-color: #d33; border: none; color: white; padding: 10px 24px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px; cursor: pointer; margin-left: 10px;" id="cancelarBoton">Cancelar</a>
     </form>
@@ -267,60 +219,60 @@
       document.getElementById('cancelarBoton').addEventListener('click', () => {
     Swal.close(); // Cierra el cuadro de diálogo sin realizar ninguna acción adicional
   });
-
+  
       document.getElementById('actualizarCategoriaForm').addEventListener('submit', (event) => {
         event.preventDefault();
-
-        const idCategoria = idcategoria;
+  
+        const idUnidad = idunidad;
         const nombre = document.getElementById('nombre').value;
         const estado = document.getElementById('estado').value;
-
-        fetch(`/auth/actualizarcategoria/${idCategoria}`, {
+  
+        fetch(`/actualizarunidad/${idUnidad}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            nombre_categoria: nombre,
-            estado_categoria: estado
+            nombre_unidad: nombre,
+            estado_unidad: estado
           })
         })
           .then(response => {
             if (response.ok) {
-              Swal.fire('Éxito', 'La categoría se actualizó correctamente', 'success',);
+              Swal.fire('Éxito', 'La Unidad se actualizó correctamente', 'success',);
               location.reload(); // Recargar la página después de la actualización exitosa
             } else {
-              Swal.fire('Error', 'Hubo un error al actualizar la categoría', 'error');
+              Swal.fire('Error', 'Hubo un error al actualizar la Unidad', 'error');
             }
           })
           .catch(error => {
             Swal.fire('Error', 'Hubo un error en la solicitud', 'error');
           });
-
+  
         Swal.close();
       });
     }
-
-
-
-
+  
+  
+  
+  
   </script>
 
 
 <script>
   document.getElementById('botonagregar').addEventListener('click', () => {
     Swal.fire({
-      title: 'Agregar Categoria',
+      title: 'Agregar Unidad',
       html: `
-  <form id="agregarUsuarioForm" method="post" action="/auth/categoria">
+  <form id="agregarUsuarioForm" method="post" action="/unidad">
     <div class="form-group">
-      <label for="nombre">Nombre de la Categoria:</label>
-      <input type="text" class="form-control" id="nombre" name="nombre_categoria" required>
+      <label for="nombre">Nombre de la unidad:</label>
+      <input type="text" class="form-control" id="nombre" name="nombre_unidad" required>
     </div>
   
 
     <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="estado" name="estado_categoria" value="Activo" checked>
+      <input type="checkbox" class="form-check-input" id="estado" name="estado_unidad" value="Activo" checked>
       <label class="form-check-label" for="estado">Activo</label>
     </div>
     <br/>
@@ -334,11 +286,10 @@
     });
     function validarFormulario() {
       const nombre = document.getElementById('nombre').value;
-      const descripcion = document.getElementById('descripcion').value;
       const estado = document.getElementById('estado').value;
 
 
-      if (!nombre || !descripcion || !estado) {
+      if (!nombre || !estado) {
         Swal.fire('Error', 'Debe completar todos los campos', 'error');
         return false;
       }

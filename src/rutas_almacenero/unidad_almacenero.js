@@ -5,42 +5,64 @@ const pool = require("../../database/db");
 const router = express.Router();
 
 function requireAuth(req, res, next) {
-  if (!req.session.loggedin) {
-    // Limpiamos la cookie "loggedout"
-    return res.redirect("/login");
-  } else {
-    if (req.session) {
-      // Aquí puedes acceder a los datos de usuario de la sesión
-
-      // Verifica el cargo del usuario permitido para acceder a /auth/compras
-      if (req.session.cargo === "Administrador") {
-        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
-        return next();
+    if (!req.session.loggedin) {
+      // Limpiamos la cookie "loggedout"
+      return res.redirect("/login");
+    } else {
+      if (req.session) {
+        // Aquí puedes acceder a los datos de usuario de la sesión
+  
+        // Verifica el cargo del usuario permitido para acceder a /auth/compras
+        if (req.session.cargo === "Almacenero") {
+          // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+          return next();
+        } else {
+          // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+          return res.redirect("/login");
+        }
       } else {
-        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
         return res.redirect("/login");
       }
-    } else {
-      return res.redirect("/login");
     }
   }
-}
+  
+  function otro(req, res, next) {
+      if (!req.session.loggedin) {
+        // Limpiamos la cookie "loggedout"
+        return res.redirect("/login");
+      } else {
+        if (req.session) {
+          // Aquí puedes acceder a los datos de usuario de la sesión
+    
+          // Verifica el cargo del usuario permitido para acceder a /auth/compras
+          if (req.session.cargo === "Almacenero" || req.session.cargo === "Administrador") {
+            // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+            return next();
+          } else {
+            // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+            return res.redirect("/login");
+          }
+        } else {
+          return res.redirect("/login");
+        }
+      }
+    }
 
 /* BOTON PARA REGISTRAR CATEGORIAS
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/unidad", requireAuth, async function (req, res) {
+router.get("/unidad", requireAuth, async function (req, res) {
   pool.query(
     "SELECT * FROM unidad",
     function (error, results, fields) {
       if (error) throw error;
-      res.render("unidad", { unidades: results });
+      res.render("unidad_almacenero", { unidades: results });
     }
   );
 });
 
-router.post("/auth/unidad", async (req, res) => {
+router.post("/unidad", async (req, res) => {
   const { nombre_unidad, estado_unidad } = req.body;
 
   // Resto del código para validar y guardar los datos en la base de datos
@@ -52,7 +74,7 @@ router.post("/auth/unidad", async (req, res) => {
 
       if (results.length > 0) {
         // La categoría ya existe, mostrar un mensaje de error
-        res.render("unidad", {
+        res.render("unidad_almacenero", {
           unidades: results,
           name: "Administrador",
           alert: true,
@@ -73,7 +95,7 @@ router.post("/auth/unidad", async (req, res) => {
             "SELECT * FROM unidad",
             function (error, results, fields) {
               if (error) throw error;
-              res.render("unidad", {
+              res.render("unidad_almacenero", {
                 unidades: results,
                 name: "Administrador",
                 alert: true,
@@ -90,7 +112,7 @@ router.post("/auth/unidad", async (req, res) => {
       }
     });
   } catch (error) {
-    res.render("unidad", {
+    res.render("unidad_almacenero", {
       name: "Administrador",
       alert: true,
       alertTitle: "Error",
@@ -109,14 +131,14 @@ router.post("/auth/unidad", async (req, res) => {
 /* PARA MODIFICAR CATEGORIAS
 ---------------------------------------------------------------------------------------------------- */
 
- router.get("/auth/actualizarunidad/:id", async function (req, res) {
+ router.get("/actualizarunidad/:id", requireAuth, async function (req, res) {
    const idUnidad = req.params.id;
    try {
      const [results, fields] = await pool.promise().query(
        "SELECT * FROM unidad WHERE idunidad = ?",
        [idUnidad]
      );
-     res.render("unidad", { productos: results });
+     res.render("unidad_almacenero", { productos: results });
    } catch (error) {
      console.error(error);
      res.status(500).send("Error al obtener la categoría");
@@ -124,7 +146,7 @@ router.post("/auth/unidad", async (req, res) => {
  });
 
 
- router.post("/auth/actualizarunidad/:id", async function (req, res) {
+ router.post("/actualizarunidad/:id", async function (req, res) {
   const idUnidad = req.params.id;
   const { nombre_unidad, estado_unidad } = req.body;
   try {
@@ -142,7 +164,7 @@ router.post("/auth/unidad", async (req, res) => {
       "UPDATE unidad SET nombre_unidad = ?, estado_unidad = ? WHERE idunidad = ?",
       [nombre_unidad, estado_unidad, idUnidad]
     );
-    res.redirect("/auth/unidad");
+    res.redirect("/unidad");
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al actualizar la unidad");

@@ -64,10 +64,14 @@ app.use(
   })
 );
 
+const viewsDirectories = [
+  path.join(__dirname, "./src/views"),
+  path.join(__dirname, "./src/vista_almacenero")
+];
 
+// Establecer el motor de plantillas y los directorios de vistas
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "./src/views"));
-console.log(app.get("view engine"));
+app.set("views", viewsDirectories);
 
 //MIS RUTAS
 const login = require("./src/routes/login");
@@ -96,6 +100,21 @@ const ingreso_almacen = require("./src/routes/ingreso_almacen");
 app.use(ingreso_almacen);
 const ingreso_venta = require("./src/routes/ingreso_ventas");
 app.use(ingreso_venta);
+const loginalmacen = require("./src/rutas_almacenero/almacenero_login")
+app.use(loginalmacen)
+const productos_almacenero = require("./src/rutas_almacenero/productos_almacenero")
+app.use(productos_almacenero)
+const unidad_almacenero = require("./src/rutas_almacenero/unidad_almacenero")
+app.use(unidad_almacenero)
+const categoria_almacenero = require("./src/rutas_almacenero/categoria_almacenero")
+app.use(categoria_almacenero)
+const proveedores_almacenero = require("./src/rutas_almacenero/proveedores_almacenero")
+app.use(proveedores_almacenero)
+const compras_almacenero = require("./src/rutas_almacenero/compras_almacenero")
+app.use(compras_almacenero)
+const lista_compra_almacenero = require("./src/rutas_almacenero/lista_compra_almacenero")
+app.use(lista_compra_almacenero)
+
 
 
 //PRUEBA DE LA CONEXION A LA BASE DE DATOS MYSQL

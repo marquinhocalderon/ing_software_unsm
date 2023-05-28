@@ -13,7 +13,7 @@ function requireAuth(req, res, next) {
       // Aquí puedes acceder a los datos de usuario de la sesión
 
       // Verifica el cargo del usuario permitido para acceder a /auth/compras
-      if (req.session.cargo === "Administrador") {
+      if (req.session.cargo === "Almacenero") {
         // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
         return next();
       } else {
@@ -26,9 +26,31 @@ function requireAuth(req, res, next) {
   }
 }
 
+function otro(req, res, next) {
+    if (!req.session.loggedin) {
+      // Limpiamos la cookie "loggedout"
+      return res.redirect("/login");
+    } else {
+      if (req.session) {
+        // Aquí puedes acceder a los datos de usuario de la sesión
+  
+        // Verifica el cargo del usuario permitido para acceder a /auth/compras
+        if (req.session.cargo === "Almacenero" || req.session.cargo === "Administrador") {
+          // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+          return next();
+        } else {
+          // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+          return res.redirect("/login");
+        }
+      } else {
+        return res.redirect("/login");
+      }
+    }
+  }
+
 /* PARA INSERTAR PRODUCTOS
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/compras", requireAuth, async function (req, res) {
+router.get("/compras", requireAuth, async function (req, res) {
   try {
     const data = await new Promise((resolve, reject) => {
       pool.query(
@@ -97,7 +119,7 @@ router.get("/auth/compras", requireAuth, async function (req, res) {
     });
 
     const idUsuario = req.session.idusuario;
-    res.render("compras", {
+    res.render("compras_almacenero", {
       idUsuario: idUsuario,
       compras: data,
       proveedores: proveedores,
@@ -112,7 +134,7 @@ router.get("/auth/compras", requireAuth, async function (req, res) {
   }
 });
 
-router.get("/api/proveedor", async function (req, res) {
+router.get("/api/proveedor", otro, async function (req, res) {
   const proveedor = req.query.ruc;
 
   // Realizar la consulta a la base de datos para obtener los datos del proveedor según el RUC
@@ -139,7 +161,7 @@ router.get("/api/proveedor", async function (req, res) {
   );
 });
 
-router.post("/auth/compras", (req, res) => {
+router.post("/compras", (req, res) => {
   const idUsuario = req.session.idusuario;
   const {
     idusuario,
@@ -280,7 +302,7 @@ router.post("/auth/compras", (req, res) => {
                           });
                         }
 
-                        res.render("compras", {
+                        res.render("compras_almacenero", {
                           boleta: boleta[0],
                           factura: factura[0],
                           idUsuario: idUsuario,
@@ -307,7 +329,7 @@ router.post("/auth/compras", (req, res) => {
         // ...
       } else {
         // Renderizar la vista "compras" con los datos obtenidos
-        res.render("compras", {
+        res.render("compras_almacenero", {
           idUsuario: idUsuario,
           productos: productos,
           proveedores: resultados, // Utilizar los resultados de la consulta
