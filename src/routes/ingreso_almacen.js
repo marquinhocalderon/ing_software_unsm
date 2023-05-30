@@ -9,8 +9,17 @@ function requireAuth(req, res, next) {
     // Limpiamos la cookie "loggedout"
     return res.redirect("/login");
   } else {
-    if (req.session.usuario) {
-      return next();
+    if (req.session) {
+      // Aquí puedes acceder a los datos de usuario de la sesión
+
+      // Verifica el cargo del usuario permitido para acceder a /auth/compras
+      if (req.session.cargo === "Administrador") {
+        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+        return next();
+      } else {
+        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+        return res.redirect("/login");
+      }
     } else {
       return res.redirect("/login");
     }
@@ -19,7 +28,7 @@ function requireAuth(req, res, next) {
 
 /* PARA INSERTAR Compras
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/almacen", async (req, res) => {
+router.get("/auth/almacen", requireAuth, async (req, res) => {
   try {
     const data = await poolQuery(`
     
@@ -59,7 +68,7 @@ function poolQuery(query) {
   });
 }
 
-router.get("/auth/almacen/:id", async function (req, res) {
+router.get("/auth/almacen/:id", requireAuth, async function (req, res) {
   try {
     const { id } = req.params; // Capturar el valor del ID
     const results = await poolQuery(

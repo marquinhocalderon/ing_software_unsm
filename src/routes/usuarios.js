@@ -58,10 +58,18 @@ router.post("/auth/usuarios", async (req, res) => {
   // Encriptar el password
   const hashedPassword = await bcryptjs.hash(password, 8);
 
- // Lee el contenido del archivo
+  // Variables para la consulta SQL
+  let query, values;
 
-  const query = 'INSERT INTO usuarios (dni_usuario, nombre, usuario, password, imagen, estado_usuario, idperfil) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  const values = [dni_usuario, nombre, usuario, hashedPassword, imagen.filename, estado_usuario, idPerfil];
+  if (imagen) {
+    // Si se envía una imagen, incluir su nombre en la consulta SQL
+    query = 'INSERT INTO usuarios (dni_usuario, nombre, usuario, password, imagen, estado_usuario, idperfil) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    values = [dni_usuario, nombre, usuario, hashedPassword, imagen.filename, estado_usuario, idPerfil];
+  } else {
+    // Si no se envía una imagen, excluir el campo de imagen en la consulta SQL
+    query = 'INSERT INTO usuarios (dni_usuario, nombre, usuario, password, estado_usuario, idperfil) VALUES (?, ?, ?, ?, ?, ?)';
+    values = [dni_usuario, nombre, usuario, hashedPassword, estado_usuario, idPerfil];
+  }
 
   pool.query(query, values, function(error, result) {
     if (error) throw error;
@@ -70,6 +78,7 @@ router.post("/auth/usuarios", async (req, res) => {
     res.redirect('/auth/usuarios');
   });
 });
+
 
 
 

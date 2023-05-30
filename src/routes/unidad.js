@@ -109,7 +109,7 @@ router.post("/auth/unidad", async (req, res) => {
 /* PARA MODIFICAR CATEGORIAS
 ---------------------------------------------------------------------------------------------------- */
 
- router.get("/auth/actualizarunidad/:id", async function (req, res) {
+ router.get("/auth/actualizarunidad/:id", requireAuth, async function (req, res) {
    const idUnidad = req.params.id;
    try {
      const [results, fields] = await pool.promise().query(

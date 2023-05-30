@@ -66,7 +66,8 @@ app.use(
 
 const viewsDirectories = [
   path.join(__dirname, "./src/views"),
-  path.join(__dirname, "./src/vista_almacenero")
+  path.join(__dirname, "./src/vista_almacenero"),
+  path.join(__dirname, "./src/vista_cajero")
 ];
 
 // Establecer el motor de plantillas y los directorios de vistas
@@ -115,6 +116,15 @@ app.use(compras_almacenero)
 const lista_compra_almacenero = require("./src/rutas_almacenero/lista_compra_almacenero")
 app.use(lista_compra_almacenero)
 
+
+const logincaja = require("./src/rutas_cajero/login_cajero")
+app.use(logincaja)
+const clientes_cajero = require("./src/rutas_cajero/clientes_cajero")
+app.use(clientes_cajero)
+const ventas_cajero = require("./src/rutas_cajero/ventas_cajero")
+app.use(ventas_cajero)
+const lista_ventas = require("./src/rutas_cajero/facturaciones_cajero")
+app.use(lista_ventas)
 
 
 //PRUEBA DE LA CONEXION A LA BASE DE DATOS MYSQL

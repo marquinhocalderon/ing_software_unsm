@@ -1,99 +1,182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="/src/css/index.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
-  </head>
-  <body>
-	<div class="d-flex" id="wrapper">
-		<!-- Sidebar-->
-		<div class="border-end bg-white" id="sidebar-wrapper">
-			<div class="sidebar-heading bg-primary text-light p-3 d-flex align-items-center">
-				<i class="bi bi-house-door-fill"></i>
-				<a href="#" style="cursor: pointer; text-decoration: none; color: white;">
-					<h5 class="m-2">San Mathias</h5>
-				</a>
-			  </div>
-			  
-        <div class="list-group list-group-flush">
-         
-					<a href="#"
-					class="list-group-item list-group-item-action list-group-item-info d-flex justify-content-between align-items-center">
-					<span>
-						<i class="bi bi-people"></i>
-						Ventas
-					</span>
-				</a>
-				<a href="#"
-				class="list-group-item list-group-item-action list-group-item-info d-flex justify-content-between align-items-center">
-				<span>
-					<i class="bi bi-three-dots-vertical"></i>
-				 Reporte Ventas
-				</span>
-			</a>
-      
-  
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- start: Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- start: Icons -->
+    <!-- start: CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/src/css/style.css">
+    <!-- end: CSS -->
+    <title>San Mathias</title>
+</head>
+
+<body>
+
+    <!-- start: Sidebar -->
+    <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
+        <div class="d-flex align-items-center p-3">
+            <a href="/caja" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San
+                Mathias</a>
+            <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
         </div>
-		</div>
-		<!-- Page content wrapper-->
-		<div id="page-content-wrapper">
-			<!-- Top navigation-->
-			<nav class="navbar navbar-expand-lg navbar-light ">
-				<div class="container-fluid">
-					<button class="btn btn-primary" id="sidebarToggle"><i class="bi bi-three-dots-vertical"></i></button>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav ms-auto mt-1 mt-lg-0">
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <strong>Bienvenido Cajero </strong> <i class="bi bi-person" style="font-size: 18px; color: black;"></i></a>
-								<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="/auth/cambiar">Cambiar Contraseña</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="/logout">Cerrar Session</a>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-<div class="container" style="display: flex; justify-content: center; align-items: center;">
-	<img src="resources/css/Admin.jpg" style="width:69em;" alt="">
-</div>
-		</div>
-	</div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-	<script>
-		/*!
-* Start Bootstrap - Simple Sidebar v6.0.6 (https://startbootstrap.com/template/simple-sidebar)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
-*/
-// 
-// Scripts
-// 
+        <ul class="sidebar-menu p-3 m-0 mb-0">
+            <li class="sidebar-menu-item active">
+                <a href="/caja">
+                    <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+                    Inicio
+                </a>
+            </li>
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
+            <li class="sidebar-menu-item has-dropdown">
+                <a href="#">
+                    <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                    Ventas
+                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                  <li class="sidebar-dropdown-menu-item">
+                    <a href="/facturaciones">
+                      Lista de ventas
+                    </a>
+                  </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/ventas">
+                            Nueva Venta
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/clientes">
+                            Clientes
+                        </a>
+                    </li>
+                </ul>
+            </li>
+           
+        </ul>
 
-window.addEventListener('DOMContentLoaded', event => {
 
-// Toggle the side navigation
-const sidebarToggle = document.body.querySelector('#sidebarToggle');
-if (sidebarToggle) {
-	// Uncomment Below to persist sidebar toggle between refreshes
-	// if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-	//     document.body.classList.toggle('sb-sidenav-toggled');
-	// }
-	sidebarToggle.addEventListener('click', event => {
-		event.preventDefault();
-		document.body.classList.toggle('sb-sidenav-toggled');
-		localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-	});
-}
+    </div>
+    <div class="sidebar-overlay"></div>
+    <!-- end: Sidebar -->
 
-});
-	</script>
-  </body>
+    <!-- start: Main -->
+    <main class="bg-light">
+        <div class="p-2">
+            <!-- start: Navbar -->
+            <nav class="px-3 py-2 bg-white rounded shadow-sm">
+                <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
+                <h5 class="fw-bold mb-0 me-auto">Dashboard</h5>
+
+                <div class="dropdown">
+                    <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <span class="me-2 d-none d-sm-block">Cajero </span>
+                        <img class="navbar-profile-image"
+                            src="https://png.pngtree.com/element_our/20190529/ourlarge/pngtree-cashier-png-free-material-download-at-work-image_1190664.jpg"
+                            alt="Image">
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/logout">Cerrar Session</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- end: Navbar -->
+
+            <!-- start: Content -->
+            <div class="py-4">
+                <!-- start: Summary -->
+                <div class="row g-3">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <a href="#"
+                            class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-primary">
+                            <div>
+                                <i class="ri-shopping-cart-2-line summary-icon bg-primary mb-2"></i>
+                                <div>Sales</div>
+                            </div>
+                            <h4>$435</h4>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <a href="#"
+                            class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-indigo">
+                            <div>
+                                <i class="ri-shopping-cart-2-line summary-icon bg-indigo mb-2"></i>
+                                <div>Sales</div>
+                            </div>
+                            <h4>$435</h4>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <a href="#"
+                            class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-success">
+                            <div>
+                                <i class="ri-shopping-cart-2-line summary-icon bg-success mb-2"></i>
+                                <div>Sales</div>
+                            </div>
+                            <h4>$435</h4>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <a href="#"
+                            class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-danger">
+                            <div>
+                                <i class="ri-shopping-cart-2-line summary-icon bg-danger mb-2"></i>
+                                <div>Sales</div>
+                            </div>
+                            <h4>$435</h4>
+                        </a>
+                    </div>
+                </div>
+                <!-- end: Summary -->
+                <!-- start: Graph -->
+                <div class="row g-3 mt-2">
+                    <div class="col-12 col-md-7 col-xl-8">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                Sales
+                            </div>
+                            <div class="card-body">
+                                <canvas id="sales-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5 col-xl-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                Visitors
+                            </div>
+                            <div class="card-body">
+                                <canvas id="visitors-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: Graph -->
+            </div>
+            <!-- end: Content -->
+        </div>
+    </main>
+    <!-- end: Main -->
+
+    <!-- start: JS -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+        integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script src="/src/css/script.js"></script>
+    <!-- end: JS -->
+</body>
+
 </html>

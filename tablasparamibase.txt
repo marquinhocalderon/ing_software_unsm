@@ -56,7 +56,7 @@ CREATE TABLE productos (
 
 CREATE TABLE compras (
   idcompra INT PRIMARY KEY AUTO_INCREMENT,
-  fecha_compra DATE,
+  fecha_compra DATETIME,
   tipo_comprobante VARCHAR(255),
   serie VARCHAR(255), 
   numero_correlativo VARCHAR(255),
@@ -94,7 +94,7 @@ CREATE TABLE clientes (
 
 CREATE TABLE ventas (
   idventa INT PRIMARY KEY AUTO_INCREMENT,
-  fecha_venta DATE,
+  fecha_venta DATETIME,
   tipo_comprobante VARCHAR(255),
   serie VARCHAR(255), 
   numero_correlativo VARCHAR(255),

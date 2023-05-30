@@ -6,26 +6,26 @@ const axios = require("axios");
 
 
 function requireAuth(req, res, next) {
-  if (!req.session.loggedin) {
-    // Limpiamos la cookie "loggedout"
-    return res.redirect("/login");
-  } else {
-    if (req.session) {
-      // Aquí puedes acceder a los datos de usuario de la sesión
-
-      // Verifica el cargo del usuario permitido para acceder a /auth/compras
-      if (req.session.cargo === "Administrador") {
-        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
-        return next();
+    if (!req.session.loggedin) {
+      // Limpiamos la cookie "loggedout"
+      return res.redirect("/login");
+    } else {
+      if (req.session) {
+        // Aquí puedes acceder a los datos de usuario de la sesión
+  
+        // Verifica el cargo del usuario permitido para acceder a /auth/compras
+        if (req.session.cargo === "Caja") {
+          // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+          return next();
+        } else {
+          // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+          return res.redirect("/login");
+        }
       } else {
-        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
         return res.redirect("/login");
       }
-    } else {
-      return res.redirect("/login");
     }
   }
-}
 
 
 function poolQuery(query) {
@@ -41,7 +41,7 @@ function poolQuery(query) {
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
 /* PARA mostrar las ventas
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/facturaciones", requireAuth, async (req, res) => {
+router.get("/facturaciones", requireAuth, async (req, res) => {
     try {
       const data = await poolQuery(`
         SELECT c.*, cl.nombre_cliente AS nombre_cliente, cl.razonsocial AS razonsocial, u.nombre, p2.cargo AS cargo
@@ -60,7 +60,7 @@ router.get("/auth/facturaciones", requireAuth, async (req, res) => {
         ORDER BY p.idproducto ASC
       `);
   
-      res.render("facturaciones", { ventas: data, clientes, productos });
+      res.render("facturaciones_cajero", { ventas: data, clientes, productos });
     } catch (error) {
       console.error(error);
       res.status(500).send("Error en el servidor");
@@ -74,7 +74,7 @@ router.get("/auth/facturaciones", requireAuth, async (req, res) => {
 
 
 
-router.get("/auth/facturaciones/:id", requireAuth,  async function (req, res) {
+router.get("/facturaciones/:id", requireAuth, async function (req, res) {
   try {
     const { id } = req.params; // Capturar el valor del ID
     const results = await poolQuery(

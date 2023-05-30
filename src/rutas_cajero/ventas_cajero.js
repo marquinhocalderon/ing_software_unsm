@@ -7,23 +7,34 @@ const axios = require("axios");
 
 router.use(express.json());
 
+
 function requireAuth(req, res, next) {
   if (!req.session.loggedin) {
     // Limpiamos la cookie "loggedout"
     return res.redirect("/login");
   } else {
-    if (req.session.usuario) {
-      return next();
+    if (req.session) {
+      // Aquí puedes acceder a los datos de usuario de la sesión
+
+      // Verifica el cargo del usuario permitido para acceder a /auth/compras
+      if (req.session.cargo === "Caja") {
+        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+        return next();
+      } else {
+        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+        return res.redirect("/login");
+      }
     } else {
       return res.redirect("/login");
     }
   }
 }
 
+
 /* BOTON PARA REGISTRAR CATEGORIAS
 --------------------------------------------------------------------------------------------------------------------
 */
-router.get("/auth/ventas", requireAuth, async function (req, res) {
+router.get("/ventas", requireAuth, async function (req, res) {
   try {
     const data = await new Promise((resolve, reject) => {
       pool.query(
@@ -92,7 +103,7 @@ router.get("/auth/ventas", requireAuth, async function (req, res) {
     });
 
     const idUsuario = req.session.idusuario;
-    res.render("ventas", {
+    res.render("ventas_cajero", {
       idUsuario: idUsuario,
       compras: data,
       clientes: clientes,
@@ -107,7 +118,7 @@ router.get("/auth/ventas", requireAuth, async function (req, res) {
   }
 });
 
-router.post("/auth/ventas", (req, res) => {
+router.post("/ventas", (req, res) => {
   const idUsuario = req.session.idusuario;
   const {
     fecha_venta,
@@ -266,7 +277,7 @@ router.post("/auth/ventas", (req, res) => {
                           });
                         }
 
-                        res.render("ventas", {
+                        res.render("ventas_cajero", {
                           boleta: boleta[0],
                           factura: factura[0],
                           idUsuario: idUsuario,
@@ -294,7 +305,7 @@ router.post("/auth/ventas", (req, res) => {
         // ...
       } else {
         // Renderizar la vista "compras" con los datos obtenidos
-        res.render("ventas", {
+        res.render("ventas_cajero", {
           idUsuario: idUsuario,
           productos: productos,
           clientes: resultados, // Utilizar los resultados de la consulta

@@ -21,7 +21,7 @@ function requireAuth(req, res, next) {
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/clientes", async function (req, res) {
+router.get("/auth/clientes", requireAuth, async function (req, res) {
   pool.query(
     "SELECT * FROM clientes",
     function (error, results, fields) {
@@ -30,26 +30,28 @@ router.get("/auth/clientes", async function (req, res) {
     }
   );
 });
-
-
 router.post("/auth/clientes", (req, res) => {
-  const { dni, ruc , nombre_cliente, razonsocial, telefono, direccion } = req.body;
+  let { dni, ruc, nombre_cliente, razonsocial, telefono, direccion } = req.body;
   const estado_cliente = "Activo";
 
-  try {
+  // Verificar si dni y ruc no están presentes en la solicitud y establecerlos como null
+  dni = dni || null;
+  ruc = ruc || null;
 
-    const sqlBuscaCliente = "SELECT * FROM clientes WHERE dni = ? AND ruc=? AND telefono = ?";
+  try {
+    // Realizar la consulta para verificar si el DNI o el teléfono ya existen
+    const sqlBuscaCliente = "SELECT * FROM clientes WHERE dni = ? OR ruc = ? OR telefono = ?";
     pool.query(sqlBuscaCliente, [dni, ruc, telefono], async (err, results) => {
       if (err) throw err;
-    
+
       if (results.length > 0) {
-        // El cliente ya existe, mostrar un mensaje de error
+        // Si el cliente ya existe, mostrar un mensaje de error
         return res.render("clientes", {
           clientes: results,
           name: "Administrador",
           alert: true,
           alertTitle: "Error De Registro",
-          alertMessage: "El DNI Y/O RUC O EL TELEFONO YA EXISTEN",
+          alertMessage: "El DNI/RUC o el teléfono ya existen",
           alertIcon: "error",
           showConfirmButton: true,
           timer: false,
@@ -57,12 +59,12 @@ router.post("/auth/clientes", (req, res) => {
         });
       }
 
-      // El cliente no existe, insertar datos en la tabla clientes
+      // Si el cliente no existe, insertar datos en la tabla clientes
       const sqlCliente =
         "INSERT INTO clientes (ruc, dni, nombre_cliente, razonsocial, telefono, direccion, estado_cliente) VALUES (?,?,?,?,?,?,?)";
       pool.query(
         sqlCliente,
-        [ruc, dni, nombre_cliente, razonsocial,telefono, direccion, estado_cliente],
+        [ruc, dni, nombre_cliente, razonsocial, telefono, direccion, estado_cliente],
         (err, _) => {
           if (err) throw err;
 
@@ -103,7 +105,9 @@ router.post("/auth/clientes", (req, res) => {
 
 
 
-router.get("/auth/actualizarcliente/:id", async function (req, res) {
+
+
+router.get("/auth/actualizarcliente/:id", requireAuth, async function (req, res) {
   const idCliente = req.params.id;
   try {
     const [results, fields] = await pool.promise().query(
@@ -118,34 +122,37 @@ router.get("/auth/actualizarcliente/:id", async function (req, res) {
 });
 
 
-
- router.post("/auth/actualizarcliente/:idcliente", async function (req, res) {
+router.post("/auth/actualizarcliente/:idcliente", async function (req, res) {
   const idCliente = req.params.idcliente;
-  const {ruc, dni, nombre_cliente, razonsocial, telefono, direccion, estado_cliente } = req.body;
+  const { ruc, dni, nombre_cliente, razonsocial, telefono, direccion, estado_cliente } = req.body;
   
   try {
     // Verificar si el número de DNI ya está en uso por otro cliente
     const [existingClients, _] = await pool.promise().query(
-      "SELECT idcliente FROM clientes WHERE dni = ?  AND idcliente <> ?",
+      "SELECT idcliente FROM clientes WHERE dni = ? AND idcliente <> ?",
       [dni, idCliente]
     );
 
     if (existingClients.length > 0) {
-      // Si existen clientes con el mismo DNI, mostrar un mensaje de error
-      return res.status(400).send("El número de DNI ya está en uso por otro cliente");
+      // Si existen clientes con el mismo DNI, mostrar el Swal.fire con el mensaje de error
+      return res.status(200).json({ error: 'El DNI ya está en uso por otro cliente. Retroceda Por favor y ponga otro dni que no este en us o'  });
     }
 
     // Actualizar el cliente si el número de DNI no está repetido
-    const [results, fields] = await pool.promise().query(
-      "UPDATE clientes SET ruc=?, dni = ?, nombre_cliente = ?, razonsocial =? ,telefono = ?, direccion=?, estado_cliente = ? WHERE idcliente = ?",
+    await pool.promise().query(
+      "UPDATE clientes SET ruc=?, dni=?, nombre_cliente=?, razonsocial=?, telefono=?, direccion=?, estado_cliente=? WHERE idcliente=?",
       [ruc, dni, nombre_cliente, razonsocial, telefono, direccion, estado_cliente, idCliente]
     );
+    
     res.redirect("/auth/clientes");
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error al actualizar el cliente");
+    return res.status(500).json({ error: 'No se puede actualizar el cliente. Ocurrió un error en el servidor.' });
   }
-}); 
+});
+
+
+
 
 
 

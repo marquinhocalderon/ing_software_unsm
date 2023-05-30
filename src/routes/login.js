@@ -107,8 +107,8 @@ router.post("/auth", async (req, res) => {
                   login: true,
                   name: req.session.cargo,
                 });
-              } else if (cargo === "Cajero") {
-                res.redirect("/cajero");
+              } else if (cargo === "Caja") {
+                res.redirect("/caja");
               } else if (cargo === "Almacenero") {
                 res.redirect("/almacen");
               } else {
@@ -145,5 +145,10 @@ router.get("/logout", requireAuth, function (req, res) {
     res.redirect("/login");
   });
 });
+
+
+
+
+
 
 module.exports = router;

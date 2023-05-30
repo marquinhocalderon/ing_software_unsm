@@ -93,7 +93,7 @@
         <ul class="sidebar-dropdown-menu">
           <li class="sidebar-dropdown-menu-item">
             <a href="/auth/almacen">
-              Ingreso Almacen
+              Listas Compras
             </a>
           </li>
           <li class="sidebar-dropdown-menu-item">
@@ -224,8 +224,7 @@
                         <button class="btn btn-success"
                           onclick="editar('<%= producto.idproducto %>')"><i class="bi bi-box-arrow-up-right"></i></button>
 
-                        <button class="btn btn-danger" id="eliminarClienteBtn"
-                          onclick="mostrarFormulario2('<%= producto.idproducto %>', '<%= JSON.stringify(producto) %>')"><i class="bi bi-trash-fill"></i></button>
+                       
                       </td>
                     </tr>
                     <% }); %>

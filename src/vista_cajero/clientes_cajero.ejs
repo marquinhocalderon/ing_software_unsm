@@ -28,115 +28,47 @@
   <!-- start: Sidebar -->
   <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
     <div class="d-flex align-items-center p-3">
-      <a href="/auth" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San Mathias</a>
-      <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
+        <a href="/caja" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">San
+            Mathias</a>
+        <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
     </div>
     <ul class="sidebar-menu p-3 m-0 mb-0">
-      <li class="sidebar-menu-item active">
-          <a href="/auth">
-              <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
-              Inicio
-          </a>
-      </li>
-      <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
-      <li class="sidebar-menu-item has-dropdown">
-          <a href="#">
-              <i class="ri-pages-line sidebar-menu-item-icon"></i>
-              Seguridad
-              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-          </a>
-          <ul class="sidebar-dropdown-menu">
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/usuarios">
-                      Usuarios
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/perfiles">
-                      Perfiles
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/recuperar">
-                      Recuperar Contraseña
-                  </a>
-              </li>
-          </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-          <a href="#">
-              <i class="ri-pages-line sidebar-menu-item-icon"></i>
-              Almacen
-              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-          </a>
-          <ul class="sidebar-dropdown-menu">
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/lista">
-                      Productos
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/categoria">
-                      Categorias
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/unidad">
-                      Unidades
-                  </a>
-              </li>
-          </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-          <a href="#">
-              <i class="ri-pages-line sidebar-menu-item-icon"></i>
-              Compras
-              <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-          </a>
-          <ul class="sidebar-dropdown-menu">
-            <li class="sidebar-dropdown-menu-item">
-              <a href="/auth/almacen">
-                Listas Compras
-              </a>
-            </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/compras">
-                      Ingreso Compras
-                  </a>
-              </li>
-              <li class="sidebar-dropdown-menu-item">
-                  <a href="/auth/proveedores">
-                      Proveedores
-                  </a>
-              </li>
-          </ul>
-      </li>
-      <li class="sidebar-menu-item has-dropdown">
-        <a href="#">
-            <i class="ri-pages-line sidebar-menu-item-icon"></i>
-            Ventas
-            <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-        </a>
-        <ul class="sidebar-dropdown-menu">
-          <li class="sidebar-dropdown-menu-item">
-            <a href="/auth/facturaciones">
-              Lista de ventas
+        <li class="sidebar-menu-item active">
+            <a href="/caja">
+                <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+                Inicio
             </a>
-          </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/ventas">
-                    Nueva Venta
+        </li>
+        <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Modulos</li>
+        <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-pages-line sidebar-menu-item-icon"></i>
+                Ventas
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+            </a>
+            <ul class="sidebar-dropdown-menu">
+              <li class="sidebar-dropdown-menu-item">
+                <a href="/facturaciones">
+                  Lista de ventas
                 </a>
-            </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/clientes">
-                    Clientes
-                </a>
-            </li>
-        </ul>
-    </li>
-  </ul>
-  </div>
+              </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/ventas">
+                        Nueva Venta
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="/clientes">
+                        Clientes
+                    </a>
+                </li>
+            </ul>
+        </li>
+       
+    </ul>
+
+
+</div>
   <div class="sidebar-overlay"></div>
   <!-- end: Sidebar -->
 
@@ -150,12 +82,12 @@
        
         <div class="dropdown">
           <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <span class="me-2 d-none d-sm-block">Adminstrador </span>
-            <img class="navbar-profile-image"
-              src="https://marketplace.magento.com/media/catalog/product/4/a/4acb_rsz_admin-logo_1.png"
-              alt="Image">
-          </div>
+                        aria-expanded="false">
+                        <span class="me-2 d-none d-sm-block">Cajero </span>
+                        <img class="navbar-profile-image"
+                            src="https://png.pngtree.com/element_our/20190529/ourlarge/pngtree-cashier-png-free-material-download-at-work-image_1190664.jpg"
+                            alt="Image">
+                    </div>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Perfil</a>
             <div class="dropdown-divider"></div>
@@ -174,7 +106,7 @@
           <div class="col-md-12">
             
             <div class="form first">
-              <form id="agregarUsuarioForm" method="post" action="/auth/clientes">
+              <form id="agregarUsuarioForm" method="post" action="/clientes">
                 <div class="details personal" style="width: 100%;">
                   <br>
                   <div class="fields" >
@@ -265,7 +197,7 @@
                     <td><%= cliente.estado_cliente %></td>
                     <td>
                       <button class="btn btn-success" onclick="mostrarFormulario('<%= cliente.idcliente %>', '<%= JSON.stringify(cliente) %>')">Actualizar Cliente</button>
-                    
+                     
                     </td>
                   </tr>
                   <% }); %>
@@ -317,7 +249,7 @@
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          const url = `/auth/eliminarcliente2/${idcliente}`;
+          const url = `/eliminarcliente2/${idcliente}`;
           fetch(url, {
             method: 'DELETE'
           })
@@ -344,7 +276,7 @@
       Swal.fire({
         title: 'Detalles del cliente',
         html: `
-          <form id="actualizarClienteForm" method="post" action="/auth/actualizarcliente/${idcliente}">
+          <form id="actualizarClienteForm" method="post" action="/actualizarcliente/${idcliente}">
             <div class="form-group">
               <label for="dni">DNI:</label>
               <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}"  >
@@ -391,7 +323,7 @@
           const direccion = document.getElementById('direccion').value;
           const estado = document.getElementById('estado').value;
   
-          fetch(`/auth/actualizarcliente/${idCliente}`, {
+          fetch(`/actualizarcliente/${idCliente}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

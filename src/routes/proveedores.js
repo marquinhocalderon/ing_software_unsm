@@ -4,13 +4,23 @@ const pool = require("../../database/db");
 
 const router = express.Router();
 
+
 function requireAuth(req, res, next) {
   if (!req.session.loggedin) {
     // Limpiamos la cookie "loggedout"
     return res.redirect("/login");
   } else {
-    if (req.session.usuario) {
-      return next();
+    if (req.session) {
+      // Aquí puedes acceder a los datos de usuario de la sesión
+
+      // Verifica el cargo del usuario permitido para acceder a /auth/compras
+      if (req.session.cargo === "Administrador") {
+        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+        return next();
+      } else {
+        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+        return res.redirect("/login");
+      }
     } else {
       return res.redirect("/login");
     }
@@ -21,7 +31,7 @@ function requireAuth(req, res, next) {
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/proveedores", async function (req, res) {
+router.get("/auth/proveedores", requireAuth, async function (req, res) {
   pool.query(
     "SELECT * FROM proveedores",
     function (error, results, fields) {
@@ -98,7 +108,7 @@ router.post("/auth/proveedores", async (req, res) => {
 /* PARA MODIFICAR CATEGORIAS
 ---------------------------------------------------------------------------------------------------- */
 
-router.get("/auth/actualizarproveedor/:id", async function (req, res) {
+router.get("/auth/actualizarproveedor/:id", requireAuth, async function (req, res) {
   const idproveedor = req.params.id;
   try {
     const [results, fields] = await pool.promise().query(
