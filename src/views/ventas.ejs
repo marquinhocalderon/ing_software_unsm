@@ -168,7 +168,7 @@
         <!-- start: Content -->
         <div class="container">
 
-          <form action="/auth/ventas" method="post">
+          <form action="/auth/ventas" method="post" id="miFormulario">
             <input type="hidden" placeholder="idcliente" id="idcliente" name="idcliente" >
             <input type="text" placeholder="idusuario" id="idusuario" value="<%= idUsuario %>" name="idusuario" readonly>
             <div class="form first">
@@ -244,7 +244,7 @@
                   </div>
                   <div class="input-field">
                     <label>Fecha Venta:</label>
-                    <input type="datetime-local" placeholder="Fecha Compra" name="fecha_venta" required>
+                    <input type="datetime-local" placeholder="Fecha Compra" name="fecha_venta" id="fecha_venta" required>
                   </div>
                 </div>
 
@@ -260,7 +260,7 @@
                     </tr>
                   </thead>
 
-                  <tbody class="table-group-divider">
+                  <tbody class="table-group-divider" id="tabla2">
 
                   </tbody>
                 </table>
@@ -293,13 +293,191 @@
               <textarea style="display: none;" name="comprasjson" id="datosComprasInput" cols="30" rows="10"></textarea>
             </div>
             <div style="display: flex; gap: 10px;">
-              <button type="submit" id="enviarBtn" class="btn btn-primary">Registrar Pedido</button>
+              <button type="submit" id="enviarBtn" class="btn btn-primary" >Registrar Venta</button>
             </div>
 
         </div>
       </div>
     </div>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    
+<script> 
+      document.getElementById('miFormulario').addEventListener('submit', function(event) {
+        // Evita el envío del formulario por defecto para manejarlo manualmente
+        event.preventDefault();
+    
+        // Obtén los datos del formulario
+        var tabla = document.getElementById("datosComprasInput").value;
+  var ruc = document.getElementById("ruc").value;
+  var dni = document.getElementById("dni").value;
+  var nombre_cliente = document.getElementById("nombre_cliente").value;
+  var razon_social = document.getElementById("razon_social").value;
+  var serie = document.getElementById("serie").value;
+  var numero_correlativo = document.getElementById("numero_correlativo").value;
+  var fecha_emision =document.getElementById("fecha_venta").value;
+  var totalventa =document.getElementById("calculoTotal").value;
+  var igv =document.getElementById("igv").value;
+  var subotal =document.getElementById("subtotal").value;
+  
+
+
+
+
+
+
+
+  var productos = JSON.parse(tabla);
+  var total = 0;
+  var boleta = `
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: monospace;
+          }
+
+          .ticket {
+            width: 200px;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid black;
+            padding: 10px;
+          }
+
+          .ticket p {
+            margin: 0;
+            padding: 0;
+          }
+
+          .ticket h1 {
+            margin: 5px 0;
+          }
+
+          .ticket table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+          }
+
+          .ticket th,
+          .ticket td {
+            padding: 3px;
+            text-align: left;
+          }
+
+          .ticket img {
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+}
+        </style>
+      </head>
+      <body>
+        <div class="ticket">
+          <img src="https://i.ibb.co/2yKykR8/sanmathias.jpg" alt="sanmathias" border="0">
+          <p> SAN MATHIAS PANADERIA Y PASTEL </p> 
+          <p> AV.CIRCUNVALACION NRO.725(FRENTE AL MINISTERIO DE TRANSPORTES), SAN MARTIN(PE)</p> 
+  `;
+
+  if (ruc) {
+    boleta += `
+    
+    <h3>FACTURA ${serie}-${numero_correlativo} </h3>
+    <p>--------------------------- </p> 
+    <br>
+    <p>RUC: ${ruc}</p>
+    <p> ${razon_social}</p> 
+
+    `;
+
+  }
+
+  if (dni) {
+    boleta += `
+    <h3>BOLETA ${serie}-${numero_correlativo} </h3>
+    <p>--------------------------- </p> 
+    <br>
+    <p>DNI: ${dni}</p>
+    <p> ${nombre_cliente}</p> 
+   
+
+    `;
+  }
+
+  var fechaEmision = new Date(fecha_emision);
+var dia = fechaEmision.getDate().toString().padStart(2, "0");
+var mes = (fechaEmision.getMonth() + 1).toString().padStart(2, "0");
+var anio = fechaEmision.getFullYear();
+
+boleta += "<p>Fecha Emisión: " + anio + "-" + mes + "-" + dia + "</p>\n";
+boleta += "<p>Fecha Vencimiento: " + anio + "-" + mes + "-" + dia + "</p>\n";
+
+boleta += `
+<p> MONEDA: Soles</p> 
+<p> IGV: 18%</p> 
+  `;
+  
+  boleta += `
+          <table>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+            </tr>
+  `;
+
+  for (var i = 0; i < productos.length; i++) {
+    var producto = productos[i];
+
+    var nombre = producto.nombre_producto;
+    var cantidad = producto.cantidad;
+    var precio = producto.precio_venta;
+    var subtotal = producto.Total;
+    
+    boleta += `
+      <tr>
+        <td>${nombre}</td>
+        <td>${cantidad}</td>
+        <td>${precio}</td>
+      </tr>
+    `;
+  }
+
+  boleta += `
+          </table>
+          <p>Subtotal: ${subotal}</p>
+          <p>IGV: ${igv}</p>
+          <p>Total: ${totalventa}</p>
+
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+      </body>
+    </html>
+  `;
+
+  var ventana = window.open(window.location.href, "_blank", "width=screen.availWidth,height=screen.availHeight");
+  ventana.document.write(boleta);
+
+  ventana.document.close();
+
+  ventana.onload = function() {
+    ventana.print();
+  };
+    
+        // Envía el formulario de manera asíncrona si es necesario
+        // Puedes eliminar esta línea si no necesitas enviar el formulario en segundo plano
+        this.submit();
+      });
+    
+</script>
+
+  
 
      <script>
     const tipoComprobanteSelect = document.getElementById('tipo_comprobante');
@@ -710,6 +888,13 @@
     });
   </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<script>
+
+
+</script>
+
 
   <!-- start: JS -->
   <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
@@ -727,7 +912,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
   <!-- end: JS -->
-  <script src="/src/ventasjs/apiclientedni.js"></script>
+
 
 
 </body>

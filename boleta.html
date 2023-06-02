@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de Boleta</title>
+  <script>
+    function crearBoleta() {
+      // Obtener los valores ingresados por el usuario
+      var nombre = document.getElementById("nombre").value;
+      var direccion = document.getElementById("direccion").value;
+      var producto = document.getElementById("producto").value;
+      var cantidad = document.getElementById("cantidad").value;
+      var precio = document.getElementById("precio").value;
+
+      // Calcular el total
+      var total = cantidad * precio;
+
+      // Crear la boleta
+      var boleta = "<h2>Boleta</h2>" +
+                   "<p><strong>Nombre:</strong> " + nombre + "</p>" +
+                   "<p><strong>Dirección:</strong> " + direccion + "</p>" +
+                   "<p><strong>Producto:</strong> " + producto + "</p>" +
+                   "<p><strong>Cantidad:</strong> " + cantidad + "</p>" +
+                   "<p><strong>Precio:</strong> $" + precio + "</p>" +
+                   "<p><strong>Total:</strong> $" + total + "</p>";
+
+      // Abrir una nueva ventana con la boleta
+      var ventana = window.open("", "_blank", "width=600,height=400");
+      ventana.document.write(boleta);
+    }
+  </script>
+</head>
+<body>
+  <h1>Formulario de Boleta</h1>
+  <form>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" required><br><br>
+
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" required><br><br>
+
+    <label for="producto">Producto:</label>
+    <input type="text" id="producto" required><br><br>
+
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad" required><br><br>
+
+    <label for="precio">Precio:</label>
+    <input type="number" id="precio" required><br><br>
+
+    <input type="button" value="Crear Boleta" onclick="crearBoleta()">
+  </form>
+</body>
+</html>
+
+</body>
+</html>
