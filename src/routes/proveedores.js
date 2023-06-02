@@ -45,8 +45,8 @@ router.post("/auth/proveedores", async (req, res) => {
   const { nombre_empresa, ruc, direccion, ciudad, pais, telefono, email, estado_proveedor } = req.body;
 
   try {
-    const sqlBuscaProveedor = "SELECT * FROM proveedores WHERE telefono = ?";
-    pool.query(sqlBuscaProveedor, [telefono], (err, results) => {
+    const sqlBuscaProveedor = "SELECT * FROM proveedores WHERE telefono = ? OR ruc=?";
+    pool.query(sqlBuscaProveedor, [telefono , ruc], (err, results) => {
       if (err) throw err;
 
       if (results.length > 0) {
@@ -139,9 +139,13 @@ router.post("/auth/actualizarproveedor/:id", async function (req, res) {
   try {
     // Verificar si el nombre de proveedor ya está en uso
     const [existingProvider, _] = await pool.promise().query(
-      "SELECT * FROM proveedores",
-      [telefono]
+      "SELECT * FROM proveedores WHERE telefono = ? AND idproveedor <> ?",
+      [telefono, idproveedor]
     );
+
+    if (existingProvider.length > 0) {
+      return res.status(400).send("El número de teléfono ya está en uso por otro proveedor.");
+    }
 
     // Actualizar el proveedor
     await pool.promise().query(
@@ -155,6 +159,7 @@ router.post("/auth/actualizarproveedor/:id", async function (req, res) {
     res.status(500).send("Error al actualizar proveedor");
   }
 });
+
 
 
 

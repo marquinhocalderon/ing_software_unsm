@@ -341,8 +341,9 @@
                           <strong>${datosventas.results[0].razonsocial}</strong>
                       </div>
                       <div>Ruc : ${datosventas.results[0].ruc}</div>
-                              <div>Direccion: ${datosventas.results[0].direccion}</div>
-                              <div>Telefono: ${datosventas.results[0].telefono}</div>
+                      <div>Direccion: ${datosventas.results[0].direccion !== null ? datosventas.results[0].direccion : ''}</div>
+                      <div>Telefono: ${datosventas.results[0].telefono !== null ? datosventas.results[0].telefono : ''}</div>
+
                   </div>
   
   
@@ -444,9 +445,8 @@
                       </div>
         
                       <div> ${datosventas.results[0].dni}</div>
-                              <div>Direccion: ${datosventas.results[0].direccion}</div>
-                         
-                              <div>Telefono: ${datosventas.results[0].telefono}</div>
+                      <div>Direccion: ${datosventas.results[0].direccion !== null ? datosventas.results[0].direccion : ''}</div>
+                      <div>Telefono: ${datosventas.results[0].telefono !== null ? datosventas.results[0].telefono : ''}</div>
                   </div>
   
   

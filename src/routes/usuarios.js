@@ -3,6 +3,7 @@ const pool = require("../../database/db");
 const bcryptjs = require("bcryptjs");
 const router = express.Router();
 const fs = require('fs');
+const swal = require('sweetalert');
 
 
 function requireAuth(req, res, next) {
@@ -30,7 +31,7 @@ function requireAuth(req, res, next) {
 /* PARA MODIFICAR USUARIOS
 ---------------------------------------------------------------------------------------------------- */
 
-router.get("/auth/usuarios", async function (req, res) {
+router.get("/auth/usuarios", requireAuth, async function (req, res) {
   pool.query(
     "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil",
     function (error, results, fields) {
@@ -54,6 +55,12 @@ router.post("/auth/usuarios", async (req, res) => {
   const { dni_usuario, nombre, usuario, password, estado_usuario } = req.body;
   const idPerfil = req.body.cargo;
   const imagen = req.file;
+
+  if (dni_usuario.length !== 8) {
+    swal('Error', 'El DNI debe tener 8 dígitos', 'error');
+    return res.status(400).json({ error: "El DNI debe tener 8 dígitos" });
+  }
+  
 
   // Encriptar el password
   const hashedPassword = await bcryptjs.hash(password, 8);
@@ -81,8 +88,24 @@ router.post("/auth/usuarios", async (req, res) => {
 
 
 
+router.get("/auth/usuarios/:id",requireAuth, async function (req, res) {
+  const { id } = req.params;
+  pool.query(
+    "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil WHERE usuarios.idusuario = ?", [id], 
+    function (error, results, fields) {
+      if (error) throw error;
 
-router.get("/auth/usuarios/:id", requireAuth, async function (req, res) {
+      // Consulta adicional a la tabla "perfil"
+      pool.query('SELECT * FROM perfil WHERE estado = "Activo"', function (errorPerfil, perfiles, fieldsPerfil) {
+        if (errorPerfil) throw errorPerfil;
+
+        res.redirect("/auth/usuarios")
+      });
+    }
+  );
+});
+
+router.get("/auth/usuarios1/:id", requireAuth, async function (req, res) {
   try {
     const { id } = req.params;
 

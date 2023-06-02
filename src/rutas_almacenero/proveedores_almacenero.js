@@ -144,6 +144,7 @@ router.get("/actualizarproveedor/:id", async function (req, res) {
 });
 
 
+
 router.post("/actualizarproveedor/:id", async function (req, res) {
   const idproveedor = req.params.id;
   const {
@@ -160,10 +161,13 @@ router.post("/actualizarproveedor/:id", async function (req, res) {
   try {
     // Verificar si el nombre de proveedor ya está en uso
     const [existingProvider, _] = await pool.promise().query(
-      "SELECT * FROM proveedores ",
-      [telefono]
+      "SELECT * FROM proveedores WHERE telefono = ? AND idproveedor <> ?",
+      [telefono, idproveedor]
     );
-   
+
+    if (existingProvider.length > 0) {
+      return res.status(400).send("El número de teléfono ya está en uso por otro proveedor.");
+    }
 
     // Actualizar el proveedor
     await pool.promise().query(

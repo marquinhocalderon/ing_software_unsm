@@ -55,7 +55,7 @@
           </li>
           <li class="sidebar-dropdown-menu-item">
             <a href="/auth/recuperar">
-             Recuperar Contraseña
+              Recuperar Contraseña
             </a>
           </li>
         </ul>
@@ -110,9 +110,9 @@
       </li>
       <li class="sidebar-menu-item has-dropdown">
         <a href="#">
-            <i class="ri-pages-line sidebar-menu-item-icon"></i>
-            Ventas
-            <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+          <i class="ri-pages-line sidebar-menu-item-icon"></i>
+          Ventas
+          <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
         </a>
         <ul class="sidebar-dropdown-menu">
           <li class="sidebar-dropdown-menu-item">
@@ -120,18 +120,18 @@
               Lista de ventas
             </a>
           </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/ventas">
-                    Nueva Venta
-                </a>
-            </li>
-            <li class="sidebar-dropdown-menu-item">
-                <a href="/auth/clientes">
-                    Clientes
-                </a>
-            </li>
+          <li class="sidebar-dropdown-menu-item">
+            <a href="/auth/ventas">
+              Nueva Venta
+            </a>
+          </li>
+          <li class="sidebar-dropdown-menu-item">
+            <a href="/auth/clientes">
+              Clientes
+            </a>
+          </li>
         </ul>
-    </li>
+      </li>
     </ul>
   </div>
   <div class="sidebar-overlay"></div>
@@ -165,25 +165,25 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-      
-              <div style="margin-top: 10px;">
-                <button class="btn btn-primary" id="botonagregar" style="margin-bottom: 15px;">+ Agregar Usuario</button>
-              </div>
-              <table id="users" class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">DNI</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Cargo</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Foto</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                  <% usuarios.forEach(function(usuario) { %>
+
+            <div style="margin-top: 10px;">
+              <button class="btn btn-primary" id="botonagregar" style="margin-bottom: 15px;">+ Agregar Usuario</button>
+            </div>
+            <table id="users" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">DNI</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Cargo</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Foto</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <% usuarios.forEach(function(usuario) { %>
                   <tr>
                     <td>
                       <%= usuario.idusuario %>
@@ -207,39 +207,40 @@
                       <img src="/public/uploads/<%= usuario.imagen %>" alt="" style="width: 70px; height: 70px;">
 
                     </td>
-                                       
+
                     <td>
-                      <button class="btn btn-success" onclick="editar('<%= usuario.idusuario %>')"><i class="bi bi-box-arrow-up-right"></i></button>
+                      <button class="btn btn-success" onclick="editar('<%= usuario.idusuario %>')"><i
+                          class="bi bi-box-arrow-up-right"></i></button>
                     </td>
                   </tr>
                   <% }); %>
-                </tbody>
-              </table>
-              
-              <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-              <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+              </tbody>
+            </table>
+
+            <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+            <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+            <script>
+              $(document).ready(function () {
+                $('#users').DataTable();
+              });
+            </script>
+
+
+            <% if(typeof alert !='undefined' ) { %>
+
               <script>
-                $(document).ready(function() {
-                  $('#users').DataTable();
-                });
-              </script>
-
-
-              <% if(typeof alert !='undefined' ) { %>
-
-                <script>
-                  Swal.fire({
-                    title: "<%= alertTitle %> ",
-                    text: "<%= alertMessage %> ",
-                    icon: "<%= alertIcon %> ",
-                    showConfirmButton: <%= showConfirmButton %>,
-                    timer:<%= timer %> 
+                Swal.fire({
+                  title: "<%= alertTitle %> ",
+                  text: "<%= alertMessage %> ",
+                  icon: "<%= alertIcon %> ",
+                  showConfirmButton: <%= showConfirmButton %>,
+                  timer:<%= timer %> 
                               }).then(() => {
-                      window.location = '<%= ruta %> '
-                    })
-                </script>
-                <% } %>
-            
+                    window.location = '<%= ruta %> '
+                  })
+              </script>
+              <% } %>
+
           </div>
         </div>
       </div>
@@ -266,7 +267,7 @@
   <script>
     async function editar(id) {
       try {
-        const response = await axios.get(`/auth/usuarios/${id}`);
+        const response = await axios.get(`/auth/usuarios1/${id}`);
         const response2 = await axios.get(`/auth/perfil1`);
         const perfiles = response2.data;
         const datosUsuarios = response.data[0];
@@ -333,20 +334,25 @@
 
 
         function validarFormulario() {
-          const dni_usuario = document.getElementById('dni_usuario');
+          const dni_usuario = document.getElementById('dni_usuario').value;
           const nombre = document.getElementById('nombre').value;
           const usuario = document.getElementById('usuario').value;
-          const imagen = document.getElementById('imagen').value;
           const cargo = document.getElementById('cargo').value;
-          const estado = document.getElementById('estado_usuario').value;
 
-          if (!dni_usuario || !nombre || !usuario || !cargo || !estado) {
+
+          if (!nombre || !usuario ||  !cargo) {
             Swal.fire('Error', 'Debe completar todos los campos', 'error');
+            return false;
+          }
+
+          if (dni_usuario.length !== 8) {
+            Swal.fire('Error', 'El DNI debe tener exactamente 8 dígitos', 'error');
             return false;
           }
 
           return true;
         }
+
 
         document.getElementById('registrarBoton').addEventListener('click', (event) => {
           event.preventDefault();
@@ -410,21 +416,26 @@
         showConfirmButton: false // Ocultar el botón de confirmar de SweetAlert
       });
       function validarFormulario() {
-        const dni_usuario = document.getElementById('dni_usuario');
+        const dni_usuario = document.getElementById('dni_usuario').value;
         const nombre = document.getElementById('nombre').value;
         const usuario = document.getElementById('usuario').value;
         const password = document.getElementById('password').value;
         const cargo = document.getElementById('cargo').value;
         const estado = document.getElementById('estado').value;
 
-
         if (!nombre || !usuario || !password || !cargo) {
           Swal.fire('Error', 'Debe completar todos los campos', 'error');
           return false;
         }
 
+        if (dni_usuario.length !== 8) {
+          Swal.fire('Error', 'El DNI debe tener exactamente 8 dígitos', 'error');
+          return false;
+        }
+
         return true;
       }
+
       // Agregar listener de evento para el botón "Registrar"
       document.getElementById('registrarBoton').addEventListener('click', (event) => {
         if (validarFormulario()) {

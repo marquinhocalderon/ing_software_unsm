@@ -30,7 +30,7 @@ function requireAuth(req, res, next) {
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/perfiles", async function (req, res) {
+router.get("/auth/perfiles", requireAuth,  async function (req, res) {
   pool.query(
     "SELECT * FROM perfil",
     function (error, results, fields) {

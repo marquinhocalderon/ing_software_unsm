@@ -214,7 +214,7 @@
               <script>
                 async function editar(id) {
                   try {
-                    const response = await axios.get(`/auth/facturaciones/${id}`);
+                    const response = await axios.get(`/facturaciones/${id}`);
                     const datosventas = response.data;
                     console.log(datosventas);
   
