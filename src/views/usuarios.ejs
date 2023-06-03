@@ -204,7 +204,7 @@
                       <%= usuario.estado_usuario %>
                     </td>
                     <td style="display: flex; justify-content: center; align-items: center;margin-top: -8px;">
-                      <img src="/public/uploads/<%= usuario.imagen %>" alt="" style="width: 70px; height: 70px;">
+                      <img src="/public/uploads/<%= usuario.imagen %>" alt="" style="width: 70px; height: 70px; cursor: pointer;" onclick="abrirModal('/public/uploads/<%= usuario.imagen %>')" title="Haz clic para ampliar">
 
                     </td>
 
@@ -216,6 +216,39 @@
                   <% }); %>
               </tbody>
             </table>
+
+            <div id="miModal" class="modal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto;">
+              <span onclick="cerrarModal()" class="modal-cerrar" style="color: black; float: right; font-size: 32px; font-weight: bold; cursor: pointer; margin-right: 20px; margin-top: 20px;">&times;</span>
+              <img id="imagenModal" src="" alt="" style="max-width: 100%; max-height: 600px; margin: 0 auto; display: block; margin-top: 40px;">
+            </div>
+            <div id="modalFondo" class="modal-fondo" style="display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+
+            <script>
+              function abrirModal(rutaImagen) {
+                const modal = document.getElementById("miModal");
+                const imagenModal = document.getElementById("imagenModal");
+              
+                imagenModal.src = rutaImagen;
+                modal.style.display = "block";
+                document.getElementById("modalFondo").style.display = "block";
+              }
+              
+              function cerrarModal() {
+                const modal = document.getElementById("miModal");
+                const imagenModal = document.getElementById("imagenModal");
+              
+                imagenModal.src = "";
+                modal.style.display = "none";
+                document.getElementById("modalFondo").style.display = "none";
+              }
+              </script>
+              <script>
+                document.addEventListener("keydown", function(event) {
+                  if (event.key === "Escape") {
+                    cerrarModal();
+                  }
+                });
+              </script>
 
             <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
             <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
