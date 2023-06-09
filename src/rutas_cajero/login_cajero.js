@@ -38,7 +38,7 @@ router.get("/caja", requireAuth, (req, res) => {
   );
 });
 
-router.post("/auth", requireAuth, async (req, res) => {
+router.post("/auth", async (req, res) => {
   const { usuario, password } = req.body;
 
   if (usuario && password) {
