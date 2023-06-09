@@ -127,6 +127,9 @@ const lista_ventas = require("./src/rutas_cajero/facturaciones_cajero")
 app.use(lista_ventas)
 
 
+
+
+
 //PRUEBA DE LA CONEXION A LA BASE DE DATOS MYSQL
 pool.getConnection((err, connection) => {
   if (err) {
