@@ -8,8 +8,8 @@ const pool = mysql.createPool({
   database: process.env.DB_DBNAME,
   waitForConnections: true,
   connectionLimit: Infinity, // Establece un límite de conexiones muy alto
-  queueLimit: 0
-  
+  queueLimit: 0,
+  timeout: 0 // Establece un tiempo de espera infinito
 });
 // Exporta el pool para que pueda ser utilizado desde otros módulos
 module.exports = pool;
