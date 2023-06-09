@@ -9,6 +9,27 @@ const ventasRouter = require('./src/routes/ventas');
 const multer = require('multer');
 const path = require("path");
 
+
+const session = require("express-session");
+const MySQLStore = require("connect-mysql")(session);
+
+app.use(
+  session({
+    key: "my-cookie",
+    secret: "my-secret",
+    resave: false,
+    saveUninitialized: true,
+    store: new MySQLStore({
+      // Configuración de la conexión a la base de datos
+      host: process.env.DB_HOST,
+      user: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DBNAME,
+    }),
+  })
+);
+
+
 const app = express();
 app.use("/public", express.static("public"));
 app.use(cors());
@@ -55,14 +76,7 @@ app.use(
 
 app.use(cookieParser());
 
-app.use(
-  session({
-    key: "my-cookie",
-    secret: "my-secret",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+
 
 const viewsDirectories = [
   path.join(__dirname, "./src/views"),
