@@ -161,7 +161,7 @@ router.get("/logout", verificarAutenticacion, function (req, res) {
   req.session.destroy(function (err) {
     if (err) {
       console.error(err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("Internal Server Error2");
       return;
     }
 
