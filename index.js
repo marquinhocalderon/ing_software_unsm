@@ -60,7 +60,7 @@ app.use(
   session({
     key: "my-cookie",
     secret: "my-secret",
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   })
 );

@@ -4,29 +4,16 @@ const bcryptjs = require("bcryptjs");
 const router = express.Router();
 
 
-function requireAuth2(req, res, next) {
-  if (!req.session.loggedin) {
-    // Limpiamos la cookie "loggedout"
-    return res.redirect("/login");
+const requireAuth2 = (req, res, next) => {
+  if (req.session.loggedin) {
+    // El usuario ha iniciado sesión, permite el acceso a la siguiente ruta
+    next();
   } else {
-    if (req.session) {
-      // Aquí puedes acceder a los datos de usuario de la sesión
-
-      // Verifica el cargo del usuario permitido para acceder a /auth/compras
-      if (req.session.cargo === "Administrador") {
-        console.log(req.session.loggedin)
-      
-        return next();
-      
-      } else {
-        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
-        return res.redirect("/login");
-      }
-    } else {
-      return res.redirect("/login");
-    }
+    // El usuario no ha iniciado sesión, redirige a la página de inicio de sesión
+    res.redirect("/login");
   }
-}
+};
+
 
 router.get("/", (req, res) => {
   res.render("login");
