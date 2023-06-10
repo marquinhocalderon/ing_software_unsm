@@ -72,7 +72,7 @@ const sessionStore = new MySQLStore({
   expiration: 86400000, // Tiempo de expiración de la sesión en milisegundos (aquí se usa 1 día)
   createDatabaseTable: true, // Crea automáticamente la tabla de sesiones si no existe
   schema: {
-    tableName: 'sessions' // Nombre de la tabla de sesiones
+    tableName: 'usuarios' // Nombre de la tabla de sesiones
   },
   pool: pool // Utiliza el pool de conexiones de MySQL
 });
