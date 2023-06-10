@@ -94,7 +94,7 @@ router.post("/login", async (req, res) => {
           res.render("login", {
             alert: true,
             alertTitle: "Error",
-            alertMessage: "Este usuario ya no tiene acceso a esta pagina",
+            alertMessage: "Este usuario ya no tiene acceso a esta página",
             alertIcon: "error",
             showConfirmButton: true,
             timer: false,
@@ -127,11 +127,7 @@ router.post("/login", async (req, res) => {
                     }
                     req.session.name = "Marco"; // Guardar el nombre en la sesión
                     req.session.totalVentas = resultsVentas[0].totalVentas; // Guardar el total de ventas en la sesión
-                    res.render("index", {
-                      login: true,
-                      name: req.session.name,
-                      totalVentas: req.session.totalVentas,
-                    });
+                    res.redirect("/auth"); // Redirigir a la página principal ("/auth")
                   }
                 );
               } else if (cargo === "Caja") {
@@ -158,6 +154,7 @@ router.post("/login", async (req, res) => {
     });
   }
 });
+
 
 
 router.get("/logout", verificarAutenticacion, function (req, res) {
