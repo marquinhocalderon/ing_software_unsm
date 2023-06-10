@@ -78,8 +78,9 @@ app.set("views", viewsDirectories);
 //MIS RUTAS
 const login = require("./src/routes/login");
 app.use(login);
-const usuarios = require("./src/routes/usuarios");
-app.use(usuarios);
+
+
+
 const perfiles= require("./src/routes/perfiles");
 app.use(perfiles);
 const productos = require("./src/routes/productos");
@@ -102,8 +103,7 @@ const ingreso_almacen = require("./src/routes/ingreso_almacen");
 app.use(ingreso_almacen);
 const ingreso_venta = require("./src/routes/ingreso_ventas");
 app.use(ingreso_venta);
-const loginalmacen = require("./src/rutas_almacenero/almacenero_login")
-app.use(loginalmacen)
+
 const productos_almacenero = require("./src/rutas_almacenero/productos_almacenero")
 app.use(productos_almacenero)
 const unidad_almacenero = require("./src/rutas_almacenero/unidad_almacenero")
@@ -118,8 +118,6 @@ const lista_compra_almacenero = require("./src/rutas_almacenero/lista_compra_alm
 app.use(lista_compra_almacenero)
 
 
-const logincaja = require("./src/rutas_cajero/login_cajero")
-app.use(logincaja)
 const clientes_cajero = require("./src/rutas_cajero/clientes_cajero")
 app.use(clientes_cajero)
 const ventas_cajero = require("./src/rutas_cajero/ventas_cajero")
