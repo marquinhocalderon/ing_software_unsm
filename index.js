@@ -1,24 +1,22 @@
 const express = require("express");
-const mysql = require("mysql2/promise");
+const pool = require("./database/db");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const bcrypt = require("bcryptjs");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const ventasRouter = require("./src/routes/ventas");
-const multer = require("multer");
+const brypts = require("bcryptjs");
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const ventasRouter = require('./src/routes/ventas');
+const multer = require('multer');
 const path = require("path");
 
-const app = express();
 
+const app = express();
 app.use("/public", express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/auth/ventas", ventasRouter);
-
-const MySQLStore = require("express-mysql-session")(session);
+app.use('/auth/ventas', ventasRouter);
 
 app.use("/src", express.static("src"));
 app.use("/src", express.static(__dirname + "/src"));
@@ -26,19 +24,20 @@ app.use("/src", express.static(__dirname + "/src"));
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "public/uploads"),
   filename: (req, file, cb) => {
+    // Obtener la extensión del archivo
     const ext = path.extname(file.originalname);
 
+    // Validar que la extensión sea jpeg, jpg, png o gif
     if (
       ext !== ".jpeg" &&
       ext !== ".jpg" &&
       ext !== ".png" &&
       ext !== ".gif"
     ) {
-      return cb(
-        new Error("Solo se permiten archivos JPEG, JPG, PNG y GIF.")
-      );
+      return cb(new Error("Solo se permiten archivos JPEG, JPG, PNG y GIF."));
     }
 
+    // Generar el nombre de archivo único
     const uniqueSuffix = `${Date.now()}-${Math.round(
       Math.random() * 1e9
     )}${ext}`;
@@ -46,6 +45,7 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix);
   },
 });
+
 
 app.use(
   multer({
@@ -56,46 +56,30 @@ app.use(
 
 app.use(cookieParser());
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DBNAME,
-  waitForConnections: true,
-  connectionLimit: Infinity,
-  queueLimit: 0,
-  timeout: 0,
-});
-
-const sessionStore = new MySQLStore({
-  expiration: 86400000,
-  createDatabaseTable: true,
-  schema: {
-    tableName: "usuarios",
-  },
-  pool: pool,
-});
-
 app.use(
   session({
+    key: "my-cookie",
     secret: "my-secret",
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    store: sessionStore,
+    
   })
 );
 
 const viewsDirectories = [
   path.join(__dirname, "./src/views"),
   path.join(__dirname, "./src/vista_almacenero"),
-  path.join(__dirname, "./src/vista_cajero"),
+  path.join(__dirname, "./src/vista_cajero")
 ];
 
+// Establecer el motor de plantillas y los directorios de vistas
 app.set("view engine", "ejs");
 app.set("views", viewsDirectories);
 
+//MIS RUTAS
 const login = require("./src/routes/login");
 app.use(login);
+
 
 
 const perfiles= require("./src/routes/perfiles");
