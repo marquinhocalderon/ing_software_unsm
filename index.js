@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/auth/ventas', ventasRouter);
+const MySQLStore = require('express-mysql-session')(session);
 
 app.use("/src", express.static("src"));
 app.use("/src", express.static(__dirname + "/src"));
@@ -56,12 +57,14 @@ app.use(
 
 app.use(cookieParser());
 
+const store = new MySQLStore(pool);
 app.use(
   session({
     key: "my-cookie",
     secret: "my-secret",
     resave: true,
     saveUninitialized: true,
+    store: store.Store,
   })
 );
 
