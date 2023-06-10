@@ -3,7 +3,8 @@ const pool = require("../../database/db");
 const bcryptjs = require("bcryptjs");
 const router = express.Router();
 
-function requireAuth(req, res, next) {
+
+function requireAuth2(req, res, next) {
   if (!req.session.loggedin) {
     // Limpiamos la cookie "loggedout"
     return res.redirect("/login");
@@ -13,8 +14,10 @@ function requireAuth(req, res, next) {
 
       // Verifica el cargo del usuario permitido para acceder a /auth/compras
       if (req.session.cargo === "Administrador") {
-        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+        console.log(req.session.loggedin)
+      
         return next();
+      
       } else {
         // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
         return res.redirect("/login");
@@ -33,7 +36,7 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/auth", requireAuth, function (req, res) {
+router.get("/auth", requireAuth2, function (req, res) {
   pool.query(
     'SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil  WHERE perfil.estado = "Activo"',
     function (error, results, fields) {
@@ -168,7 +171,7 @@ router.post("/auth", async (req, res) => {
 });
 
 
-router.get("/logout", requireAuth, function (req, res) {
+router.get("/logout", requireAuth2, function (req, res) {
   req.session.destroy(function (err) {
     if (err) {
       console.error(err);

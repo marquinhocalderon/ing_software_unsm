@@ -9,11 +9,12 @@ const ventasRouter = require('./src/routes/ventas');
 const multer = require('multer');
 const path = require("path");
 
+
 const app = express();
 app.use("/public", express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/auth/ventas', ventasRouter);
 
