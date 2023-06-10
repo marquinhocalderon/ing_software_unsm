@@ -175,4 +175,4 @@ router.get("/logout", verificarAutenticacion, function (req, res) {
 
 
 
-module.exports = router;
+module.exports = {router,verificarAutenticacion};

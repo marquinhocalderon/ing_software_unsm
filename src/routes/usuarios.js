@@ -4,34 +4,15 @@ const bcryptjs = require("bcryptjs");
 const router = express.Router();
 const fs = require('fs');
 const swal = require('sweetalert');
+const { verificarAutenticacion } = require("./login");
 
 
-function requireAuth(req, res, next) {
-  if (!req.session.loggedin) {
-    // Limpiamos la cookie "loggedout"
-    return res.redirect("/login");
-  } else {
-    if (req.session) {
-      // Aquí puedes acceder a los datos de usuario de la sesión
 
-      // Verifica el cargo del usuario permitido para acceder a /auth/compras
-      if (req.session.cargo === "Administrador") {
-        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
-        return next();
-      } else {
-        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
-        return res.redirect("/login");
-      }
-    } else {
-      return res.redirect("/login");
-    }
-  }
-}
 
 /* PARA MODIFICAR USUARIOS
 ---------------------------------------------------------------------------------------------------- */
 
-router.get("/auth/usuarios", requireAuth, async function (req, res) {
+router.get("/auth/usuarios", verificarAutenticacion, async function (req, res) {
   pool.query(
     "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil",
     function (error, results, fields) {
@@ -88,7 +69,7 @@ router.post("/auth/usuarios", async (req, res) => {
 
 
 
-router.get("/auth/usuarios/:id",requireAuth, async function (req, res) {
+router.get("/auth/usuarios/:id", verificarAutenticacion, async function (req, res) {
   const { id } = req.params;
   pool.query(
     "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil WHERE usuarios.idusuario = ?", [id], 
@@ -105,7 +86,7 @@ router.get("/auth/usuarios/:id",requireAuth, async function (req, res) {
   );
 });
 
-router.get("/auth/usuarios1/:id", requireAuth, async function (req, res) {
+router.get("/auth/usuarios1/:id", verificarAutenticacion, async function (req, res) {
   try {
     const { id } = req.params;
 
