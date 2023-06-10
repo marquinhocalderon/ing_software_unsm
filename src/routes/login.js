@@ -116,7 +116,7 @@ router.post("/auth", async (req, res) => {
           req.session.loggedin = true;
           req.session.idusuario = results[0].idusuario;
           req.session.usuario = results[0].usuario;
-          req.session.cargo = "Administrador"
+          req.session.cargo = results[0].cargo;
           const perfilId = results[0].idperfil;
           pool.query(
             "SELECT * FROM perfil WHERE idperfil = ?",
