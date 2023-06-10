@@ -56,14 +56,12 @@ app.use(
 
 app.use(cookieParser());
 
-app.use(
-  session({
-    key: "my-cookie",
-    secret: "my-secret",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+app.use(session({
+  secret: 'mysecretkey',
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+}));
 
 const viewsDirectories = [
   path.join(__dirname, "./src/views"),
