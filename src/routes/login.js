@@ -193,7 +193,7 @@ router.get("/auth/usuarios", verificarAutenticacion, async function (req, res) {
 
 
 
-router.post("/auth/usuarios", async (req, res) => {
+router.post("/auth/usuarios", verificarAutenticacion, async (req, res) => {
   const { dni_usuario, nombre, usuario, password, estado_usuario } = req.body;
   const idPerfil = req.body.cargo;
   const imagen = req.file;
@@ -230,7 +230,7 @@ router.post("/auth/usuarios", async (req, res) => {
 
 
 
-router.get("/auth/usuarios/:id", async function (req, res) {
+router.get("/auth/usuarios/:id", verificarAutenticacion, async function (req, res) {
   const { id } = req.params;
   pool.query(
     "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil WHERE usuarios.idusuario = ?", [id], 
@@ -247,7 +247,7 @@ router.get("/auth/usuarios/:id", async function (req, res) {
   );
 });
 
-router.get("/auth/usuarios1/:id", async function (req, res) {
+router.get("/auth/usuarios1/:id", verificarAutenticacion, async function (req, res) {
   try {
     const { id } = req.params;
 
@@ -280,7 +280,7 @@ router.get("/auth/perfil1", verificarAutenticacion, async function (req, res) {
   );
 });
 
-router.post("/auth/usuarios/:id", async function (req, res) {
+router.post("/auth/usuarios/:id", verificarAutenticacion, async function (req, res) {
   const { dni_usuario, nombre, usuario, estado_usuario } = req.body;
   const imagen = req.file;
   const idPerfil = req.body.cargo;
