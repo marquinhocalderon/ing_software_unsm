@@ -7,7 +7,7 @@ const router = express.Router();
 function verificarAutenticacion(req, res, next) {
   if (req.session.loggedin) {
     // Si el usuario está autenticado, pasa al siguiente middleware o ruta
-    next();
+    return next();
   } else {
     // Si el usuario no está autenticado, redirecciona al formulario de login
     res.redirect("/login");
