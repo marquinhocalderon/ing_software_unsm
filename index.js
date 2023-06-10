@@ -64,7 +64,7 @@ app.use(
     secret: "my-secret",
     resave: true,
     saveUninitialized: true,
-    store: store.Store,
+    store: store,
   })
 );
 
