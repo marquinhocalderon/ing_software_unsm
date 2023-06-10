@@ -4,15 +4,15 @@ const bcryptjs = require("bcryptjs");
 const router = express.Router();
 
 
-const requireAuth2 = (req, res, next) => {
+function verificarAutenticacion(req, res, next) {
   if (req.session.loggedin) {
-    // El usuario ha iniciado sesión, permite el acceso a la siguiente ruta
+    // Si el usuario está autenticado, pasa al siguiente middleware o ruta
     next();
   } else {
-    // El usuario no ha iniciado sesión, redirige a la página de inicio de sesión
+    // Si el usuario no está autenticado, redirecciona al formulario de login
     res.redirect("/login");
   }
-};
+}
 
 
 router.get("/", (req, res) => {
@@ -23,7 +23,7 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/auth", requireAuth2, function (req, res) {
+router.get("/auth", verificarAutenticacion, function (req, res) {
   pool.query(
     'SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil  WHERE perfil.estado = "Activo"',
     function (error, results, fields) {
@@ -125,10 +125,12 @@ router.post("/auth", async (req, res) => {
                       res.status(500).send("Internal Server Error");
                       return;
                     }
+                    req.session.name = "Marco"; // Guardar el nombre en la sesión
+                    req.session.totalVentas = resultsVentas[0].totalVentas; // Guardar el total de ventas en la sesión
                     res.render("index", {
                       login: true,
-                      name: "Marco",
-                      totalVentas: resultsVentas[0].totalVentas,
+                      name: req.session.name,
+                      totalVentas: req.session.totalVentas,
                     });
                   }
                 );
@@ -158,7 +160,7 @@ router.post("/auth", async (req, res) => {
 });
 
 
-router.get("/logout", requireAuth2, function (req, res) {
+router.get("/logout", verificarAutenticacion, function (req, res) {
   req.session.destroy(function (err) {
     if (err) {
       console.error(err);
