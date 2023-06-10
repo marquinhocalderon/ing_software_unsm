@@ -57,14 +57,23 @@ app.use(
 
 app.use(cookieParser());
 
-const store = new MySQLStore(pool);
+const sessionStore = new MySQLStore({
+  expiration: 86400000, // Tiempo de expiración de la sesión en milisegundos (aquí se usa 1 día)
+  createDatabaseTable: true, // Crea automáticamente la tabla de sesiones si no existe
+  schema: {
+    tableName: 'sessions' // Nombre de la tabla de sesiones
+  },
+  pool: pool // Utiliza el pool de conexiones de MySQL
+});
+
+
 app.use(
   session({
     key: "my-cookie",
     secret: "my-secret",
     resave: true,
     saveUninitialized: true,
-    store: store,
+    store: sessionStore,
   })
 );
 
