@@ -61,7 +61,7 @@ router.get('/jalarproductos', (req, res) => {
   );
 });
 
-router.post("/auth", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { usuario, password } = req.body;
 
   let passEncryptado = await bcryptjs.hash(password, 8);
