@@ -71,6 +71,8 @@ router.get('/jalarproductos', (req, res) => {
   );
 });
 
+
+
 router.post("/auth", async (req, res) => {
   const { usuario, password } = req.body;
 
@@ -114,7 +116,7 @@ router.post("/auth", async (req, res) => {
           req.session.loggedin = true;
           req.session.idusuario = results[0].idusuario;
           req.session.usuario = results[0].usuario;
-          req.session.cargo = results[0].cargo;
+          req.session.cargo = "Administrador"
           const perfilId = results[0].idperfil;
           pool.query(
             "SELECT * FROM perfil WHERE idperfil = ?",
@@ -166,6 +168,8 @@ router.post("/auth", async (req, res) => {
     });
   }
 });
+
+
 
 
 router.get("/logout", requireAuth, function (req, res) {

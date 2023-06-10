@@ -1,17 +1,15 @@
 const express = require("express");
 const pool = require("./database/db");
-const session = require("express-session");
+
 const cookieParser = require("cookie-parser");
-const brypts = require("bcryptjs");
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const ventasRouter = require('./src/routes/ventas');
 const multer = require('multer');
 const path = require("path");
 
-
 const session = require("express-session");
-const MySQLStore = require("connect-mysql")(session);
 
 app.use(
   session({
@@ -19,13 +17,6 @@ app.use(
     secret: "my-secret",
     resave: false,
     saveUninitialized: true,
-    store: new MySQLStore({
-      // Configuración de la conexión a la base de datos
-      host: process.env.DB_HOST,
-      user: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DBNAME,
-    }),
   })
 );
 
