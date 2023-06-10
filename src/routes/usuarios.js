@@ -2,9 +2,9 @@ const express = require("express");
 const pool = require("../../database/db");
 const bcryptjs = require("bcryptjs");
 const router = express.Router();
-const fs = require('fs');
+
 const swal = require('sweetalert');
-const { verificarAutenticacion } = require("./login");
+const  verificarAutenticacion  = require("./login");
 
 
 
