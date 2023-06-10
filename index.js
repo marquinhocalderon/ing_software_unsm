@@ -1,25 +1,13 @@
 const express = require("express");
 const pool = require("./database/db");
-
+const session = require("express-session");
 const cookieParser = require("cookie-parser");
-
+const brypts = require("bcryptjs");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const ventasRouter = require('./src/routes/ventas');
 const multer = require('multer');
 const path = require("path");
-
-const session = require("express-session");
-
-app.use(
-  session({
-    key: "my-cookie",
-    secret: "my-secret",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
 
 const app = express();
 app.use("/public", express.static("public"));
@@ -67,7 +55,14 @@ app.use(
 
 app.use(cookieParser());
 
-
+app.use(
+  session({
+    key: "my-cookie",
+    secret: "my-secret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 const viewsDirectories = [
   path.join(__dirname, "./src/views"),

@@ -71,8 +71,6 @@ router.get('/jalarproductos', (req, res) => {
   );
 });
 
-
-
 router.post("/auth", async (req, res) => {
   const { usuario, password } = req.body;
 
@@ -168,8 +166,6 @@ router.post("/auth", async (req, res) => {
     });
   }
 });
-
-
 
 
 router.get("/logout", requireAuth, function (req, res) {
