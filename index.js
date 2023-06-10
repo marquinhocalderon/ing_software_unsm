@@ -1,23 +1,24 @@
 const express = require("express");
-const mysql = require('mysql2');
+const mysql = require("mysql2");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const brypts = require("bcryptjs");
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const ventasRouter = require('./src/routes/ventas');
-const multer = require('multer');
+const bcrypt = require("bcryptjs");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const ventasRouter = require("./src/routes/ventas");
+const multer = require("multer");
 const path = require("path");
 
-
 const app = express();
+
 app.use("/public", express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use('/auth/ventas', ventasRouter);
-const MySQLStore = require('express-mysql-session')(session);
+app.use("/auth/ventas", ventasRouter);
+
+const MySQLStore = require("express-mysql-session")(session);
 
 app.use("/src", express.static("src"));
 app.use("/src", express.static(__dirname + "/src"));
@@ -25,20 +26,19 @@ app.use("/src", express.static(__dirname + "/src"));
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "public/uploads"),
   filename: (req, file, cb) => {
-    // Obtener la extensión del archivo
     const ext = path.extname(file.originalname);
 
-    // Validar que la extensión sea jpeg, jpg, png o gif
     if (
       ext !== ".jpeg" &&
       ext !== ".jpg" &&
       ext !== ".png" &&
       ext !== ".gif"
     ) {
-      return cb(new Error("Solo se permiten archivos JPEG, JPG, PNG y GIF."));
+      return cb(
+        new Error("Solo se permiten archivos JPEG, JPG, PNG y GIF.")
+      );
     }
 
-    // Generar el nombre de archivo único
     const uniqueSuffix = `${Date.now()}-${Math.round(
       Math.random() * 1e9
     )}${ext}`;
@@ -46,7 +46,6 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix);
   },
 });
-
 
 app.use(
   multer({
@@ -63,42 +62,40 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DBNAME,
   waitForConnections: true,
-  connectionLimit: Infinity, // Establece un límite de conexiones muy alto
+  connectionLimit: Infinity,
   queueLimit: 0,
-  timeout: 0 // Establece un tiempo de espera infinito
+  timeout: 0,
 });
 
 const sessionStore = new MySQLStore({
-  expiration: 86400000, // Tiempo de expiración de la sesión en milisegundos (aquí se usa 1 día)
-  createDatabaseTable: true, // Crea automáticamente la tabla de sesiones si no existe
+  expiration: 86400000,
+  createDatabaseTable: true,
   schema: {
-    tableName: 'usuarios' // Nombre de la tabla de sesiones
+    tableName: "usuarios",
   },
-  pool: pool // Utiliza el pool de conexiones de MySQL
+  pool: pool,
 });
 
-app.use(session({
-  secret: 'my-secret',
-  resave: false,
-  saveUninitialized: true,
-  store: sessionStore
-}));
-
+app.use(
+  session({
+    secret: "my-secret",
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  })
+);
 
 const viewsDirectories = [
   path.join(__dirname, "./src/views"),
   path.join(__dirname, "./src/vista_almacenero"),
-  path.join(__dirname, "./src/vista_cajero")
+  path.join(__dirname, "./src/vista_cajero"),
 ];
 
-// Establecer el motor de plantillas y los directorios de vistas
 app.set("view engine", "ejs");
 app.set("views", viewsDirectories);
 
-//MIS RUTAS
 const login = require("./src/routes/login");
 app.use(login);
-
 
 
 const perfiles= require("./src/routes/perfiles");
