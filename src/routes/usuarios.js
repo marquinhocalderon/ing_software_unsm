@@ -4,7 +4,7 @@ const bcryptjs = require("bcryptjs");
 const router = express.Router();
 
 const swal = require('sweetalert');
-const  verificarAutenticacion  = require("./login");
+
 
 
 
