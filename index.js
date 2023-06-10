@@ -1,5 +1,5 @@
 const express = require("express");
-const pool = require("./database/db");
+const mysql = require('mysql2');
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const brypts = require("bcryptjs");
@@ -57,6 +57,17 @@ app.use(
 
 app.use(cookieParser());
 
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DBNAME,
+  waitForConnections: true,
+  connectionLimit: Infinity, // Establece un límite de conexiones muy alto
+  queueLimit: 0,
+  timeout: 0 // Establece un tiempo de espera infinito
+});
+
 const sessionStore = new MySQLStore({
   expiration: 86400000, // Tiempo de expiración de la sesión en milisegundos (aquí se usa 1 día)
   createDatabaseTable: true, // Crea automáticamente la tabla de sesiones si no existe
@@ -66,16 +77,13 @@ const sessionStore = new MySQLStore({
   pool: pool // Utiliza el pool de conexiones de MySQL
 });
 
+app.use(session({
+  secret: 'my-secret',
+  resave: false,
+  saveUninitialized: true,
+  store: sessionStore
+}));
 
-app.use(
-  session({
-    key: "my-cookie",
-    secret: "my-secret",
-    resave: true,
-    saveUninitialized: true,
-    store: sessionStore,
-  })
-);
 
 const viewsDirectories = [
   path.join(__dirname, "./src/views"),
