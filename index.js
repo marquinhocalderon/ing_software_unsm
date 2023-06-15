@@ -9,12 +9,11 @@ const ventasRouter = require('./src/routes/ventas');
 const multer = require('multer');
 const path = require("path");
 
-
 const app = express();
 app.use("/public", express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/auth/ventas', ventasRouter);
 
@@ -60,9 +59,8 @@ app.use(
   session({
     key: "my-cookie",
     secret: "my-secret",
-    resave: true,
+    resave: false,
     saveUninitialized: true,
-    
   })
 );
 
@@ -79,9 +77,8 @@ app.set("views", viewsDirectories);
 //MIS RUTAS
 const login = require("./src/routes/login");
 app.use(login);
-
-
-
+const usuarios = require("./src/routes/usuarios");
+app.use(usuarios);
 const perfiles= require("./src/routes/perfiles");
 app.use(perfiles);
 const productos = require("./src/routes/productos");
@@ -104,7 +101,8 @@ const ingreso_almacen = require("./src/routes/ingreso_almacen");
 app.use(ingreso_almacen);
 const ingreso_venta = require("./src/routes/ingreso_ventas");
 app.use(ingreso_venta);
-
+const loginalmacen = require("./src/rutas_almacenero/almacenero_login")
+app.use(loginalmacen)
 const productos_almacenero = require("./src/rutas_almacenero/productos_almacenero")
 app.use(productos_almacenero)
 const unidad_almacenero = require("./src/rutas_almacenero/unidad_almacenero")
@@ -119,15 +117,14 @@ const lista_compra_almacenero = require("./src/rutas_almacenero/lista_compra_alm
 app.use(lista_compra_almacenero)
 
 
+const logincaja = require("./src/rutas_cajero/login_cajero")
+app.use(logincaja)
 const clientes_cajero = require("./src/rutas_cajero/clientes_cajero")
 app.use(clientes_cajero)
 const ventas_cajero = require("./src/rutas_cajero/ventas_cajero")
 app.use(ventas_cajero)
 const lista_ventas = require("./src/rutas_cajero/facturaciones_cajero")
 app.use(lista_ventas)
-
-
-
 
 
 //PRUEBA DE LA CONEXION A LA BASE DE DATOS MYSQL

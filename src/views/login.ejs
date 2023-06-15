@@ -31,7 +31,7 @@
                                   <div class="text-center" style="margin-top: -28px;">
                                       <img src="/src/img/sanmathias.jpg" style="width: 8em; border-radius: 50%;" alt="">
                                   </div>
-                                  <form class="user" action="/login" method="post">
+                                  <form class="user" action="/auth" method="post">
                                       <div class="mb-3 form-floating">
                                           <input type="text" name="usuario" class="form-control" id="floatingInput" placeholder="Escribe tu Usuario">
                                           <label for="floatingInput">Escribe tu Usuario</label>
@@ -51,22 +51,6 @@
               </div>
           </div>
       </div>
-  
-        
-
-   <% if (typeof alert != "undefined")  { %>
-    <script>
-    Swal.fire({
-      title:'<%= alertTitle %>',
-      text:'<%= alertMessage %>',
-      icon:'<%= alertIcon %>',
-      showConfirmButton: <%= showConfirmButton %>,
-      timer: <%= timer %>
-    }).then(()=>{
-      window.location='/<%= ruta %>'
-    })
-    </script>
-  <% } %>
     </div>
 
 

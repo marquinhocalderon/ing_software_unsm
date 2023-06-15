@@ -69,89 +69,92 @@
 
 
 </div>
-<div class="sidebar-overlay"></div>
-<!-- end: Sidebar -->
+  <div class="sidebar-overlay"></div>
+  <!-- end: Sidebar -->
 
-<!-- start: Main -->
-<main class="bg-light">
+  <!-- start: Main -->
+  <main class="bg-light">
     <div class="p-2">
-        <!-- start: Navbar -->
-        <nav class="px-3 py-2 bg-white rounded shadow-sm">
-            <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
-            <h5 class="fw-bold mb-0 me-auto">Dashboard</h5>
-
-            <div class="dropdown">
-                <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <span class="me-2 d-none d-sm-block">Cajero </span>
-                    <img class="navbar-profile-image"
-                        src="https://png.pngtree.com/element_our/20190529/ourlarge/pngtree-cashier-png-free-material-download-at-work-image_1190664.jpg"
-                        alt="Image">
-                </div>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Perfil</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/logout">Cerrar Session</a>
-                </div>
-            </div>
-        </nav>
+      <!-- start: Navbar -->
+      <nav class="px-3 py-2 bg-white rounded shadow-sm">
+        <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
+        <h5 class="fw-bold mb-0 me-auto">Clientes</h5>
+       
+        <div class="dropdown">
+          <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <span class="me-2 d-none d-sm-block">Cajero </span>
+                        <img class="navbar-profile-image"
+                            src="https://png.pngtree.com/element_our/20190529/ourlarge/pngtree-cashier-png-free-material-download-at-work-image_1190664.jpg"
+                            alt="Image">
+                    </div>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Perfil</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout">Cerrar Session</a>
+          </div>
+        </div>
+      </nav>
       <!-- end: Navbar -->
 
       <!-- start: Content -->
-      <!-- end: Navbar -->
+          <!-- end: Navbar -->
 
       <!-- start: Content -->
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-
+            
             <div class="form first">
               <form id="agregarUsuarioForm" method="post" action="/clientes">
                 <div class="details personal" style="width: 100%;">
                   <br>
-                  <div class="fields">
-                    <div class="input-field">
-                      <label>Tipo de Documento</label>
-                      <select name="tipo_comprobante" id="tipo_comprobante" required>
-                        <option value="">Seleccione</option>
-  
-                        <option value="dni">Dni</option>
-                        <option value="ruc">Ruc</option>
-                      </select>
-                    </div>
-                    <div class="input-field"
-                      style="display: flex; flex-direction: row; justify-content: end; align-items: center; gap: 5px;">
-                      <div style=" display: flex;
-                      width: 100%;
-                      flex-direction: column;
-                      margin: 4px 0;">
-                        <label>Buscar Cliente:</label>
-                        <input type="text" placeholder="Buscar Cliente" id="dni" name="dni" >
-                        <input type="text" placeholder="Buscar Cliente" id="ruc" name="ruc" style="display: none;" >
+                  <div class="fields" >
+                    <div class="input-field" style=" width: auto;">
+                      <div style="display: flex; flex-direction: column; width: 100%; margin: 4px 0;">
+                        <label>Dni:</label>
+                        <input style="width: 20em;" type="number" placeholder="Ingrese Dni" id="dni" name="dni" >
                       </div>
-                     
-                      <div style="margin-top: 1em;  ">
-                        <a class="btn btn-primary" id="botonapi" style="width: 3em; font-size: 1.2em;"><i
-                          class="bi bi-search"></i></a>
+                      
+                      <div style="display: flex; flex-direction: column; width: 100%; margin: 4px 0;">
+                        <label>Ruc:</label>
+                        <input style="width: 20em;" type="number" placeholder="Ingrese ruc" id="ruc" name="ruc" >
+                      </div>
+                      <div style="display: flex; gap: 10px; width: 100em;">
+                      <div style="margin-top: 1.8em;">
+                        <a class="btn btn-primary" id="buscar1" style=" font-size: 1.2em;">
+                          Buscar por dni
+                        </a>
+                      </div>
+                      <div style="margin-top: 1.8em;">
+                        <a class="btn btn-primary" id="buscarclienteapi" style="font-size: 1.2em;">
+                          Buscar por Ruc
+                        </a>
                       </div>
                     </div>
-                    <div class="input-field">
-                      <label>Cliente</label>
-                      <input type="text" placeholder="Nombre Cliente" id="nombre_cliente" name="nombre_cliente"  >
-                      <input type="text" placeholder="Razón Social" id="razonsocial" name="razonsocial" style="display: none;" >
                     </div>
-               
+                    <div class="input-field"  >
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Nombre Completo:</label>
+                        <input style="width: 24.5em;" type="text" placeholder="nombre" id="nombre" name="nombre_cliente" >
+                      </div>
                     </div>
-                    <div class="input-field">
+                    <div class="input-field"  >
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Razon Social:</label>
+                        <input style="width: 24.5em;" type="text" placeholder="razonsocial" id="razonsocial" name="razonsocial" >
+                      </div>
+                    </div>
+                    <div class="input-field" >
                       <div style="display: flex; flex-direction: column; margin: 4px 0;">
                         <label>Telefono:</label>
-                        <input style="width: 15em;" type="number" placeholder="telefono" id="telefono" name="telefono">
+                        <input style="width: 15em;" type="number" placeholder="telefono" id="telefono" name="telefono" >
                       </div>
                     </div>
                     <div class="input-field" style="display: flex; flex-direction: row; gap: 5px;">
                       <div style="display: flex; flex-direction: column; margin: 4px 0;">
                         <label>Direccion:</label>
-                        <input style="width: 20em;" type="text" placeholder="direccion" id="direccion" name="direccion">
+                        <input style="width: 20em;" type="text" placeholder="direccion" id="direccion" name="direccion" >
                       </div>
                       <div>
                         <button type="submit" class="btn btn-primary" style="margin-top: 1.7em;">Agregar</button>
@@ -161,8 +164,8 @@
                 </div>
               </form>
             </div>
-
-
+            
+          
           </div>
 
           <div class="col-md-12">
@@ -183,39 +186,21 @@
                 </thead>
                 <tbody class="table-group-divider">
                   <% clientes.forEach(function(cliente) { %>
-                    <tr>
-                      <td>
-                        <%= cliente.idcliente %>
-                      </td>
-                      <td>
-                        <%= cliente.dni %>
-                      </td>
-                      <td>
-                        <%= cliente.ruc %>
-                      </td>
-                      <td>
-                        <%= cliente.nombre_cliente %>
-                      </td>
-                      <td>
-                        <%= cliente.razonsocial %>
-                      </td>
-                      <td>
-                        <%= cliente.telefono %>
-                      </td>
-                      <td>
-                        <%= cliente.direccion %>
-                      </td>
-                      <td>
-                        <%= cliente.estado_cliente %>
-                      </td>
-                      <td>
-                        <button class="btn btn-success"
-                          onclick="mostrarFormulario('<%= cliente.idcliente %>', '<%= JSON.stringify(cliente) %>')">Actualizar
-                          Cliente</button>
-
-                      </td>
-                    </tr>
-                    <% }); %>
+                  <tr>
+                    <td><%= cliente.idcliente %></td>
+                    <td><%= cliente.dni %></td>
+                    <td><%= cliente.ruc %></td>
+                    <td><%= cliente.nombre_cliente %></td>
+                    <td><%= cliente.razonsocial %></td>
+                    <td><%= cliente.telefono %></td>
+                    <td><%= cliente.direccion %></td>
+                    <td><%= cliente.estado_cliente %></td>
+                    <td>
+                      <button class="btn btn-success" onclick="mostrarFormulario('<%= cliente.idcliente %>', '<%= JSON.stringify(cliente) %>')">Actualizar Cliente</button>
+                     
+                    </td>
+                  </tr>
+                  <% }); %>
                 </tbody>
               </table>
               <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -224,7 +209,7 @@
                 $(document).ready(function () {
                   $('#users').DataTable();
                 });
-              </script>
+              </script> 
 
               <% if(typeof alert !='undefined' ) { %>
 
@@ -249,60 +234,12 @@
     </div>
   </main>
   <!-- end: Main -->
-
-  <script>
-    // Obtener referencias a los elementos del DOM
-    const tipoComprobante = document.getElementById('tipo_comprobante');
-    const nombreCliente = document.getElementById('nombre_cliente');
-    const razonSocial = document.getElementById('razonsocial');
-    const dnicliente = document.getElementById('dni');
-    const ruccliente = document.getElementById('ruc');
-  
-    // Agregar un event listener para detectar cambios en el menú desplegable
-    tipoComprobante.addEventListener('change', function() {
-      if (tipoComprobante.value === 'ruc') {
-        nombreCliente.style.display = 'none';
-        razonSocial.style.display = 'block';
-        ruccliente.style.display = 'block';
-        dnicliente.style.display = 'none';
-        razonSocial.value="";
-        ruccliente.value="";
-  
-        razonSocial.setAttribute('required', 'required');
-        ruccliente.setAttribute('required', 'required');
-        dnicliente.removeAttribute('required');
-        nombreCliente.removeAttribute('required');
-      } else if (tipoComprobante.value === 'dni') {
-        nombreCliente.style.display = 'block';
-        razonSocial.style.display = 'none';
-        ruccliente.style.display = 'none';
-        dnicliente.style.display = 'block';
-        dnicliente.value="";
-        nombreCliente.value="";
-
-        nombreCliente.setAttribute('required', 'required');
-        dnicliente.setAttribute('required', 'required');
-        razonSocial.removeAttribute('required');
-        ruccliente.removeAttribute('required');
-      } else {
-        nombreCliente.style.display = 'block';
-        razonSocial.style.display = 'none';
-        ruccliente.style.display = 'none';
-        dnicliente.style.display = 'block';
-  
-        nombreCliente.setAttribute('required', 'required');
-        dnicliente.setAttribute('required', 'required');
-        razonSocial.removeAttribute('required');
-        ruccliente.removeAttribute('required');
-      }
-    });
-  </script>
-
+ 
   <script>
     // Frontend - función mostrarFormulario
     function mostrarFormulario2(idcliente, datos) {
       const usuario = JSON.parse(datos);
-
+  
       Swal.fire({
         title: 'Confirmar eliminación',
         text: '¿Estás seguro de que quieres eliminar este cliente?',
@@ -331,112 +268,109 @@
       });
     }
   </script>
- <script>
-  // Frontend - función mostrarFormulario
-  function mostrarFormulario(idcliente, datos) {
-    const cliente = JSON.parse(datos);
-
-    Swal.fire({
-      title: 'Detalles del cliente',
-      html: `
-        <form id="actualizarClienteForm" method="post" action="/actualizarcliente/${idcliente}">
-          <div class="form-group">
-            <label for="dni">DNI:</label>
-            <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}"  >
-          </div>
-          <div class="form-group">
-            <label for="dni">Ruc:</label>
-            <input type="number" class="form-control" id="ruc" name="ruc" value="${cliente.ruc || ''}"  >
-          </div>
-          <div class="form-group">
-            <label for="nombre">Nombre Cliente:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre_cliente" value="${cliente.nombre_cliente || ''}"  >
-          </div>
-          <div class="form-group">
-            <label for="nombre">razonsocial Cliente:</label>
-            <input type="text" class="form-control" id="razonsocial" name="razonsocial" value="${cliente.razonsocial || ''}"  >
-          </div>
-          <div class="form-group">
-            <label for="telefono">Teléfono:</label>
-            <input type="text" class="form-control" id="telefono" name="telefono" value="${cliente.telefono || ''}" >
-          </div>
-          <div class="form-group">
-            <label for="direccion">Dirección:</label>
-            <input type="text" class="form-control" id="direccion" name="direccion" value="${cliente.direccion || ''}" >
-          </div>
-          <div class="form-group">
-            <label for="estado">Estado:</label>
-            <select class="form-select" id="estado" name="estado_cliente" required>
-              <option value="Activo" ${cliente.estado_cliente === 'Activo' ? 'selected' : ''}>Activo</option>
-              <option value="Inactivo" ${cliente.estado_cliente === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Actualizar</button>
-          <button type="button" class="btn btn-secondary" id="cancelarBoton">Cancelar</button>
-        </form>
-      `,
-      showCancelButton: false,
-      showConfirmButton: false
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const idCliente = idcliente;
-        const dni = document.getElementById("dni").value;
-        const nombre = document.getElementById('nombre').value;
-        const telefono = document.getElementById('telefono').value;
-        const direccion = document.getElementById('direccion').value;
-        const estado = document.getElementById('estado').value;
-
-        fetch(`/actualizarcliente/${idCliente}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            dni: dni,
-            nombre_cliente: nombre,
-            telefono: telefono,
-            direccion: direccion,
-            estado_cliente: estado
+  <script>
+    // Frontend - función mostrarFormulario
+    function mostrarFormulario(idcliente, datos) {
+      const cliente = JSON.parse(datos);
+  
+      Swal.fire({
+        title: 'Detalles del cliente',
+        html: `
+          <form id="actualizarClienteForm" method="post" action="/actualizarcliente/${idcliente}">
+            <div class="form-group">
+              <label for="dni">DNI:</label>
+              <input type="number" class="form-control" id="dni" name="dni" value="${cliente.dni || ''}"  >
+            </div>
+            <div class="form-group">
+              <label for="dni">Ruc:</label>
+              <input type="number" class="form-control" id="ruc" name="ruc" value="${cliente.ruc || ''}"  >
+            </div>
+            <div class="form-group">
+              <label for="nombre">Nombre Cliente:</label>
+              <input type="text" class="form-control" id="nombre" name="nombre_cliente" value="${cliente.nombre_cliente || ''}"  >
+            </div>
+            <div class="form-group">
+              <label for="nombre">razonsocial Cliente:</label>
+              <input type="text" class="form-control" id="razonsocial" name="razonsocial" value="${cliente.razonsocial || ''}"  >
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono:</label>
+              <input type="text" class="form-control" id="telefono" name="telefono" value="${cliente.telefono || ''}" >
+            </div>
+            <div class="form-group">
+              <label for="direccion">Dirección:</label>
+              <input type="text" class="form-control" id="direccion" name="direccion" value="${cliente.direccion || ''}" >
+            </div>
+            <div class="form-group">
+              <label for="estado">Estado:</label>
+              <select class="form-select" id="estado" name="estado_cliente" required>
+                <option value="Activo" ${cliente.estado_cliente === 'Activo' ? 'selected' : ''}>Activo</option>
+                <option value="Inactivo" ${cliente.estado_cliente === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <button type="button" class="btn btn-secondary" id="cancelarBoton">Cancelar</button>
+          </form>
+        `,
+        showCancelButton: false,
+        showConfirmButton: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const idCliente = idcliente;
+          const dni = document.getElementById("dni").value;
+          const nombre = document.getElementById('nombre').value;
+          const telefono = document.getElementById('telefono').value;
+          const direccion = document.getElementById('direccion').value;
+          const estado = document.getElementById('estado').value;
+  
+          fetch(`/actualizarcliente/${idCliente}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              dni: dni,
+              nombre_cliente: nombre,
+              telefono: telefono,
+              direccion: direccion,
+              estado_cliente: estado
+            })
           })
+          .then(response => {
+          if (response.ok) {
+            Swal.fire('Éxito', 'El cliente se actualizó correctamente', 'success');
+            location.reload();
+          } else {
+            response.json().then(data => {
+              Swal.fire('Error', data.error, 'error');
+            });
+          }
         })
-        .then(response => {
-        if (response.ok) {
-          Swal.fire('Éxito', 'El cliente se actualizó correctamente', 'success');
-          location.reload();
-        } else {
-          response.json().then(data => {
-            Swal.fire('Error', data.error, 'error');
-          });
-        }
-      })
-      .catch(error => {
-        Swal.fire('Error', 'Hubo un error en la solicitud', 'error');
+        .catch(error => {
+          Swal.fire('Error', 'Hubo un error en la solicitud', 'error');
+        });
+      }
+    });
+    
+      document.getElementById('cancelarBoton').addEventListener('click', () => {
+        Swal.close();
       });
     }
-  });
+  </script>
   
-    document.getElementById('cancelarBoton').addEventListener('click', () => {
-      Swal.close();
-    });
-  }
-</script>
-
   <!-- start: JS -->
-  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
     integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   <script src="/src/css/script.js"></script>
   <script src="/src/css/jquery-3.5.1.js"></script>
   <script src="/src/css/jquery.dataTables.min.js"></script>
   <script src="/src/css/dataTables.bootstrap5.min.js"></script>
   <!-- end: JS -->
-   
-  <script src="/src/ventasjs/apiclientesrucydni.js"></script>
+ <script src="/src/ventasjs/getapidni.js"></script> 
+ <script src="/src/ventasjs/apiclientedni.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,35 @@
+const express = require("express");
+const pool = require("../../database/db");
+const bcryptjs = require("bcryptjs");
+const router = express.Router();
+const fs = require('fs');
+const swal = require('sweetalert');
 
+
+function requireAuth(req, res, next) {
+  if (!req.session.loggedin) {
+    // Limpiamos la cookie "loggedout"
+    return res.redirect("/login");
+  } else {
+    if (req.session) {
+      // Aquí puedes acceder a los datos de usuario de la sesión
+
+      // Verifica el cargo del usuario permitido para acceder a /auth/compras
+      if (req.session.cargo === "Administrador") {
+        // El usuario tiene un cargo permitido, se permite el acceso a la página /auth/compras
+        return next();
+      } else {
+        // El usuario no tiene un cargo permitido, redirige a la página de inicio de sesión o muestra un mensaje de error
+        return res.redirect("/login");
+      }
+    } else {
+      return res.redirect("/login");
+    }
+  }
+}
+
+/* PARA MODIFICAR USUARIOS
+---------------------------------------------------------------------------------------------------- */
 
 router.get("/auth/usuarios", requireAuth, async function (req, res) {
   pool.query(

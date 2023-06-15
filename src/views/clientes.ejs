@@ -177,37 +177,42 @@
                 <div class="details personal" style="width: 100%;">
                   <br>
                   <div class="fields">
-                    <div class="input-field">
-                      <label>Tipo de Documento</label>
-                      <select name="tipo_comprobante" id="tipo_comprobante" required>
-                        <option value="">Seleccione</option>
-  
-                        <option value="dni">Dni</option>
-                        <option value="ruc">Ruc</option>
-                      </select>
-                    </div>
-                    <div class="input-field"
-                      style="display: flex; flex-direction: row; justify-content: end; align-items: center; gap: 5px;">
-                      <div style=" display: flex;
-                      width: 100%;
-                      flex-direction: column;
-                      margin: 4px 0;">
-                        <label>Buscar Cliente:</label>
-                        <input type="text" placeholder="Buscar Cliente" id="dni" name="dni" >
-                        <input type="text" placeholder="Buscar Cliente" id="ruc" name="ruc" style="display: none;" >
+                    <div class="input-field" style=" width: auto;">
+                      <div style="display: flex; flex-direction: column; width: 100%; margin: 4px 0;">
+                        <label>Dni:</label>
+                        <input style="width: 20em;" type="number" placeholder="Ingrese Dni" id="dni" name="dni">
                       </div>
-                     
-                      <div style="margin-top: 1em;  ">
-                        <a class="btn btn-primary" id="botonapi" style="width: 3em; font-size: 1.2em;"><i
-                          class="bi bi-search"></i></a>
+
+                      <div style="display: flex; flex-direction: column; width: 100%; margin: 4px 0;">
+                        <label>Ruc:</label>
+                        <input style="width: 20em;" type="number" placeholder="Ingrese ruc" id="ruc" name="ruc">
+                      </div>
+                      <div style="display: flex; gap: 10px; width: 100em;">
+                        <div style="margin-top: 1.8em;">
+                          <a class="btn btn-primary" id="buscar1" style=" font-size: 1.2em;">
+                            Buscar por dni
+                          </a>
+                        </div>
+                        <div style="margin-top: 1.8em;">
+                          <a class="btn btn-primary" id="buscarclienteapi" style="font-size: 1.2em;">
+                            Buscar por Ruc
+                          </a>
+                        </div>
                       </div>
                     </div>
                     <div class="input-field">
-                      <label>Cliente</label>
-                      <input type="text" placeholder="Nombre Cliente" id="nombre_cliente" name="nombre_cliente"  >
-                      <input type="text" placeholder="Razón Social" id="razonsocial" name="razonsocial" style="display: none;" >
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Nombre Completo:</label>
+                        <input style="width: 24.5em;" type="text" placeholder="nombre" id="nombre"
+                          name="nombre_cliente">
+                      </div>
                     </div>
-               
+                    <div class="input-field">
+                      <div style="display: flex; flex-direction: column; margin: 4px 0;">
+                        <label>Razon Social:</label>
+                        <input style="width: 24.5em;" type="text" placeholder="razonsocial" id="razonsocial"
+                          name="razonsocial">
+                      </div>
                     </div>
                     <div class="input-field">
                       <div style="display: flex; flex-direction: column; margin: 4px 0;">
@@ -316,54 +321,6 @@
     </div>
   </main>
   <!-- end: Main -->
-
-  <script>
-    // Obtener referencias a los elementos del DOM
-    const tipoComprobante = document.getElementById('tipo_comprobante');
-    const nombreCliente = document.getElementById('nombre_cliente');
-    const razonSocial = document.getElementById('razonsocial');
-    const dnicliente = document.getElementById('dni');
-    const ruccliente = document.getElementById('ruc');
-  
-    // Agregar un event listener para detectar cambios en el menú desplegable
-    tipoComprobante.addEventListener('change', function() {
-      if (tipoComprobante.value === 'ruc') {
-        nombreCliente.style.display = 'none';
-        razonSocial.style.display = 'block';
-        ruccliente.style.display = 'block';
-        dnicliente.style.display = 'none';
-        razonSocial.value="";
-        ruccliente.value="";
-  
-        razonSocial.setAttribute('required', 'required');
-        ruccliente.setAttribute('required', 'required');
-        dnicliente.removeAttribute('required');
-        nombreCliente.removeAttribute('required');
-      } else if (tipoComprobante.value === 'dni') {
-        nombreCliente.style.display = 'block';
-        razonSocial.style.display = 'none';
-        ruccliente.style.display = 'none';
-        dnicliente.style.display = 'block';
-        dnicliente.value="";
-        nombreCliente.value="";
-
-        nombreCliente.setAttribute('required', 'required');
-        dnicliente.setAttribute('required', 'required');
-        razonSocial.removeAttribute('required');
-        ruccliente.removeAttribute('required');
-      } else {
-        nombreCliente.style.display = 'block';
-        razonSocial.style.display = 'none';
-        ruccliente.style.display = 'none';
-        dnicliente.style.display = 'block';
-  
-        nombreCliente.setAttribute('required', 'required');
-        dnicliente.setAttribute('required', 'required');
-        razonSocial.removeAttribute('required');
-        ruccliente.removeAttribute('required');
-      }
-    });
-  </script>
 
   <script>
     // Frontend - función mostrarFormulario
@@ -502,8 +459,8 @@
   <script src="/src/css/jquery.dataTables.min.js"></script>
   <script src="/src/css/dataTables.bootstrap5.min.js"></script>
   <!-- end: JS -->
-   
-  <script src="/src/ventasjs/apiclientesrucydni.js"></script>
+  <script src="/src/ventasjs/getapidni.js"></script>
+  <script src="/src/ventasjs/apiclientedni.js"></script>
 </body>
 
 </html>
