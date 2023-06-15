@@ -51,6 +51,22 @@
               </div>
           </div>
       </div>
+  
+        
+
+   <% if (typeof alert != "undefined")  { %>
+    <script>
+    Swal.fire({
+      title:'<%= alertTitle %>',
+      text:'<%= alertMessage %>',
+      icon:'<%= alertIcon %>',
+      showConfirmButton: <%= showConfirmButton %>,
+      timer: <%= timer %>
+    }).then(()=>{
+      window.location='/<%= ruta %>'
+    })
+    </script>
+  <% } %>
     </div>
 
 

@@ -35,14 +35,38 @@ router.get("/login", (req, res) => {
 
 router.get("/auth", requireAuth, function (req, res) {
   pool.query(
-    'SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil  WHERE perfil.estado= "Activo"',
+    'SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil  WHERE perfil.estado = "Activo"',
     function (error, results, fields) {
       if (error) throw error;
-      res.render("index", {
-        usuarios: results,
-        name: results[0].cargo,
-        usuario: results[0].usuario,
-      });
+      pool.query(
+        'SELECT SUM(totalventa) AS totalVentas FROM ventas',
+        function (error, resultsVentas, fields) {
+          if (error) throw error;
+          pool.query(
+            'SELECT p.nombre_producto, COUNT(*) AS cantidad FROM detalle_venta AS dv JOIN productos AS p ON dv.idproducto = p.idproducto GROUP BY dv.idproducto ORDER BY cantidad DESC',
+            function (error, resultsProductos, fields) {
+              if (error) throw error;
+              res.render("index", {
+                usuarios: results,
+                name: "Marco",
+                usuario: results[0].usuario,
+                totalVentas: resultsVentas[0].totalVentas,
+                productos: resultsProductos
+              });
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
+router.get('/jalarproductos', (req, res) => {
+  pool.query(
+    'SELECT p.nombre_producto, COUNT(*) AS cantidad FROM detalle_venta AS dv JOIN productos AS p ON dv.idproducto = p.idproducto GROUP BY dv.idproducto ORDER BY cantidad DESC',
+    function (error, resultsProductos, fields) {
+      if (error) throw error;
+      res.json(resultsProductos);
     }
   );
 });
@@ -103,10 +127,21 @@ router.post("/auth", async (req, res) => {
               }
               const cargo = results[0].cargo;
               if (cargo === "Administrador") {
-                res.render("index", {
-                  login: true,
-                  name: req.session.cargo,
-                });
+                pool.query(
+                  "SELECT SUM(totalventa) AS totalVentas FROM ventas",
+                  (error, resultsVentas) => {
+                    if (error) {
+                      console.error(error);
+                      res.status(500).send("Internal Server Error");
+                      return;
+                    }
+                    res.render("index", {
+                      login: true,
+                      name: "Marco",
+                      totalVentas: resultsVentas[0].totalVentas,
+                    });
+                  }
+                );
               } else if (cargo === "Caja") {
                 res.redirect("/caja");
               } else if (cargo === "Almacenero") {
