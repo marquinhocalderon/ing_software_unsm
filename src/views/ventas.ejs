@@ -189,7 +189,7 @@
 
           <form action="/auth/ventas" method="post" id="miFormulario">
             <input type="hidden" placeholder="idcliente" id="idcliente" name="idcliente" >
-            <input type="text" placeholder="idusuario" id="idusuario" value="<%= idUsuario %>" name="idusuario" readonly>
+            <input type="hidden" placeholder="idusuario" id="idusuario" value="<%= idUsuario %>" name="idusuario" readonly>
             <div class="form first">
               <div class="details personal">
                 <span class="title">Cliente</span>
@@ -484,13 +484,6 @@ boleta += `
   ventana.document.write(boleta);
 
   ventana.document.close();
-
-  ventana.onload = function() {
-    ventana.print();
-  };
-    
-        // Envía el formulario de manera asíncrona si es necesario
-        // Puedes eliminar esta línea si no necesitas enviar el formulario en segundo plano
         this.submit();
       });
     
