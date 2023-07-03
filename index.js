@@ -127,6 +127,17 @@ const lista_ventas = require("./src/rutas_cajero/facturaciones_cajero")
 app.use(lista_ventas)
 
 
+// reportes ventas
+const reporteventas = require("./src/routes/reporteventas")
+app.use(reporteventas)
+
+// reportes compras
+const reportecompras = require("./src/routes/reportecompras")
+app.use(reportecompras)
+
+
+
+
 //PRUEBA DE LA CONEXION A LA BASE DE DATOS MYSQL
 pool.getConnection((err, connection) => {
   if (err) {
