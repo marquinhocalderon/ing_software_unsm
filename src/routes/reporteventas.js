@@ -20,7 +20,7 @@ function requireAuth(req, res, next) {
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/reporteventas", async function (req, res) {
+router.get("/auth/reporteventas", requireAuth, async function (req, res) {
   pool.query(
     `SELECT * FROM ventas WHERE totalventa IS NOT NULL`,
     function (error, results, fields) {

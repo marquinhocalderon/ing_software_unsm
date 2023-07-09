@@ -135,6 +135,16 @@ app.use(reporteventas)
 const reportecompras = require("./src/routes/reportecompras")
 app.use(reportecompras)
 
+// reportes usuarios
+const reporteusuarios = require("./src/routes/reporteusuarios")
+app.use(reporteusuarios)
+
+// reportes stock
+const reportestock = require("./src/routes/reportestock")
+app.use(reportestock)
+
+
+
 
 
 

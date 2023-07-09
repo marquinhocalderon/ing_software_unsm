@@ -33,7 +33,11 @@ function requireAuth(req, res, next) {
 
 router.get("/auth/usuarios", requireAuth, async function (req, res) {
   pool.query(
-    "SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil",
+    `SELECT *
+    FROM usuarios
+    JOIN perfil ON usuarios.idperfil = perfil.idperfil
+    WHERE usuarios.estado_usuario = 'Activo';
+    `,
     function (error, results, fields) {
       if (error) throw error;
 

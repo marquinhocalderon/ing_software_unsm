@@ -204,17 +204,15 @@
 
 
             <div class="form-group">
-              <label for="fecha_inicio">Fecha de inicio:</label>
-              <input type="date" class="form-control" id="fecha_inicio" name="fecha_venta" required>
+
+              <input type="hidden" class="form-control" id="fecha_inicio" name="fecha_venta" required>
             </div>
 
             <div class="form-group">
-              <label for="fecha_fin">Fecha de fin:</label>
-              <input type="date" class="form-control" name="fecha_venta" id="fecha_fin" required>
+              <input type="hidden" class="form-control" name="fecha_venta" id="fecha_fin" required>
             </div>
             <div class="form-group">
               <label for="fecha_fin"></label>
-              <button id="buscar" class="btn btn-primary form-control">Buscar</button>
             </div>
           </div>
 
@@ -224,30 +222,33 @@
             <table id="users" class="table">
               <thead>
                 <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Fecha Venta</th>
-                  <th scope="col">Comprobante</th>
-                  <th scope="col">Total Venta</th>
+                  <th scope="col">DNI</th>
+                  <th scope="col">NOMBRE</th>
+                  <th scope="col">USUARIO</th>
+                  <th scope="col">CARGO</th>
+                  <th scope="col">ESTADO</th>
                 </tr>
               </thead>
               <tbody class="table-group-divider">
                 <% reportes.forEach(function(reporte) { %>
-                  <tr>
-                    <td>
-                      <%= reporte.idventa %>
-                    </td>
-                    <td>
-                      <%= reporte.fecha_venta.toLocaleString('es-ES', { day: '2-digit' , month: '2-digit' ,
-                        year: 'numeric' , hour: '2-digit' , minute: '2-digit' }) %>
-                    </td>
-                    <td>
-                      <%= reporte.tipo_comprobante %>
-                    </td>
-                    <td>
-                      <%= reporte.totalventa %>
-                    </td>
-                  </tr>
-                  <% }); %>
+                    <tr>
+                        <td>
+                            <%= reporte.dni_usuario %>
+                        </td>
+                        <td>
+                            <%= reporte.nombre %>
+                        </td>
+                        <td>
+                            <%= reporte.usuario %>
+                        </td>
+                        <td>
+                            <%= reporte.cargo %>
+                        </td>
+                        <td>
+                            <%= reporte.estado_usuario %>
+                        </td>
+                    </tr>
+                    <% }); %>
               </tbody>
             </table>
 
@@ -274,39 +275,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-      document.getElementById('buscar').addEventListener('click', function (event) {
-        // Obtén los valores de las fechas ingresadas por el usuario
-        var fechaInicio = document.getElementById('fecha_inicio').value;
-        var fechaFin = document.getElementById('fecha_fin').value;
 
-        // Realiza una solicitud al servidor enviando las fechas
-        axios.get(`/auth/reporteventasjson`)
-          .then(response => {
-            var data = response.data;
-
-            // Filtra los datos por fecha dentro del rango especificado
-            var datosFiltrados = data.filter(function (reporte) {
-              var fechaVenta = new Date(reporte.fecha_venta);
-              return fechaVenta >= new Date(fechaInicio) && fechaVenta <= new Date(fechaFin);
-            });
-
-            // Actualiza la tabla con los datos filtrados
-            var tbody = document.querySelector('#users tbody');
-            tbody.innerHTML = '';
-
-            datosFiltrados.forEach(function (reporte) {
-              var row = document.createElement('tr');
-              row.innerHTML = `
-                        <td>${reporte.idventa}</td>
-                        <td>${reporte.fecha_venta.split('T')[0]}</td>
-                        <td>${reporte.tipo_comprobante}</td>
-                        <td>${reporte.totalventa}</td>
-                      `;
-              tbody.appendChild(row);
-            });
-          })
-          .catch(error => console.error(error));
-      });
       document.getElementById('exportar-excel').addEventListener('click', function (event) {
         // Obtener los datos de la tabla
         var tabla = document.getElementById('users');
@@ -330,11 +299,11 @@
 
         // Crear una hoja de cálculo y agregar los datos
         var worksheet = XLSX.utils.aoa_to_sheet(data);
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte de Ventas');
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte de Todos los Usuarios');
 
         // Guardar el libro de Excel como archivo
         var fechaActual = new Date().toISOString().slice(0, 10);
-        var nombreArchivo = 'reporte_ventas_' + fechaActual + '.xlsx';
+        var nombreArchivo = 'reporte_usuarios_' + fechaActual + '.xlsx';
         XLSX.writeFile(workbook, nombreArchivo);
       });
 
@@ -377,7 +346,7 @@
   var docDefinition = {
     content: [
       {
-        text: 'Reporte de Ventas',
+        text: 'Reporte de Todos los Usuarios',
         style: 'header'
       },
       {
@@ -392,7 +361,7 @@
   };
 
   // Generar el archivo PDF
-  pdfMake.createPdf(docDefinition).download('reporte_ventas.pdf');
+  pdfMake.createPdf(docDefinition).download('reporte_usuarios.pdf');
 });
 
     </script>

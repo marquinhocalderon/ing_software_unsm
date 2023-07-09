@@ -20,20 +20,23 @@ function requireAuth(req, res, next) {
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/reportecompras", requireAuth, async function (req, res) {
+router.get("/auth/reporteusuarios", requireAuth, async function (req, res) {
   pool.query(
-    `SELECT * FROM compras WHERE totalcompra IS NOT NULL`,
+    `SELECT *
+    FROM usuarios
+    JOIN perfil ON usuarios.idperfil = perfil.idperfil
+    `,
     function (error, results, fields) {
       if (error) throw error;
-      res.render("reportecompras", { reportes: results });
+      res.render("reporteusuarios", { reportes: results });
     }
   );
 });
 
 
-router.get("/auth/reportecomprasjson", async function (req, res) {
+router.get("/auth/reporteventasjson", async function (req, res) {
   pool.query(
-    `SELECT * FROM compras WHERE totalcompra IS NOT NULL`,
+    `SELECT * FROM ventas WHERE totalventa IS NOT NULL`,
     function (error, results, fields) {
       if (error) throw error;
       res.json(results);
