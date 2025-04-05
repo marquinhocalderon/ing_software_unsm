@@ -2,11 +2,11 @@ const mysql = require('mysql2'); // o 'mysql' si prefieres
 
 // Crea el pool de conexiones
 const pool = mysql.createPool({
-  host: 'buh5pev0wmpkxzzzunkj-mysql.services.clever-cloud.com',
-  user: 'uxsvg0q0r58hniyu',
-  password: 'BOHAFwBGKvil2t1JoGSO',
+  host: 'bt1smpsjp9qigmz6opgy-mysql.services.clever-cloud.com',
+  user: 'ufjxjnwqralpcyhd',
+  password: 'KA1MkRv4zRGd2FsJlHHa',
   port: 3306,
-  database: 'buh5pev0wmpkxzzzunkj'
+  database: 'bt1smpsjp9qigmz6opgy'
 });
 
 // // Crea el pool de conexiones
