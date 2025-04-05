@@ -28,7 +28,7 @@ function requireAuth(req, res, next) {
 
 /* PARA INSERTAR Compras
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/almacen", requireAuth, async (req, res) => {
+router.get("/auth/almacen", async (req, res) => {
   try {
     const data = await poolQuery(`
     
@@ -68,7 +68,7 @@ function poolQuery(query) {
   });
 }
 
-router.get("/auth/almacen/:id", requireAuth, async function (req, res) {
+router.get("/auth/almacen/:id", async function (req, res) {
   try {
     const { id } = req.params; // Capturar el valor del ID
     const results = await poolQuery(

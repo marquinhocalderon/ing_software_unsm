@@ -41,7 +41,7 @@ function poolQuery(query) {
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
 /* PARA mostrar las ventas
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/facturaciones", requireAuth, async (req, res) => {
+router.get("/auth/facturaciones", async (req, res) => {
     try {
       const data = await poolQuery(`
         SELECT c.*, cl.nombre_cliente AS nombre_cliente, cl.razonsocial AS razonsocial, u.nombre, p2.cargo AS cargo
@@ -74,7 +74,7 @@ router.get("/auth/facturaciones", requireAuth, async (req, res) => {
 
 
 
-router.get("/auth/facturaciones/:id", requireAuth,  async function (req, res) {
+router.get("/auth/facturaciones/:id",  async function (req, res) {
   try {
     const { id } = req.params; // Capturar el valor del ID
     const results = await poolQuery(

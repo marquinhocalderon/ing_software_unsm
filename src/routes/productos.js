@@ -28,7 +28,7 @@ function requireAuth(req, res, next) {
 
 /* PARA INSERTAR PRODUCTOS
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/lista", requireAuth, async function (req, res) {
+router.get("/auth/lista", async function (req, res) {
   pool.query(
     "SELECT p.*,c.nombre_categoria AS nombre_categoria, u.nombre_unidad AS nombre_unidad " +
       "FROM productos p " +
@@ -153,7 +153,7 @@ router.post("/auth/lista", function (req, res) {
 
 // ...
 
-router.get("/auth/lista/:id", requireAuth, async function (req, res) {
+router.get("/auth/lista/:id", async function (req, res) {
   try {
     const { id } = req.params;
 
