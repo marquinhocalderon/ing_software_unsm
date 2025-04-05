@@ -23,7 +23,7 @@ function requireAuth(req, res, next) {
 /* BOTON PARA REGISTRAR CATEGORIAS
 --------------------------------------------------------------------------------------------------------------------
 */
-router.get("/auth/ventas", requireAuth, async function (req, res) {
+router.get("/auth/ventas", async function (req, res) {
   try {
     const data = await new Promise((resolve, reject) => {
       pool.query(

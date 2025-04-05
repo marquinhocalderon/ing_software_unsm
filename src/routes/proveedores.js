@@ -31,7 +31,7 @@ function requireAuth(req, res, next) {
 --------------------------------------------------------------------------------------------------------------------
 */
 
-router.get("/auth/proveedores", requireAuth, async function (req, res) {
+router.get("/auth/proveedores", async function (req, res) {
   pool.query(
     "SELECT * FROM proveedores",
     function (error, results, fields) {

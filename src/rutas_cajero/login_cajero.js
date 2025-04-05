@@ -23,7 +23,7 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/caja", requireAuth, (req, res) => {
+router.get("/caja", (req, res) => {
   const perfilId = req.session.idperfil;
   pool.query(
     'SELECT * FROM usuarios JOIN perfil ON usuarios.idperfil = perfil.idperfil WHERE perfil.estado = "Activo"',

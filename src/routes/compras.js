@@ -28,7 +28,7 @@ function requireAuth(req, res, next) {
 
 /* PARA INSERTAR PRODUCTOS
 ----------------------------------------------------------------------------------------------------  WHERE categoria.estado= "Activo" */
-router.get("/auth/compras", requireAuth, async function (req, res) {
+router.get("/auth/compras", async function (req, res) {
   try {
     const data = await new Promise((resolve, reject) => {
       pool.query(
